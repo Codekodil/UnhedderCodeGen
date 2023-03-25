@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CppSharpFiles\CppSharpFiles.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CppSharp.AST">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.AST.dll</HintPath>
+    </Reference>
+    <Reference Include="CppSharp.Generator">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.Generator.dll</HintPath>
+    </Reference>
+    <Reference Include="CppSharp.Parser">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.Parser.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

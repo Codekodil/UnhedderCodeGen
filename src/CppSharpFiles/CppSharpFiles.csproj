@@ -1,0 +1,866 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CLI.Gen.deps.json" Link="CLI.Gen.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CLI.Gen.runtimeconfig.json" Link="CLI.Gen.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Common.Gen.deps.json" Link="Common.Gen.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Common.Gen.runtimeconfig.json" Link="Common.Gen.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.AST.deps.json" Link="CppSharp.AST.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.CLI.deps.json" Link="CppSharp.CLI.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.CLI.runtimeconfig.json" Link="CppSharp.CLI.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.deps.json" Link="CppSharp.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Generator.deps.json" Link="CppSharp.Generator.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Generator.Tests.deps.json" Link="CppSharp.Generator.Tests.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Generator.Tests.runtimeconfig.json" Link="CppSharp.Generator.Tests.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Bootstrap.deps.json" Link="CppSharp.Parser.Bootstrap.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Bootstrap.runtimeconfig.json" Link="CppSharp.Parser.Bootstrap.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CLI.deps.json" Link="CppSharp.Parser.CLI.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CLI.runtimeconfig.json" Link="CppSharp.Parser.CLI.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CSharp.deps.json" Link="CppSharp.Parser.CSharp.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.deps.json" Link="CppSharp.Parser.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Gen.deps.json" Link="CppSharp.Parser.Gen.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Gen.runtimeconfig.json" Link="CppSharp.Parser.Gen.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Runtime.deps.json" Link="CppSharp.Runtime.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CSharp.Gen.deps.json" Link="CSharp.Gen.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CSharp.Gen.runtimeconfig.json" Link="CSharp.Gen.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Encodings.Gen.deps.json" Link="Encodings.Gen.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Encodings.Gen.runtimeconfig.json" Link="Encodings.Gen.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\NamespacesDerived.Gen.deps.json" Link="NamespacesDerived.Gen.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\NamespacesDerived.Gen.runtimeconfig.json" Link="NamespacesDerived.Gen.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\StandardLib.Gen.deps.json" Link="StandardLib.Gen.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\StandardLib.Gen.runtimeconfig.json" Link="StandardLib.Gen.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\VTables.Gen.deps.json" Link="VTables.Gen.deps.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\VTables.Gen.runtimeconfig.json" Link="VTables.Gen.runtimeconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CLI.Gen.dll" Link="CLI.Gen.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CLI.Gen.exe" Link="CLI.Gen.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CLI.Gen.pdb" Link="CLI.Gen.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Common.Gen.dll" Link="Common.Gen.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Common.Gen.exe" Link="Common.Gen.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Common.Gen.pdb" Link="Common.Gen.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.AST.dll" Link="CppSharp.AST.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.AST.pdb" Link="CppSharp.AST.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.CLI.dll" Link="CppSharp.CLI.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.CLI.exe" Link="CppSharp.CLI.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.CLI.pdb" Link="CppSharp.CLI.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.CppParser.dll" Link="CppSharp.CppParser.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.CppParser.exp" Link="CppSharp.CppParser.exp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.CppParser.lib" Link="CppSharp.CppParser.lib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.CppParser.pdb" Link="CppSharp.CppParser.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.dll" Link="CppSharp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Generator.dll" Link="CppSharp.Generator.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Generator.pdb" Link="CppSharp.Generator.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Generator.Tests.dll" Link="CppSharp.Generator.Tests.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Generator.Tests.pdb" Link="CppSharp.Generator.Tests.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Bootstrap.dll" Link="CppSharp.Parser.Bootstrap.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Bootstrap.exe" Link="CppSharp.Parser.Bootstrap.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Bootstrap.pdb" Link="CppSharp.Parser.Bootstrap.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CLI.dll" Link="CppSharp.Parser.CLI.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CLI.exp" Link="CppSharp.Parser.CLI.exp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CLI.lib" Link="CppSharp.Parser.CLI.lib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CLI.pdb" Link="CppSharp.Parser.CLI.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CSharp.dll" Link="CppSharp.Parser.CSharp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CSharp.pdb" Link="CppSharp.Parser.CSharp.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.dll" Link="CppSharp.Parser.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Gen.dll" Link="CppSharp.Parser.Gen.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Gen.exe" Link="CppSharp.Parser.Gen.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.Gen.pdb" Link="CppSharp.Parser.Gen.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Parser.pdb" Link="CppSharp.Parser.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.pdb" Link="CppSharp.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Runtime.dll" Link="CppSharp.Runtime.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CppSharp.Runtime.pdb" Link="CppSharp.Runtime.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CSharp.Gen.dll" Link="CSharp.Gen.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CSharp.Gen.exe" Link="CSharp.Gen.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\CSharp.Gen.pdb" Link="CSharp.Gen.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Encodings.Gen.dll" Link="Encodings.Gen.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Encodings.Gen.exe" Link="Encodings.Gen.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Encodings.Gen.pdb" Link="Encodings.Gen.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Ijwhost.dll" Link="Ijwhost.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Microsoft.TestPlatform.CommunicationUtilities.dll" Link="Microsoft.TestPlatform.CommunicationUtilities.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Microsoft.TestPlatform.CoreUtilities.dll" Link="Microsoft.TestPlatform.CoreUtilities.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Microsoft.TestPlatform.CrossPlatEngine.dll" Link="Microsoft.TestPlatform.CrossPlatEngine.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Microsoft.TestPlatform.PlatformAbstractions.dll" Link="Microsoft.TestPlatform.PlatformAbstractions.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Microsoft.TestPlatform.Utilities.dll" Link="Microsoft.TestPlatform.Utilities.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Microsoft.VisualStudio.CodeCoverage.Shim.dll" Link="Microsoft.VisualStudio.CodeCoverage.Shim.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Microsoft.VisualStudio.TestPlatform.Common.dll" Link="Microsoft.VisualStudio.TestPlatform.Common.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll" Link="Microsoft.VisualStudio.TestPlatform.ObjectModel.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\NamespacesDerived.Gen.dll" Link="NamespacesDerived.Gen.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\NamespacesDerived.Gen.exe" Link="NamespacesDerived.Gen.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\NamespacesDerived.Gen.pdb" Link="NamespacesDerived.Gen.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Newtonsoft.Json.dll" Link="Newtonsoft.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\NuGet.Frameworks.dll" Link="NuGet.Frameworks.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\nunit.engine.api.dll" Link="nunit.engine.api.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\nunit.engine.core.dll" Link="nunit.engine.core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\nunit.engine.dll" Link="nunit.engine.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\nunit.framework.dll" Link="nunit.framework.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\NUnit3.TestAdapter.dll" Link="NUnit3.TestAdapter.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\NUnit3.TestAdapter.pdb" Link="NUnit3.TestAdapter.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\nunit_random_seed.tmp" Link="nunit_random_seed.tmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\StandardLib.Gen.dll" Link="StandardLib.Gen.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\StandardLib.Gen.exe" Link="StandardLib.Gen.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\StandardLib.Gen.pdb" Link="StandardLib.Gen.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Std-symbols.dll" Link="Std-symbols.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Std-symbols.exp" Link="Std-symbols.exp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Std-symbols.lib" Link="Std-symbols.lib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\Std-symbols.pdb" Link="Std-symbols.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\testcentric.engine.metadata.dll" Link="testcentric.engine.metadata.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\testhost.dll" Link="testhost.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\testhost.exe" Link="testhost.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\VTables.Gen.dll" Link="VTables.Gen.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\VTables.Gen.exe" Link="VTables.Gen.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\VTables.Gen.pdb" Link="VTables.Gen.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CppSharp">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CppSharp.AST">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.AST.dll</HintPath>
+    </Reference>
+    <Reference Include="CppSharp.Generator">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.Generator.dll</HintPath>
+    </Reference>
+    <Reference Include="CppSharp.Parser">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="CppSharp.Parser.CSharp">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CppSharp.Runtime">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="lib\clang\14.0.0\include\cuda_wrappers\" />
+    <Folder Include="lib\clang\14.0.0\include\ppc_wrappers\" />
+    <Folder Include="lib\clang\14.0.0\include\openmp_wrappers\" />
+    <Folder Include="lib\clang\14.0.0\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\adxintrin.h" Link="lib\clang\14.0.0\include\adxintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\altivec.h" Link="lib\clang\14.0.0\include\altivec.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ammintrin.h" Link="lib\clang\14.0.0\include\ammintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\amxintrin.h" Link="lib\clang\14.0.0\include\amxintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\arm64intr.h" Link="lib\clang\14.0.0\include\arm64intr.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\armintr.h" Link="lib\clang\14.0.0\include\armintr.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\arm_acle.h" Link="lib\clang\14.0.0\include\arm_acle.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\arm_cmse.h" Link="lib\clang\14.0.0\include\arm_cmse.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx2intrin.h" Link="lib\clang\14.0.0\include\avx2intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512bf16intrin.h" Link="lib\clang\14.0.0\include\avx512bf16intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512bitalgintrin.h" Link="lib\clang\14.0.0\include\avx512bitalgintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512bwintrin.h" Link="lib\clang\14.0.0\include\avx512bwintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512cdintrin.h" Link="lib\clang\14.0.0\include\avx512cdintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512dqintrin.h" Link="lib\clang\14.0.0\include\avx512dqintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512erintrin.h" Link="lib\clang\14.0.0\include\avx512erintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512fintrin.h" Link="lib\clang\14.0.0\include\avx512fintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512fp16intrin.h" Link="lib\clang\14.0.0\include\avx512fp16intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512ifmaintrin.h" Link="lib\clang\14.0.0\include\avx512ifmaintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512ifmavlintrin.h" Link="lib\clang\14.0.0\include\avx512ifmavlintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512pfintrin.h" Link="lib\clang\14.0.0\include\avx512pfintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vbmi2intrin.h" Link="lib\clang\14.0.0\include\avx512vbmi2intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vbmiintrin.h" Link="lib\clang\14.0.0\include\avx512vbmiintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vbmivlintrin.h" Link="lib\clang\14.0.0\include\avx512vbmivlintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vlbf16intrin.h" Link="lib\clang\14.0.0\include\avx512vlbf16intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vlbitalgintrin.h" Link="lib\clang\14.0.0\include\avx512vlbitalgintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vlbwintrin.h" Link="lib\clang\14.0.0\include\avx512vlbwintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vlcdintrin.h" Link="lib\clang\14.0.0\include\avx512vlcdintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vldqintrin.h" Link="lib\clang\14.0.0\include\avx512vldqintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vlfp16intrin.h" Link="lib\clang\14.0.0\include\avx512vlfp16intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vlintrin.h" Link="lib\clang\14.0.0\include\avx512vlintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vlvbmi2intrin.h" Link="lib\clang\14.0.0\include\avx512vlvbmi2intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vlvnniintrin.h" Link="lib\clang\14.0.0\include\avx512vlvnniintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vlvp2intersectintrin.h" Link="lib\clang\14.0.0\include\avx512vlvp2intersectintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vnniintrin.h" Link="lib\clang\14.0.0\include\avx512vnniintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vp2intersectintrin.h" Link="lib\clang\14.0.0\include\avx512vp2intersectintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vpopcntdqintrin.h" Link="lib\clang\14.0.0\include\avx512vpopcntdqintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avx512vpopcntdqvlintrin.h" Link="lib\clang\14.0.0\include\avx512vpopcntdqvlintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avxintrin.h" Link="lib\clang\14.0.0\include\avxintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\avxvnniintrin.h" Link="lib\clang\14.0.0\include\avxvnniintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\bmi2intrin.h" Link="lib\clang\14.0.0\include\bmi2intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\bmiintrin.h" Link="lib\clang\14.0.0\include\bmiintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\builtins.h" Link="lib\clang\14.0.0\include\builtins.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\cet.h" Link="lib\clang\14.0.0\include\cet.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\cetintrin.h" Link="lib\clang\14.0.0\include\cetintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\cldemoteintrin.h" Link="lib\clang\14.0.0\include\cldemoteintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\clflushoptintrin.h" Link="lib\clang\14.0.0\include\clflushoptintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\clwbintrin.h" Link="lib\clang\14.0.0\include\clwbintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\clzerointrin.h" Link="lib\clang\14.0.0\include\clzerointrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\cpuid.h" Link="lib\clang\14.0.0\include\cpuid.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\crc32intrin.h" Link="lib\clang\14.0.0\include\crc32intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\emmintrin.h" Link="lib\clang\14.0.0\include\emmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\enqcmdintrin.h" Link="lib\clang\14.0.0\include\enqcmdintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\f16cintrin.h" Link="lib\clang\14.0.0\include\f16cintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\float.h" Link="lib\clang\14.0.0\include\float.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\fma4intrin.h" Link="lib\clang\14.0.0\include\fma4intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\fmaintrin.h" Link="lib\clang\14.0.0\include\fmaintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\fxsrintrin.h" Link="lib\clang\14.0.0\include\fxsrintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\gfniintrin.h" Link="lib\clang\14.0.0\include\gfniintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\hexagon_circ_brev_intrinsics.h" Link="lib\clang\14.0.0\include\hexagon_circ_brev_intrinsics.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\hexagon_protos.h" Link="lib\clang\14.0.0\include\hexagon_protos.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\hexagon_types.h" Link="lib\clang\14.0.0\include\hexagon_types.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\hresetintrin.h" Link="lib\clang\14.0.0\include\hresetintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\htmintrin.h" Link="lib\clang\14.0.0\include\htmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\htmxlintrin.h" Link="lib\clang\14.0.0\include\htmxlintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\hvx_hexagon_protos.h" Link="lib\clang\14.0.0\include\hvx_hexagon_protos.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ia32intrin.h" Link="lib\clang\14.0.0\include\ia32intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\immintrin.h" Link="lib\clang\14.0.0\include\immintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\intrin.h" Link="lib\clang\14.0.0\include\intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\inttypes.h" Link="lib\clang\14.0.0\include\inttypes.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\invpcidintrin.h" Link="lib\clang\14.0.0\include\invpcidintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\iso646.h" Link="lib\clang\14.0.0\include\iso646.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\keylockerintrin.h" Link="lib\clang\14.0.0\include\keylockerintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\limits.h" Link="lib\clang\14.0.0\include\limits.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\lwpintrin.h" Link="lib\clang\14.0.0\include\lwpintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\lzcntintrin.h" Link="lib\clang\14.0.0\include\lzcntintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\mm3dnow.h" Link="lib\clang\14.0.0\include\mm3dnow.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\mmintrin.h" Link="lib\clang\14.0.0\include\mmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\mm_malloc.h" Link="lib\clang\14.0.0\include\mm_malloc.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\module.modulemap" Link="lib\clang\14.0.0\include\module.modulemap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\movdirintrin.h" Link="lib\clang\14.0.0\include\movdirintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\msa.h" Link="lib\clang\14.0.0\include\msa.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\mwaitxintrin.h" Link="lib\clang\14.0.0\include\mwaitxintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\nmmintrin.h" Link="lib\clang\14.0.0\include\nmmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\opencl-c-base.h" Link="lib\clang\14.0.0\include\opencl-c-base.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\opencl-c.h" Link="lib\clang\14.0.0\include\opencl-c.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\pconfigintrin.h" Link="lib\clang\14.0.0\include\pconfigintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\pkuintrin.h" Link="lib\clang\14.0.0\include\pkuintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\pmmintrin.h" Link="lib\clang\14.0.0\include\pmmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\popcntintrin.h" Link="lib\clang\14.0.0\include\popcntintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\prfchwintrin.h" Link="lib\clang\14.0.0\include\prfchwintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ptwriteintrin.h" Link="lib\clang\14.0.0\include\ptwriteintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\rdseedintrin.h" Link="lib\clang\14.0.0\include\rdseedintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\rtmintrin.h" Link="lib\clang\14.0.0\include\rtmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\s390intrin.h" Link="lib\clang\14.0.0\include\s390intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\serializeintrin.h" Link="lib\clang\14.0.0\include\serializeintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\sgxintrin.h" Link="lib\clang\14.0.0\include\sgxintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\shaintrin.h" Link="lib\clang\14.0.0\include\shaintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\smmintrin.h" Link="lib\clang\14.0.0\include\smmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\stdalign.h" Link="lib\clang\14.0.0\include\stdalign.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\stdarg.h" Link="lib\clang\14.0.0\include\stdarg.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\stdatomic.h" Link="lib\clang\14.0.0\include\stdatomic.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\stdbool.h" Link="lib\clang\14.0.0\include\stdbool.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\stddef.h" Link="lib\clang\14.0.0\include\stddef.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\stdint.h" Link="lib\clang\14.0.0\include\stdint.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\stdnoreturn.h" Link="lib\clang\14.0.0\include\stdnoreturn.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\tbmintrin.h" Link="lib\clang\14.0.0\include\tbmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\tgmath.h" Link="lib\clang\14.0.0\include\tgmath.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\tmmintrin.h" Link="lib\clang\14.0.0\include\tmmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\tsxldtrkintrin.h" Link="lib\clang\14.0.0\include\tsxldtrkintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\uintrintrin.h" Link="lib\clang\14.0.0\include\uintrintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\unwind.h" Link="lib\clang\14.0.0\include\unwind.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\vadefs.h" Link="lib\clang\14.0.0\include\vadefs.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\vaesintrin.h" Link="lib\clang\14.0.0\include\vaesintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\varargs.h" Link="lib\clang\14.0.0\include\varargs.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\vecintrin.h" Link="lib\clang\14.0.0\include\vecintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\vpclmulqdqintrin.h" Link="lib\clang\14.0.0\include\vpclmulqdqintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\waitpkgintrin.h" Link="lib\clang\14.0.0\include\waitpkgintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\wasm_simd128.h" Link="lib\clang\14.0.0\include\wasm_simd128.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\wbnoinvdintrin.h" Link="lib\clang\14.0.0\include\wbnoinvdintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\wmmintrin.h" Link="lib\clang\14.0.0\include\wmmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\x86gprintrin.h" Link="lib\clang\14.0.0\include\x86gprintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\x86intrin.h" Link="lib\clang\14.0.0\include\x86intrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\xmmintrin.h" Link="lib\clang\14.0.0\include\xmmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\xopintrin.h" Link="lib\clang\14.0.0\include\xopintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\xsavecintrin.h" Link="lib\clang\14.0.0\include\xsavecintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\xsaveintrin.h" Link="lib\clang\14.0.0\include\xsaveintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\xsaveoptintrin.h" Link="lib\clang\14.0.0\include\xsaveoptintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\xsavesintrin.h" Link="lib\clang\14.0.0\include\xsavesintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\xtestintrin.h" Link="lib\clang\14.0.0\include\xtestintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_builtin_vars.h" Link="lib\clang\14.0.0\include\__clang_cuda_builtin_vars.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_cmath.h" Link="lib\clang\14.0.0\include\__clang_cuda_cmath.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_complex_builtins.h" Link="lib\clang\14.0.0\include\__clang_cuda_complex_builtins.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_device_functions.h" Link="lib\clang\14.0.0\include\__clang_cuda_device_functions.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_intrinsics.h" Link="lib\clang\14.0.0\include\__clang_cuda_intrinsics.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_libdevice_declares.h" Link="lib\clang\14.0.0\include\__clang_cuda_libdevice_declares.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_math.h" Link="lib\clang\14.0.0\include\__clang_cuda_math.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_math_forward_declares.h" Link="lib\clang\14.0.0\include\__clang_cuda_math_forward_declares.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_runtime_wrapper.h" Link="lib\clang\14.0.0\include\__clang_cuda_runtime_wrapper.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_cuda_texture_intrinsics.h" Link="lib\clang\14.0.0\include\__clang_cuda_texture_intrinsics.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_hip_cmath.h" Link="lib\clang\14.0.0\include\__clang_hip_cmath.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_hip_libdevice_declares.h" Link="lib\clang\14.0.0\include\__clang_hip_libdevice_declares.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_hip_math.h" Link="lib\clang\14.0.0\include\__clang_hip_math.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__clang_hip_runtime_wrapper.h" Link="lib\clang\14.0.0\include\__clang_hip_runtime_wrapper.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__stddef_max_align_t.h" Link="lib\clang\14.0.0\include\__stddef_max_align_t.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__wmmintrin_aes.h" Link="lib\clang\14.0.0\include\__wmmintrin_aes.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\__wmmintrin_pclmul.h" Link="lib\clang\14.0.0\include\__wmmintrin_pclmul.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\cuda_wrappers\algorithm" Link="lib\clang\14.0.0\include\cuda_wrappers\algorithm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\cuda_wrappers\complex" Link="lib\clang\14.0.0\include\cuda_wrappers\complex">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\cuda_wrappers\new" Link="lib\clang\14.0.0\include\cuda_wrappers\new">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\openmp_wrappers\cmath" Link="lib\clang\14.0.0\include\openmp_wrappers\cmath">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\openmp_wrappers\complex" Link="lib\clang\14.0.0\include\openmp_wrappers\complex">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\openmp_wrappers\complex.h" Link="lib\clang\14.0.0\include\openmp_wrappers\complex.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\openmp_wrappers\complex_cmath.h" Link="lib\clang\14.0.0\include\openmp_wrappers\complex_cmath.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\openmp_wrappers\math.h" Link="lib\clang\14.0.0\include\openmp_wrappers\math.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\openmp_wrappers\new" Link="lib\clang\14.0.0\include\openmp_wrappers\new">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\openmp_wrappers\__clang_openmp_device_functions.h" Link="lib\clang\14.0.0\include\openmp_wrappers\__clang_openmp_device_functions.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ppc_wrappers\emmintrin.h" Link="lib\clang\14.0.0\include\ppc_wrappers\emmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ppc_wrappers\mmintrin.h" Link="lib\clang\14.0.0\include\ppc_wrappers\mmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ppc_wrappers\mm_malloc.h" Link="lib\clang\14.0.0\include\ppc_wrappers\mm_malloc.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ppc_wrappers\pmmintrin.h" Link="lib\clang\14.0.0\include\ppc_wrappers\pmmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ppc_wrappers\smmintrin.h" Link="lib\clang\14.0.0\include\ppc_wrappers\smmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ppc_wrappers\tmmintrin.h" Link="lib\clang\14.0.0\include\ppc_wrappers\tmmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\CppSharp\bin\Release_x64\lib\clang\14.0.0\include\ppc_wrappers\xmmintrin.h" Link="lib\clang\14.0.0\include\ppc_wrappers\xmmintrin.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
