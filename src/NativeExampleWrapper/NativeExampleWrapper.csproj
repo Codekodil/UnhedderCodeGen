@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\CodeGenConsole\bin\Std.cs" Link="Std.cs" />
     <Compile Include="..\CodeGenConsole\bin\UnhedderNative.cs" Link="UnhedderNative.cs" />
   </ItemGroup>
 

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WrapperTests": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
