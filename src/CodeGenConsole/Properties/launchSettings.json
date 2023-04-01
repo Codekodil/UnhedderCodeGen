@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CodeGenConsole": {
+      "commandName": "Project",
+      "commandLineArgs": "../../../../../NativeExampleWrapper/testing.json"
+    }
+  }
+}
