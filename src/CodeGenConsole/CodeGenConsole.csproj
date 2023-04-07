@@ -22,6 +22,9 @@
     <Reference Include="CppSharp.Parser">
       <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.Parser.dll</HintPath>
     </Reference>
+    <Reference Include="CppSharp.Parser.CLI">
+      <HintPath>..\..\CppSharp\bin\Release_x64\CppSharp.Parser.CLI.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

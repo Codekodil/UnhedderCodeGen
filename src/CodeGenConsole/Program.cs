@@ -1,5 +1,5 @@
 ﻿using CodeGenConsole;
 
-var lib = await ConfigLib.NewAsync(args[0]);
+var config = await Config.LoadAsync(args[0]);
 
-await lib.RunConsoleAsync();
+await ConfigLib.RunConsoleAsync(config);

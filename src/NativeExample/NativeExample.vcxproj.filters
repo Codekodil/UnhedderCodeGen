@@ -7,5 +7,6 @@
   <ItemGroup>
     <ClCompile Include="BasicStorage.cpp" />
     <ClCompile Include="GlmMapping.cpp" />
+    <ClCompile Include="..\CodeGenConsole\bin\NativeExample-symbols.cpp" />
   </ItemGroup>
 </Project>

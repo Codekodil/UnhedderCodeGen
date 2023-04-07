@@ -1,4 +1,4 @@
-using UnhedderNative.Example;
+using NativeExample.Example;
 
 namespace WrapperTests
 {

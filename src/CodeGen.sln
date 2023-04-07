@@ -11,9 +11,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D1F23479
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativeExample", "NativeExample\NativeExample.vcxproj", "{47060763-83A5-46B6-B62A-5973E3CEEA2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeExampleWrapper", "NativeExampleWrapper\NativeExampleWrapper.csproj", "{7CBDEC27-F8C2-4799-8B24-3C26B71DBFAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeExampleWrapper", "NativeExampleWrapper\NativeExampleWrapper.csproj", "{7CBDEC27-F8C2-4799-8B24-3C26B71DBFAC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{47060763-83A5-46B6-B62A-5973E3CEEA2E} = {47060763-83A5-46B6-B62A-5973E3CEEA2E}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrapperTests", "WrapperTests\WrapperTests.csproj", "{5D00E6C4-AD03-4083-AE2D-01DE8DD78A4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WrapperTests", "WrapperTests\WrapperTests.csproj", "{5D00E6C4-AD03-4083-AE2D-01DE8DD78A4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

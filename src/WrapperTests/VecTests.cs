@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using UnhedderNative.Example;
+using NativeExample.Example;
 
 namespace VectorTests
 {

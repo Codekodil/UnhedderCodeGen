@@ -8,35 +8,19 @@ namespace CodeGenConsole
 	public class ConfigLib : ILibrary
 	{
 		private Config _config = new Config();
-		private ConfigLib() { }
-
-		public static async Task<ConfigLib> NewAsync(string path)
-		{
-			var result = new ConfigLib();
-			{
-				using var file = File.OpenRead(path);
-				var config = await JsonSerializer.DeserializeAsync<Config>(file);
-				if (config != null)
-					result._config = config;
-			}
-#if DEBUG
-			{
-				using var file = File.OpenWrite(path);
-				await JsonSerializer.SerializeAsync(file, result._config);
-			}
-#endif
-			return result;
-		}
+		public ConfigLib(Config config) => _config = config;
 
 		public Task RunConsoleAsync() => Task.Run(() => ConsoleDriver.Run(this));
+		public static Task RunConsoleAsync(Config config) => new ConfigLib(config).RunConsoleAsync();
 
 
 
 		public void Setup(Driver driver)
 		{
 			driver.ParserOptions.LanguageVersion = CppSharp.Parser.LanguageVersion.CPP20;
+			driver.ParserOptions.AddArguments("-fcxx-exceptions");
 			driver.Options.GeneratorKind = GeneratorKind.CSharp;
-			driver.Options.OutputDir = @"..\..\..\";
+			driver.Options.OutputDir = _config.OutputDirectory;
 #if DEBUG
 			driver.Options.GenerateDebugOutput = true;
 #endif
