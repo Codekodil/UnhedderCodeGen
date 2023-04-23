@@ -1,1 +1,6 @@
-{"HeaderDirectories":[]}
+{
+  "Pch": "../../../../TestNative/pch.h",
+  "HeaderDirectories": [
+    "../../../../TestNative"
+  ]
+}

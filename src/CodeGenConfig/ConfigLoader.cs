@@ -20,7 +20,7 @@ namespace CodeGenConfig
 			{
 #if DEBUG
 				using var file = new StreamWriter(path);
-				await JsonSerializer.SerializeAsync(file.BaseStream, result);
+				await JsonSerializer.SerializeAsync(file.BaseStream, result, new JsonSerializerOptions { WriteIndented = true });
 #endif
 			}
 		}
