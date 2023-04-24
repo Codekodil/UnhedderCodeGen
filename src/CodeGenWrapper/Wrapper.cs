@@ -15,5 +15,16 @@ namespace CodeGenWrapper
 				.Where(p => p != PchPath)
 				.ToList();
 		}
+
+		public async Task ParseHeaders()
+		{
+			var headerTasks = HeaderFilePaths.Select(async h =>
+			{
+				using var file = File.OpenRead(h);
+				return await ParserHeader.NormalizeHeader(file);
+			}).ToList();
+
+			await Task.WhenAll(headerTasks);
+		}
 	}
 }

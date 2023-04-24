@@ -3,13 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenConsole", "CodeGenConsole\CodeGenConsole.csproj", "{3EF41674-FEB2-49AA-95EB-58C651688015}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenConsole", "CodeGenConsole\CodeGenConsole.csproj", "{3EF41674-FEB2-49AA-95EB-58C651688015}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenWrapper", "CodeGenWrapper\CodeGenWrapper.csproj", "{A5A4D3ED-F81E-4841-A718-C7241118F834}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenWrapper", "CodeGenWrapper\CodeGenWrapper.csproj", "{A5A4D3ED-F81E-4841-A718-C7241118F834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenConfig", "CodeGenConfig\CodeGenConfig.csproj", "{8A8562B1-A14A-437C-8E39-242FA28A7A1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenConfig", "CodeGenConfig\CodeGenConfig.csproj", "{8A8562B1-A14A-437C-8E39-242FA28A7A1C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestNative", "TestNative\TestNative.vcxproj", "{7A250193-0353-47B9-A688-8A101412BEC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFC66485-0A87-4CAC-ACC7-537DB698AC90}"
+	ProjectSection(SolutionItems) = preProject
+		Helper.h = Helper.h
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWrapper", "TestWrapper\TestWrapper.csproj", "{2FFCBA67-310A-48E0-BB82-77B95C00F20E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +76,18 @@ Global
 		{7A250193-0353-47B9-A688-8A101412BEC5}.Release|x64.Build.0 = Release|x64
 		{7A250193-0353-47B9-A688-8A101412BEC5}.Release|x86.ActiveCfg = Release|Win32
 		{7A250193-0353-47B9-A688-8A101412BEC5}.Release|x86.Build.0 = Release|Win32
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Debug|x64.Build.0 = Debug|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Debug|x86.Build.0 = Debug|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Release|x64.ActiveCfg = Release|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Release|x64.Build.0 = Release|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Release|x86.ActiveCfg = Release|Any CPU
+		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

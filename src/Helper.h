@@ -1,0 +1,1 @@
+#define Wrapper_Pointer
