@@ -13,7 +13,7 @@ namespace TestWrapper
 		  bb				333
 "));
 			var header = await ParserHeader.NormalizeHeader(file);
-			Assert.AreEqual(" A bb 333 ", header.FilteredFile.String);
+			Assert.AreEqual("A bb 333", header.FilteredFile.ToString());
 		}
 
 		[TestMethod]
@@ -24,7 +24,7 @@ namespace TestWrapper
 		  bb		//		333
 "));
 			var header = await ParserHeader.NormalizeHeader(file);
-			Assert.AreEqual(" A bb ", header.FilteredFile.String);
+			Assert.AreEqual("A bb", header.FilteredFile.ToString());
 		}
 
 		[TestMethod]
@@ -37,7 +37,7 @@ namespace TestWrapper
 		  bb				333
 "));
 			var header = await ParserHeader.NormalizeHeader(file);
-			Assert.AreEqual(" bb 333 ", header.FilteredFile.String);
+			Assert.AreEqual("bb 333", header.FilteredFile.ToString());
 		}
 	}
 }

@@ -2,10 +2,8 @@
 
 namespace CodeGenWrapper
 {
-	public class ParserHeader
+	public record ParserHeader(StringSection FilteredFile)
 	{
-		public StringSection.BaseString FilteredFile { get; private set; } = new StringSection.BaseString("");
-
 		public static async Task<ParserHeader> NormalizeHeader(Stream file)
 		{
 			using var reader = new StreamReader(file);
@@ -43,9 +41,9 @@ namespace CodeGenWrapper
 				else
 					continiusFilter.Append(previous = c);
 			}
-
-
-			return new ParserHeader { FilteredFile = new StringSection.BaseString(continiusFilter.ToString()) };
+			var section = new StringSection(continiusFilter.ToString());
+			
+			return new ParserHeader(section.Shrink(section.Chars[0] == ' ' ? 1 : 0, section[^1..] == " " ? 1 : 0));
 		}
 	}
 }
