@@ -37,5 +37,26 @@
 			Assert.AreEqual("Inner", declarations.Namespaces[0].Declarations.Namespaces[0].Name);
 			Assert.AreEqual("Between ", declarations.Namespaces[0].Declarations.Namespaces[0].Section.ToString());
 		}
+
+		[TestMethod]
+		public void EmptyClass()
+		{
+			var section = new StringSection("class FLAGS name { Empty }");
+			var declarations = new ParserDeclaration(section);
+			Assert.AreEqual(1, declarations.Classes.Count);
+			Assert.AreEqual("name", declarations.Classes[0].Name);
+			Assert.AreEqual("Empty ", declarations.Classes[0].Section.ToString());
+		}
+
+		[TestMethod]
+		public void ClassInsideNamespace()
+		{
+			var section = new StringSection("namespace Outer { Before class FL A GS Inner { Between } After }");
+			var declarations = new ParserDeclaration(section);
+			Assert.AreEqual(1, declarations.Namespaces.Count);
+			Assert.AreEqual(1, declarations.Namespaces[0].Declarations.Classes.Count);
+			Assert.AreEqual("Inner", declarations.Namespaces[0].Declarations.Classes[0].Name);
+			Assert.AreEqual("Between ", declarations.Namespaces[0].Declarations.Classes[0].Section.ToString());
+		}
 	}
 }
