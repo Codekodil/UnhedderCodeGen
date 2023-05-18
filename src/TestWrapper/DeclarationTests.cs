@@ -58,5 +58,17 @@
 			Assert.AreEqual("Inner", declarations.Namespaces[0].Declarations.Classes[0].Name);
 			Assert.AreEqual("Between ", declarations.Namespaces[0].Declarations.Classes[0].Section.ToString());
 		}
+
+		[TestMethod]
+		public void ClassWithSimpleMethods()
+		{
+			var section = new StringSection("class name { void M1();public: void M2();void M3 ( ) ; }");
+			var declarations = new ParserDeclaration(section);
+			Assert.AreEqual(1, declarations.Classes.Count);
+			Assert.AreEqual("name", declarations.Classes[0].Name);
+			Assert.AreEqual(2, declarations.Classes[0].Methods.Count);
+			Assert.AreEqual("M2", declarations.Classes[0].Methods[0].Name);
+			Assert.AreEqual("M3", declarations.Classes[0].Methods[1].Name);
+		}
 	}
 }
