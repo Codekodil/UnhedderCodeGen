@@ -2,25 +2,12 @@
 
 namespace CodeGenWrapper
 {
-	public record ParserClass(string Name, StringSection Section, List<ParserMethod> Methods)
+	public record ParserClass(string Name, StringSection Section, List<string> Flags, List<ParserMethod> Methods)
 	{
 		public static ParserClass? Parse(StringSection section)
 		{
-			var identifiers = new List<string>();
-			while (AtIdentifier())
-			{
-				if ((section = ParserHelper.AdvanceNextSymbol(section)!) == null)
-					return null;
-			}
-			bool AtIdentifier()
-			{
-				var identifier = ParserHelper.CurrentIdentifier(section);
-				if (identifier == null)
-					return false;
-				identifiers.Add(identifier);
-				return true;
-			}
-			if (identifiers.Count == 0)
+			var identifiers = ParserHelper.ParseIdentifiers(ref section);
+			if (!(identifiers?.Count > 0))
 				return null;
 
 			var block = ParserHelper.CurrentCurlyBlock(section);
@@ -29,7 +16,9 @@ namespace CodeGenWrapper
 
 			ParseMembers(block, out var methods);
 
-			return new ParserClass(identifiers[identifiers.Count - 1], block, methods);
+			var name = identifiers[^1];
+			identifiers.RemoveAt(identifiers.Count - 1);
+			return new ParserClass(name, block, identifiers, methods);
 		}
 
 		private static void ParseMembers(StringSection section, out List<ParserMethod> methods)

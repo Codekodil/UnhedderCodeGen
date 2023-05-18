@@ -1,4 +1,6 @@
-﻿namespace CodeGenWrapper
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CodeGenWrapper
 {
 	public static class ParserHelper
 	{
@@ -44,11 +46,11 @@
 			while (char.IsWhiteSpace(section[beginning]))
 				beginning++;
 			var depth = 1;
-			var next = ParserHelper.AdvanceNextSymbol(section);
+			var next = AdvanceNextSymbol(section);
 			while (next != null && depth > 0)
 			{
 				section = next;
-				next = ParserHelper.AdvanceNextSymbol(next);
+				next = AdvanceNextSymbol(next);
 				switch (section[section.First])
 				{
 					case '{': depth++; break;
@@ -56,6 +58,39 @@
 				}
 			}
 			return depth > 0 ? null : new StringSection(section, beginning, section.First - 1);
+		}
+
+		public static List<string>? ParseIdentifiers(ref StringSection section)
+		{
+			var identifiers = new List<string>();
+			while (AtIdentifier(ref section))
+			{
+				if ((section = AdvanceNextSymbol(section)!) == null)
+					return null;
+			}
+			bool AtIdentifier(ref StringSection section)
+			{
+				var identifier = CurrentIdentifier(section);
+				if (identifier == null)
+					return false;
+				identifiers.Add(identifier);
+				return true;
+			}
+			return identifiers;
+		}
+
+		public static bool RequireAndAdvance(char Symbol, [MaybeNullWhen(false)] ref StringSection section)
+		{
+			if (section.Length <= 0 || section[section.First] != Symbol)
+				return false;
+			return (section = AdvanceNextSymbol(section)!) != null;
+		}
+
+		public static bool RequireAndAdvance(string identifier, [MaybeNullWhen(false)] ref StringSection section)
+		{
+			if (CurrentIdentifier(section) != identifier)
+				return false;
+			return (section = AdvanceNextSymbol(section)!) != null;
 		}
 	}
 }

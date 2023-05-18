@@ -1,6 +1,6 @@
 ﻿namespace CodeGenWrapper
 {
-	public record ParserMethod(string Name, ParserType Result, int EndIndex)
+	public record ParserMethod(string Name, ParserType Result, List<string> Flags, int EndIndex)
 	{
 		public static ParserMethod? Parse(StringSection section)
 		{
@@ -14,29 +14,22 @@
 				if ((section = ParserHelper.AdvanceNextSymbol(section)!) == null)
 					return null;
 
-			var name = ParserHelper.CurrentIdentifier(section);
-			if (name == null)
+			var identifiers = ParserHelper.ParseIdentifiers(ref section);
+			if (!(identifiers?.Count > 0))
 				return null;
 
-			if ((section = ParserHelper.AdvanceNextSymbol(section)!) == null)
-				return null;
+			var name = identifiers[^1];
+			identifiers.RemoveAt(identifiers.Count - 1);
 
-			if (section[section.First] != '(')
+			if (!ParserHelper.RequireAndAdvance('(', ref section!))
 				return null;
-
-			if ((section = ParserHelper.AdvanceNextSymbol(section)!) == null)
+			if (!ParserHelper.RequireAndAdvance(')', ref section!))
 				return null;
-
-			if (section[section.First] != ')')
-				return null;
-
-			if ((section = ParserHelper.AdvanceNextSymbol(section)!) == null)
-				return null;
-
+			
 			if (section[section.First] != ';')
 				return null;
 
-			return new ParserMethod(name, type, section.First + 1);
+			return new ParserMethod(name, type, identifiers, section.First + 1);
 		}
 	}
 }
