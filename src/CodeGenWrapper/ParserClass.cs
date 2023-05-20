@@ -55,7 +55,7 @@ namespace CodeGenWrapper
 					if (method != null)
 					{
 						methods.Add(method);
-						section = new StringSection(section, method.EndIndex, section.Last);
+						section = ParserHelper.AdvanceNextSymbol(new StringSection(section, method.LastIndex, section.Last))!;
 						continue;
 					}
 				}

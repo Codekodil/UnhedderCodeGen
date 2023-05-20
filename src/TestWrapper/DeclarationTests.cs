@@ -45,6 +45,8 @@
 			var declarations = new ParserDeclaration(section);
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual("name", declarations.Classes[0].Name);
+			Assert.AreEqual(1, declarations.Classes[0].Flags.Count);
+			Assert.AreEqual("FLAGS", declarations.Classes[0].Flags[0]);
 			Assert.AreEqual("Empty ", declarations.Classes[0].Section.ToString());
 		}
 
@@ -56,19 +58,44 @@
 			Assert.AreEqual(1, declarations.Namespaces.Count);
 			Assert.AreEqual(1, declarations.Namespaces[0].Declarations.Classes.Count);
 			Assert.AreEqual("Inner", declarations.Namespaces[0].Declarations.Classes[0].Name);
+			Assert.AreEqual(3, declarations.Namespaces[0].Declarations.Classes[0].Flags.Count);
+			Assert.AreEqual("FL", declarations.Namespaces[0].Declarations.Classes[0].Flags[0]);
+			Assert.AreEqual("A", declarations.Namespaces[0].Declarations.Classes[0].Flags[1]);
+			Assert.AreEqual("GS", declarations.Namespaces[0].Declarations.Classes[0].Flags[2]);
 			Assert.AreEqual("Between ", declarations.Namespaces[0].Declarations.Classes[0].Section.ToString());
 		}
 
 		[TestMethod]
 		public void ClassWithSimpleMethods()
 		{
-			var section = new StringSection("class name { void M1();public: void M2();void M3 ( ) ; }");
+			var section = new StringSection("class name { void F LAGS M1();public: void FLAG S M2();void M3 ( ) ; }");
 			var declarations = new ParserDeclaration(section);
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual("name", declarations.Classes[0].Name);
 			Assert.AreEqual(2, declarations.Classes[0].Methods.Count);
 			Assert.AreEqual("M2", declarations.Classes[0].Methods[0].Name);
+			Assert.AreEqual(2, declarations.Classes[0].Methods[0].Flags.Count);
+			Assert.AreEqual("FLAG", declarations.Classes[0].Methods[0].Flags[0]);
+			Assert.AreEqual("S", declarations.Classes[0].Methods[0].Flags[1]);
+			Assert.AreEqual(0, declarations.Classes[0].Methods[1].Flags.Count);
 			Assert.AreEqual("M3", declarations.Classes[0].Methods[1].Name);
+		}
+
+
+
+		[TestMethod]
+		public void ClassWithMethodParameters()
+		{
+			var section = new StringSection("class name { public: void M(void p1, void p2);}");
+			var declarations = new ParserDeclaration(section);
+			Assert.AreEqual(1, declarations.Classes.Count);
+			Assert.AreEqual(1, declarations.Classes[0].Methods.Count);
+			Assert.AreEqual("M", declarations.Classes[0].Methods[0].Name);
+			Assert.AreEqual(2, declarations.Classes[0].Methods[0].Parameters.Count);
+			Assert.AreEqual("void", declarations.Classes[0].Methods[0].Parameters[0].Type.Name);
+			Assert.AreEqual("p1", declarations.Classes[0].Methods[0].Parameters[0].Name);
+			Assert.AreEqual("void", declarations.Classes[0].Methods[0].Parameters[1].Type.Name);
+			Assert.AreEqual("p2", declarations.Classes[0].Methods[0].Parameters[1].Name);
 		}
 	}
 }

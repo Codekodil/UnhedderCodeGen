@@ -22,6 +22,15 @@ namespace CodeGenWrapper
 			return result;
 		}
 
+		public static char? CurrentSymbol(StringSection section)
+		{
+			if (section.Length <= 0)
+				return null;
+
+			var symbol = section[section.First];
+			return char.IsLetterOrDigit(symbol) ? null : symbol;
+		}
+
 		public static StringSection? AdvanceNextSymbol(StringSection section)
 		{
 			if (section.Length <= 0)
