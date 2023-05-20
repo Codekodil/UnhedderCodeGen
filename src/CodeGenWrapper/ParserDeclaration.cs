@@ -10,24 +10,19 @@
 			var classes = new List<ParserClass>();
 			do
 			{
-				var identifier = ParserHelper.CurrentIdentifier(section);
-				if (identifier == "namespace")
+				var ns = ParserNamespace.Parse(section);
+				if (ns != null)
 				{
-					var ns = ParserNamespace.Parse(section.Shrink(identifier.Length + 1, 0));
-					if (ns != null)
-					{
-						namespaces.Add(ns);
-						section = new StringSection(section, ns.Section.Last + 1, section.Last);
-					}
+					namespaces.Add(ns);
+					section = new StringSection(section, ns.Section.Last + 1, section.Last);
+					continue;
 				}
-				else if (identifier == "class")
+				var cl = ParserClass.Parse(section);
+				if (cl != null)
 				{
-					var cl = ParserClass.Parse(section.Shrink(identifier.Length + 1, 0));
-					if (cl != null)
-					{
-						classes.Add(cl);
-						section = new StringSection(section, cl.Section.Last + 1, section.Last);
-					}
+					classes.Add(cl);
+					section = new StringSection(section, cl.Section.Last + 1, section.Last);
+					continue;
 				}
 			} while ((section = ParserHelper.AdvanceNextSymbol(section)!) != null);
 

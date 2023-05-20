@@ -4,6 +4,9 @@
 	{
 		public static ParserNamespace? Parse(StringSection section)
 		{
+			if (!ParserHelper.RequireAndAdvance("namespace", ref section!))
+				return null;
+
 			var name = ParserHelper.CurrentIdentifier(section);
 			if (name == null)
 				return null;
