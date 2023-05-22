@@ -21,8 +21,29 @@ namespace CodeGenWrapper
 			var headerTasks = HeaderFilePaths.Select(async h =>
 			{
 				using var file = File.OpenRead(h);
-				return await ParserHeader.NormalizeHeader(file);
+				return new { Header = await ParserHeader.NormalizeHeader(file), File = h };
 			}).ToList();
+
+			foreach (var task in headerTasks)
+			{
+				var result = await task;
+				Console.WriteLine($"File: {result.File}");
+				var declarations = new ParserDeclaration(result.Header.FilteredFile);
+
+				WriteDeclarations(declarations, "  ");
+				void WriteDeclarations(ParserDeclaration declarations, string prefix)
+				{
+					foreach (var cl in declarations.Classes)
+					{
+						Console.WriteLine($"{prefix}Class {cl.Name}");
+					}
+					foreach (var ns in declarations.Namespaces)
+					{
+						Console.WriteLine($"{prefix}Namespace {ns.Name}");
+						WriteDeclarations(ns.Declarations, prefix + "  ");
+					}
+				}
+			}
 
 			await Task.WhenAll(headerTasks);
 		}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CodeGenConsole": {
+      "commandName": "Project",
+      "commandLineArgs": "../../../testConfig.json"
+    }
+  }
+}

@@ -14,6 +14,7 @@ namespace CodeGenConfig
 			}
 			catch (FileNotFoundException)
 			{
+				Console.WriteLine($"File [{Path.GetFullPath(path)}] was not found");
 				return result;
 			}
 			finally
