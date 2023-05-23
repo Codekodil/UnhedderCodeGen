@@ -36,6 +36,10 @@ namespace CodeGenWrapper
 					foreach (var cl in declarations.Classes)
 					{
 						Console.WriteLine($"{prefix}Class {cl.Name}");
+						foreach (var method in cl.Methods)
+						{
+							Console.WriteLine($"{prefix}  Method {method.Name}");
+						}
 					}
 					foreach (var ns in declarations.Namespaces)
 					{
