@@ -86,7 +86,7 @@
 		[TestMethod]
 		public void ClassWithMethodParameters()
 		{
-			var section = new StringSection("class name { public: void M(void p1, void p2);}");
+			var section = new StringSection("class name { public: void M(void p1, My::Custom : : Type p2);}");
 			var declarations = new ParserDeclaration(section);
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual(1, declarations.Classes[0].Methods.Count);
@@ -94,7 +94,7 @@
 			Assert.AreEqual(2, declarations.Classes[0].Methods[0].Parameters.Count);
 			Assert.AreEqual("void", declarations.Classes[0].Methods[0].Parameters[0].Type.Name);
 			Assert.AreEqual("p1", declarations.Classes[0].Methods[0].Parameters[0].Name);
-			Assert.AreEqual("void", declarations.Classes[0].Methods[0].Parameters[1].Type.Name);
+			Assert.AreEqual("My::Custom::Type", declarations.Classes[0].Methods[0].Parameters[1].Type.Name);
 			Assert.AreEqual("p2", declarations.Classes[0].Methods[0].Parameters[1].Name);
 		}
 	}

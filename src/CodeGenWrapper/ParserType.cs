@@ -2,22 +2,6 @@
 {
 	public record ParserType(string Name, int LastIndex, bool Span, bool Pointer, bool Shared)
 	{
-		private static readonly HashSet<string> _baseTypes = new HashSet<string>
-		{
-			"void",
-			"int",
-			"float",
-			"double",
-			"char"
-		};
-
-		private static readonly HashSet<string> _stdTypes = new HashSet<string>
-		{
-			"string",
-			"span",
-			"shared_ptr"
-		};
-
 		private abstract record Type();
 		private record SimpleType(string Name) : Type;
 		private record PointerType(Type Type) : Type;
@@ -35,12 +19,12 @@
 
 			var type = nested.Value.Item1;
 
-			if (type is TemplateType spanType && spanType.Name == "span")
+			if (type is TemplateType spanType && spanType.Name == "std::span")
 			{
 				span = true;
 				type = spanType.Type;
 			}
-			if (type is TemplateType sharedType && sharedType.Name == "shared_ptr")
+			if (type is TemplateType sharedType && sharedType.Name == "std::shared_ptr")
 			{
 				shared = true;
 				type = sharedType.Type;
@@ -61,26 +45,34 @@
 			if (name == null)
 				return null;
 
-			var lookUp = _baseTypes;
-			if (name == "std")
+			var identifiers = new List<string> { name };
+
+			(string, StringSection)? next;
+			while ((next = NextIdentifier()).HasValue)
 			{
-				lookUp = _stdTypes;
-				for (var i = 0; i < 2; ++i)
-				{
-					if ((section = ParserHelper.AdvanceNextSymbol(section)!) == null)
-						return null;
-					if (ParserHelper.CurrentSymbol(section) != ':')
-						return null;
-				}
-				if ((section = ParserHelper.AdvanceNextSymbol(section)!) == null)
-					return null;
-				name = ParserHelper.CurrentIdentifier(section);
-				if (name == null)
-					return null;
+				identifiers.Add(next.Value.Item1);
+				section = next.Value.Item2;
 			}
 
-			if (!lookUp.Contains(name))
-				return null;
+			(string, StringSection)? NextIdentifier()
+			{
+				var nextSection = section;
+				for (var i = 0; i < 2; ++i)
+				{
+					if ((nextSection = ParserHelper.AdvanceNextSymbol(nextSection)!) == null)
+						return null;
+					if (ParserHelper.CurrentSymbol(nextSection) != ':')
+						return null;
+				}
+				if ((nextSection = ParserHelper.AdvanceNextSymbol(nextSection)!) == null)
+					return null;
+				var nextName = ParserHelper.CurrentIdentifier(nextSection);
+				if (nextName == null)
+					return null;
+				return (nextName, nextSection);
+			}
+
+			name = string.Join("::", identifiers);
 
 			var nextSymbolSection = ParserHelper.AdvanceNextSymbol(section);
 			var nextSymbol = nextSymbolSection == null ? null : ParserHelper.CurrentSymbol(nextSymbolSection);
@@ -100,7 +92,7 @@
 						break;
 					return (new TemplateType(name, inner.Value.Item1), nextSymbolSection.First);
 			}
-			return (new SimpleType(name), section.First + name!.Length - 1);
+			return (new SimpleType(name), section.First + identifiers[^1].Length - 1);
 		}
 	}
 }
