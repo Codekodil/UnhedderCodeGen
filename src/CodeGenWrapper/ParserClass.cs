@@ -2,7 +2,7 @@
 
 namespace CodeGenWrapper
 {
-	public record ParserClass(string Name, StringSection Section, List<string> Flags, List<ParserMethod> Methods)
+	public record ParserClass(string Name, bool Abstract, StringSection Section, List<string> Flags, List<ParserMethod> Methods)
 	{
 		public static ParserClass? Parse(StringSection section)
 		{
@@ -18,9 +18,16 @@ namespace CodeGenWrapper
 
 			ParseMembers(block, out var methods);
 
+			var isAbstract = identifiers[^1] == "abstract";
+			if (isAbstract)
+			{
+				identifiers.RemoveAt(identifiers.Count - 1);
+				if (identifiers.Count == 0)
+					return null;
+			}
 			var name = identifiers[^1];
 			identifiers.RemoveAt(identifiers.Count - 1);
-			return new ParserClass(name, block, identifiers, methods);
+			return new ParserClass(name, isAbstract, block, identifiers, methods);
 		}
 
 		private static void ParseMembers(StringSection section, out List<ParserMethod> methods)
