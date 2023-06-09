@@ -4,16 +4,12 @@
 	{
 		public static ParserNamespace? Parse(StringSection section)
 		{
-			if (!ParserHelper.RequireAndAdvance("namespace", ref section!))
+			if (!(
+				ParserHelper.RequireAndAdvance("namespace", ref section!) &&
+				ParserHelper.GetIdentifierAndAdvance(out var name, ref section!)))
 				return null;
 
-			var name = ParserHelper.CurrentIdentifier(section);
-			if (name == null)
-				return null;
-			var next = ParserHelper.AdvanceNextSymbol(section);
-			if (next == null)
-				return null;
-			var block = ParserHelper.CurrentCurlyBlock(next);
+			var block = ParserHelper.CurrentCurlyBlock(section);
 
 			return block == null ? null : new ParserNamespace(name, block, new ParserDeclaration(block));
 		}

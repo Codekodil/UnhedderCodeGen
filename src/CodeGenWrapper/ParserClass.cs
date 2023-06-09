@@ -6,11 +6,10 @@ namespace CodeGenWrapper
 	{
 		public static ParserClass? Parse(StringSection section)
 		{
-			if (!ParserHelper.RequireAndAdvance("class", ref section!))
-				return null;
-
-			var identifiers = ParserHelper.ParseIdentifiers(ref section);
-			if (!(identifiers?.Count > 0))
+			if (!(
+				ParserHelper.RequireAndAdvance("class", ref section!) &&
+				ParserHelper.GetIdentifiersAndAdvance(out var identifiers, ref section!) &&
+				identifiers.Count > 0))
 				return null;
 
 			var block = ParserHelper.CurrentCurlyBlock(section);

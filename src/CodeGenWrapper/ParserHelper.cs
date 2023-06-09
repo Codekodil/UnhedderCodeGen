@@ -69,37 +69,56 @@ namespace CodeGenWrapper
 			return depth > 0 ? null : new StringSection(section, beginning, section.First - 1);
 		}
 
-		public static List<string>? ParseIdentifiers(ref StringSection section)
+		public static bool RequireAndAdvance(char symbol, [MaybeNullWhen(false)] ref StringSection section)
 		{
-			var identifiers = new List<string>();
-			while (AtIdentifier(ref section))
-			{
-				if ((section = AdvanceNextSymbol(section)!) == null)
-					return null;
-			}
-			bool AtIdentifier(ref StringSection section)
-			{
-				var identifier = CurrentIdentifier(section);
-				if (identifier == null)
-					return false;
-				identifiers.Add(identifier);
-				return true;
-			}
-			return identifiers;
-		}
-
-		public static bool RequireAndAdvance(char Symbol, [MaybeNullWhen(false)] ref StringSection section)
-		{
-			if (section.Length <= 0 || section[section.First] != Symbol)
+			if (CurrentSymbol(section) != symbol)
 				return false;
-			return (section = AdvanceNextSymbol(section)!) != null;
+			return (section = AdvanceNextSymbol(section)) != null;
 		}
 
 		public static bool RequireAndAdvance(string identifier, [MaybeNullWhen(false)] ref StringSection section)
 		{
 			if (CurrentIdentifier(section) != identifier)
 				return false;
-			return (section = AdvanceNextSymbol(section)!) != null;
+			return (section = AdvanceNextSymbol(section)) != null;
+		}
+
+		public static bool GetIdentifierAndAdvance([MaybeNullWhen(false)] out string identifier, [MaybeNullWhen(false)] ref StringSection section)
+		{
+			if ((identifier = CurrentIdentifier(section)) == null)
+				return false;
+			return (section = AdvanceNextSymbol(section)) != null;
+		}
+
+		public static bool GetIdentifiersAndAdvance(out List<string> identifiers, [MaybeNullWhen(false)] ref StringSection section)
+		{
+			identifiers = new List<string>();
+
+			StringSection? nextSection = section;
+			while (GetIdentifierAndAdvance(out var identifier, ref nextSection))
+			{
+				identifiers.Add(identifier);
+				section = nextSection;
+			}
+
+			return nextSection != null;
+		}
+
+		public static bool GetSymbolAndAdvance(out char symbol, [MaybeNullWhen(false)] ref StringSection section)
+		{
+			var current = CurrentSymbol(section);
+			symbol = current ?? default;
+			if (!current.HasValue)
+				return false;
+			return (section = AdvanceNextSymbol(section)) != null;
+		}
+
+		public static bool GetAndAdvance<T>(Func<StringSection, T?> parse, [MaybeNullWhen(false)] out T parsed, [MaybeNullWhen(false)] ref StringSection section) where T : ILastIndex
+		{
+			if ((parsed = parse(section)) == null)
+				return false;
+			section = new StringSection(section, parsed.LastIndex, section.Last);
+			return (section = AdvanceNextSymbol(section)) != null;
 		}
 	}
 }

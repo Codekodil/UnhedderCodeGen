@@ -1,6 +1,6 @@
 ﻿namespace CodeGenWrapper
 {
-	public record ParserType(string Name, int LastIndex, bool Span, bool Pointer, bool Shared)
+	public record ParserType(string Name, int LastIndex, bool Span, bool Pointer, bool Shared) : ILastIndex
 	{
 		private abstract record Type();
 		private record SimpleType(string Name) : Type;
