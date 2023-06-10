@@ -2,7 +2,7 @@
 
 namespace CodeGenWrapper
 {
-	public record ParserClass(string Name, bool Abstract, StringSection Section, List<string> Flags, List<ParserMethod> Methods)
+	public record ParserClass(string Name, bool Abstract, StringSection Section, List<string> Flags, List<ParserMethod> Methods, List<ParserEvent> Events)
 	{
 		public static ParserClass? Parse(StringSection section)
 		{
@@ -16,7 +16,7 @@ namespace CodeGenWrapper
 			if (block == null)
 				return null;
 
-			ParseMembers(block, out var methods);
+			ParseMembers(block, out var methods, out var events);
 
 			var isAbstract = identifiers[^1] == "abstract";
 			if (isAbstract)
@@ -27,12 +27,13 @@ namespace CodeGenWrapper
 			}
 			var name = identifiers[^1];
 			identifiers.RemoveAt(identifiers.Count - 1);
-			return new ParserClass(name, isAbstract, block, identifiers, methods);
+			return new ParserClass(name, isAbstract, block, identifiers, methods, events);
 		}
 
-		private static void ParseMembers(StringSection section, out List<ParserMethod> methods)
+		private static void ParseMembers(StringSection section, out List<ParserMethod> methods, out List<ParserEvent> events)
 		{
 			methods = new List<ParserMethod>();
+			events = new List<ParserEvent>();
 			var isPublic = false;
 			while (section != null)
 			{
@@ -65,6 +66,13 @@ namespace CodeGenWrapper
 					{
 						methods.Add(method);
 						section = ParserHelper.AdvanceNextSymbol(new StringSection(section, method.LastIndex, section.Last))!;
+						continue;
+					}
+					var @event = ParserEvent.Parse(section);
+					if (@event != null)
+					{
+						events.Add(@event);
+						section = ParserHelper.AdvanceNextSymbol(new StringSection(section, @event.LastIndex, section.Last))!;
 						continue;
 					}
 				}

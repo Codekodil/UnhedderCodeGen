@@ -97,5 +97,24 @@
 			Assert.AreEqual("My::Custom::Type", declarations.Classes[0].Methods[0].Parameters[1].Type.Name);
 			Assert.AreEqual("p2", declarations.Classes[0].Methods[0].Parameters[1].Name);
 		}
+
+		[TestMethod]
+		public void ClassWithEvents()
+		{
+			var section = new StringSection("class name { public:void(__stdcall*e1)();byte *(__stdcall*e2)(std::span<int>i)=nullptr;private:void(stdcall*e3)();}");
+			var declarations = new ParserDeclaration(section);
+			Assert.AreEqual(1, declarations.Classes.Count);
+			Assert.AreEqual(2, declarations.Classes[0].Events.Count);
+			Assert.AreEqual("e1", declarations.Classes[0].Events[0].Name);
+			Assert.AreEqual("void", declarations.Classes[0].Events[0].Result.Name);
+			Assert.AreEqual(0, declarations.Classes[0].Events[0].Parameters.Count);
+			Assert.AreEqual("e2", declarations.Classes[0].Events[1].Name);
+			Assert.AreEqual("byte", declarations.Classes[0].Events[1].Result.Name);
+			Assert.IsTrue(declarations.Classes[0].Events[1].Result.Pointer);
+			Assert.AreEqual(1, declarations.Classes[0].Events[1].Parameters.Count);
+			Assert.AreEqual("int", declarations.Classes[0].Events[1].Parameters[0].Type.Name);
+			Assert.IsTrue(declarations.Classes[0].Events[1].Parameters[0].Type.Span);
+			Assert.AreEqual("i", declarations.Classes[0].Events[1].Parameters[0].Name);
+		}
 	}
 }

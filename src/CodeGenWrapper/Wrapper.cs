@@ -37,9 +37,9 @@ namespace CodeGenWrapper
 					{
 						Console.WriteLine($"{prefix}Class {cl.Name}");
 						foreach (var method in cl.Methods)
-						{
 							Console.WriteLine($"{prefix}  Method {method.Name}");
-						}
+						foreach (var @event in cl.Events)
+							Console.WriteLine($"{prefix}  Event {@event.Name}");
 					}
 					foreach (var ns in declarations.Namespaces)
 					{
