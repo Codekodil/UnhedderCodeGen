@@ -2,5 +2,8 @@
   "Pch": "../../../../TestNative/pch.h",
   "HeaderDirectories": [
     "../../../../TestNative"
-  ]
+  ],
+  "CppResultPath": "../../../../TestNative/Export.cpp",
+  "HppResultPath": "../../../../TestNative/CodeGen.h",
+  "CsResultPath": "../../../../TestWrapper/TestNative.cs"
 }

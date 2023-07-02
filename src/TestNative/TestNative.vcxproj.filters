@@ -3,9 +3,14 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="PointerParent.h" />
+    <ClInclude Include="..\Helper.h" />
+    <ClInclude Include="PointerChild.h" />
+    <ClInclude Include="DifferentNamespaceParent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="PointerParent.cpp" />
+    <ClCompile Include="PointerChild.cpp" />
+    <ClCompile Include="DifferentNamespaceParent.cpp" />
   </ItemGroup>
 </Project>

@@ -2,9 +2,9 @@
 
 namespace CodeGenWrapper
 {
-	public record ParserClass(string Name, bool Abstract, StringSection Section, List<string> Flags, List<ParserMethod> Methods, List<ParserEvent> Events)
+	public record ParserClass(string Name, List<string> Namespaces, bool Abstract, StringSection Section, bool Pointer, bool Shared, List<ParserMethod> Methods, List<ParserEvent> Events)
 	{
-		public static ParserClass? Parse(StringSection section)
+		public static ParserClass? Parse(StringSection section, List<string> namespaces)
 		{
 			if (!(
 				ParserHelper.RequireAndAdvance("class", ref section!) &&
@@ -18,6 +18,9 @@ namespace CodeGenWrapper
 
 			ParseMembers(block, out var methods, out var events);
 
+			methods.RemoveAll(m => m.Ignore);
+			events.RemoveAll(e => e.Ignore);
+
 			var isAbstract = identifiers[^1] == "abstract";
 			if (isAbstract)
 			{
@@ -27,7 +30,8 @@ namespace CodeGenWrapper
 			}
 			var name = identifiers[^1];
 			identifiers.RemoveAt(identifiers.Count - 1);
-			return new ParserClass(name, isAbstract, block, identifiers, methods, events);
+			var isShared = identifiers.Contains(Flags.Shared);
+			return new ParserClass(name, namespaces, isAbstract, block, !isShared && identifiers.Contains(Flags.Pointer), isShared, methods, events);
 		}
 
 		private static void ParseMembers(StringSection section, out List<ParserMethod> methods, out List<ParserEvent> events)
@@ -79,6 +83,23 @@ namespace CodeGenWrapper
 
 				section = ParserHelper.AdvanceNextSymbol(section)!;
 			}
+		}
+
+		public void TypeCheck(TypeChecker typeChecker)
+		{
+			Methods.RemoveAll(MethodInvalid);
+
+			bool MethodInvalid(ParserMethod method) =>
+				method.Parameters.Any(p => !typeChecker.TypeValid(p.Type, Namespaces, TypeChecker.TypeLocation.MethodParameter))
+				|| !typeChecker.TypeValid(method.Result, Namespaces, TypeChecker.TypeLocation.MethodResult);
+		}
+
+		public override string ToString()
+		{
+			var result = string.Join("::", Namespaces.Concat(new[] { Name }));
+			if (Pointer) result += " " + Flags.Pointer;
+			if (Shared) result += " " + Flags.Shared;
+			return result;
 		}
 	}
 }

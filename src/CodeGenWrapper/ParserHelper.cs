@@ -4,12 +4,15 @@ namespace CodeGenWrapper
 {
 	public static class ParserHelper
 	{
+		private static bool IsLetter(char c) => char.IsLetter(c) || c == '_';
+		private static bool IsLetterOrDigit(char c) => char.IsLetterOrDigit(c) || c == '_';
+
 		public static string? CurrentIdentifier(StringSection section)
 		{
 			if (section.Length <= 0)
 				return null;
 
-			if (!char.IsLetter(section[section.First]))
+			if (!IsLetter(section[section.First]))
 				return null;
 
 			string result = "";
@@ -18,7 +21,7 @@ namespace CodeGenWrapper
 			{
 				result += section[i];
 				i++;
-			} while (i <= section.Last && char.IsLetterOrDigit(section[i]));
+			} while (i <= section.Last && IsLetterOrDigit(section[i]));
 			return result;
 		}
 
@@ -28,7 +31,7 @@ namespace CodeGenWrapper
 				return null;
 
 			var symbol = section[section.First];
-			return char.IsLetterOrDigit(symbol) ? null : symbol;
+			return IsLetterOrDigit(symbol) ? null : symbol;
 		}
 
 		public static StringSection? AdvanceNextSymbol(StringSection section)
@@ -38,8 +41,8 @@ namespace CodeGenWrapper
 
 			var i = section.First;
 
-			if (char.IsLetterOrDigit(section[i]))
-				do i++; while (i <= section.Last && char.IsLetterOrDigit(section[i]));
+			if (IsLetterOrDigit(section[i]))
+				do i++; while (i <= section.Last && IsLetterOrDigit(section[i]));
 			else if (!char.IsWhiteSpace(section[i]))
 				i++;
 			while (i <= section.Last && char.IsWhiteSpace(section[i])) i++;

@@ -16,40 +16,16 @@ namespace CodeGenWrapper
 				.ToList();
 		}
 
-		public async Task ParseHeaders()
+		public async Task<List<ParserDeclaration>> ParseHeaders()
 		{
 			var headerTasks = HeaderFilePaths.Select(async h =>
 			{
 				using var file = File.OpenRead(h);
-				return new { Header = await ParserHeader.NormalizeHeader(file), File = h };
+				var header = await ParserHeader.NormalizeHeader(file);
+				return new ParserDeclaration(header.FilteredFile, new List<string>());
 			}).ToList();
 
-			foreach (var task in headerTasks)
-			{
-				var result = await task;
-				Console.WriteLine($"File: {result.File}");
-				var declarations = new ParserDeclaration(result.Header.FilteredFile);
-
-				WriteDeclarations(declarations, "  ");
-				void WriteDeclarations(ParserDeclaration declarations, string prefix)
-				{
-					foreach (var cl in declarations.Classes)
-					{
-						Console.WriteLine($"{prefix}Class {cl.Name}");
-						foreach (var method in cl.Methods)
-							Console.WriteLine($"{prefix}  Method {method.Name}");
-						foreach (var @event in cl.Events)
-							Console.WriteLine($"{prefix}  Event {@event.Name}");
-					}
-					foreach (var ns in declarations.Namespaces)
-					{
-						Console.WriteLine($"{prefix}Namespace {ns.Name}");
-						WriteDeclarations(ns.Declarations, prefix + "  ");
-					}
-				}
-			}
-
-			await Task.WhenAll(headerTasks);
+			return (await Task.WhenAll(headerTasks)).Cast<ParserDeclaration>().ToList();
 		}
 	}
 }

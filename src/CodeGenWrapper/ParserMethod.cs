@@ -1,6 +1,6 @@
 ﻿namespace CodeGenWrapper
 {
-	public record ParserMethod(string Name, ParserType Result, List<ParserParameter> Parameters, List<string> Flags, int LastIndex)
+	public record ParserMethod(string Name, ParserType Result, List<ParserParameter> Parameters, bool Ignore, int LastIndex)
 	{
 		public static ParserMethod? Parse(StringSection section)
 		{
@@ -15,7 +15,10 @@
 			var name = identifiers[^1];
 			identifiers.RemoveAt(identifiers.Count - 1);
 
-			return new ParserMethod(name, type, parameters.Parameters, identifiers, section.First);
+			return new ParserMethod(name, type, parameters.Parameters, identifiers.Contains(Flags.Ignore), section.First);
 		}
+
+		public override string ToString() =>
+			$"{Result} {Name}({string.Join(", ", Parameters.Select(p => $"{p.Type} {p.Name}"))})";
 	}
 }

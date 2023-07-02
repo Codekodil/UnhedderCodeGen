@@ -2,7 +2,7 @@
 {
 	public record ParserNamespace(string Name, StringSection Section, ParserDeclaration Declarations)
 	{
-		public static ParserNamespace? Parse(StringSection section)
+		public static ParserNamespace? Parse(StringSection section, List<string> namespaces)
 		{
 			if (!(
 				ParserHelper.RequireAndAdvance("namespace", ref section!) &&
@@ -11,7 +11,7 @@
 
 			var block = ParserHelper.CurrentCurlyBlock(section);
 
-			return block == null ? null : new ParserNamespace(name, block, new ParserDeclaration(block));
+			return block == null ? null : new ParserNamespace(name, block, new ParserDeclaration(block, new List<string>(namespaces) { name }));
 		}
 	}
 }

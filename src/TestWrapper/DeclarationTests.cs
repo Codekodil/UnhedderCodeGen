@@ -41,44 +41,41 @@
 		[TestMethod]
 		public void EmptyClass()
 		{
-			var section = new StringSection("class FLAGS name { Empty }");
+			var section = new StringSection("class Wrapper_Pointer name { Empty }");
 			var declarations = new ParserDeclaration(section);
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual("name", declarations.Classes[0].Name);
-			Assert.AreEqual(1, declarations.Classes[0].Flags.Count);
-			Assert.AreEqual("FLAGS", declarations.Classes[0].Flags[0]);
+			Assert.AreEqual(true, declarations.Classes[0].Pointer);
+			Assert.AreEqual(false, declarations.Classes[0].Shared);
 			Assert.AreEqual("Empty ", declarations.Classes[0].Section.ToString());
 		}
 
 		[TestMethod]
 		public void ClassInsideNamespace()
 		{
-			var section = new StringSection("namespace Outer { Before class FL A GS Inner { Between } After }");
+			var section = new StringSection("namespace Outer { Before class Wrapper_Pointer Wrapper_Shared Inner1 { Between } class Wrapper_Pointer Inner2 { Between } After }");
 			var declarations = new ParserDeclaration(section);
 			Assert.AreEqual(1, declarations.Namespaces.Count);
-			Assert.AreEqual(1, declarations.Namespaces[0].Declarations.Classes.Count);
-			Assert.AreEqual("Inner", declarations.Namespaces[0].Declarations.Classes[0].Name);
-			Assert.AreEqual(3, declarations.Namespaces[0].Declarations.Classes[0].Flags.Count);
-			Assert.AreEqual("FL", declarations.Namespaces[0].Declarations.Classes[0].Flags[0]);
-			Assert.AreEqual("A", declarations.Namespaces[0].Declarations.Classes[0].Flags[1]);
-			Assert.AreEqual("GS", declarations.Namespaces[0].Declarations.Classes[0].Flags[2]);
+			Assert.AreEqual(2, declarations.Namespaces[0].Declarations.Classes.Count);
+			Assert.AreEqual("Inner1", declarations.Namespaces[0].Declarations.Classes[0].Name);
+			Assert.AreEqual(false, declarations.Namespaces[0].Declarations.Classes[0].Pointer);
+			Assert.AreEqual(true, declarations.Namespaces[0].Declarations.Classes[0].Shared);
 			Assert.AreEqual("Between ", declarations.Namespaces[0].Declarations.Classes[0].Section.ToString());
+			Assert.AreEqual("Inner2", declarations.Namespaces[0].Declarations.Classes[1].Name);
+			Assert.AreEqual(true, declarations.Namespaces[0].Declarations.Classes[1].Pointer);
+			Assert.AreEqual(false, declarations.Namespaces[0].Declarations.Classes[1].Shared);
+			Assert.AreEqual("Between ", declarations.Namespaces[0].Declarations.Classes[1].Section.ToString());
 		}
 
 		[TestMethod]
 		public void ClassWithSimpleMethods()
 		{
-			var section = new StringSection("class name { void F LAGS M1();public: void FLAG S M2();void M3 ( ) ; }");
+			var section = new StringSection("class name { void FLAGS M1();public: void Wrapper_Ignore M2();void M3 ( ) ; }");
 			var declarations = new ParserDeclaration(section);
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual("name", declarations.Classes[0].Name);
-			Assert.AreEqual(2, declarations.Classes[0].Methods.Count);
-			Assert.AreEqual("M2", declarations.Classes[0].Methods[0].Name);
-			Assert.AreEqual(2, declarations.Classes[0].Methods[0].Flags.Count);
-			Assert.AreEqual("FLAG", declarations.Classes[0].Methods[0].Flags[0]);
-			Assert.AreEqual("S", declarations.Classes[0].Methods[0].Flags[1]);
-			Assert.AreEqual(0, declarations.Classes[0].Methods[1].Flags.Count);
-			Assert.AreEqual("M3", declarations.Classes[0].Methods[1].Name);
+			Assert.AreEqual(1, declarations.Classes[0].Methods.Count);
+			Assert.AreEqual("M3", declarations.Classes[0].Methods[0].Name);
 		}
 
 

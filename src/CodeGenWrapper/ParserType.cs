@@ -7,6 +7,8 @@
 		private record PointerType(Type Type) : Type;
 		private record TemplateType(string Name, Type Type) : Type;
 
+		public TypeChecker.MatchedType? CheckedType { get; set; }
+
 		public static ParserType? Parse(StringSection section)
 		{
 			var nested = NestedParse(section);
@@ -93,6 +95,15 @@
 					return (new TemplateType(name, inner.Value.Item1), nextSymbolSection.First);
 			}
 			return (new SimpleType(name), section.First + identifiers[^1].Length - 1);
+		}
+
+		public override string ToString()
+		{
+			var result = Name;
+			if (Pointer) result += "*";
+			if (Shared) result += "^";
+			if (Span) result += "[]";
+			return result;
 		}
 	}
 }
