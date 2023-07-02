@@ -12,6 +12,10 @@ foreach (var declaration in declarations)
 foreach (var c in declarations.SelectMany(d => d))
 {
 	Console.WriteLine(c);
+	foreach (var constructor in c.Constructors)
+		Console.WriteLine("\t" + constructor);
 	foreach (var method in c.Methods)
 		Console.WriteLine("\t" + method);
+	foreach (var @event in c.Events)
+		Console.WriteLine("\t" + @event);
 }

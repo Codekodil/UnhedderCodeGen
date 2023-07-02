@@ -3,6 +3,8 @@
 
 using namespace TestNative;
 
+PointerParent::PointerParent(short a) {}
+
 int PointerParent::Double(int a)
 {
 	return a * 2;

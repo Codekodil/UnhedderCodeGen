@@ -49,7 +49,10 @@
 			{
 				if (location == TypeLocation.MethodResult || location == TypeLocation.EventResult)
 				{
-					if (type.Name == "void" && !type.Shared && !type.Pointer && !type.Span)
+					if (type.Span)
+						return null;
+
+					if (type.Name == "void" && !type.Shared && !type.Pointer)
 						return new MatchedVoid();
 				}
 

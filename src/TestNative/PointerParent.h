@@ -8,6 +8,8 @@ namespace TestNative
 	{
 		PointerChild* _child;
 	public:
+		PointerParent(short a);
+
 		int Double(int a);
 
 		void SetChild(PointerChild* child);

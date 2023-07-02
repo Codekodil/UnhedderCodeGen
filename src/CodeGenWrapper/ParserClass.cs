@@ -2,7 +2,7 @@
 
 namespace CodeGenWrapper
 {
-	public record ParserClass(string Name, List<string> Namespaces, bool Abstract, StringSection Section, bool Pointer, bool Shared, List<ParserMethod> Methods, List<ParserEvent> Events)
+	public record ParserClass(string Name, List<string> Namespaces, bool Abstract, StringSection Section, bool Pointer, bool Shared, List<ParserConstructor> Constructors, List<ParserMethod> Methods, List<ParserEvent> Events)
 	{
 		public static ParserClass? Parse(StringSection section, List<string> namespaces)
 		{
@@ -16,11 +16,6 @@ namespace CodeGenWrapper
 			if (block == null)
 				return null;
 
-			ParseMembers(block, out var methods, out var events);
-
-			methods.RemoveAll(m => m.Ignore);
-			events.RemoveAll(e => e.Ignore);
-
 			var isAbstract = identifiers[^1] == "abstract";
 			if (isAbstract)
 			{
@@ -30,12 +25,20 @@ namespace CodeGenWrapper
 			}
 			var name = identifiers[^1];
 			identifiers.RemoveAt(identifiers.Count - 1);
+
+			ParseMembers(name, block, out var constructors, out var methods, out var events);
+
+			constructors.RemoveAll(c => c.Ignore);
+			methods.RemoveAll(m => m.Ignore);
+			events.RemoveAll(e => e.Ignore);
+
 			var isShared = identifiers.Contains(Flags.Shared);
-			return new ParserClass(name, namespaces, isAbstract, block, !isShared && identifiers.Contains(Flags.Pointer), isShared, methods, events);
+			return new ParserClass(name, namespaces, isAbstract, block, !isShared && identifiers.Contains(Flags.Pointer), isShared, constructors, methods, events);
 		}
 
-		private static void ParseMembers(StringSection section, out List<ParserMethod> methods, out List<ParserEvent> events)
+		private static void ParseMembers(string className, StringSection section, out List<ParserConstructor> constructors, out List<ParserMethod> methods, out List<ParserEvent> events)
 		{
+			constructors = new List<ParserConstructor>();
 			methods = new List<ParserMethod>();
 			events = new List<ParserEvent>();
 			var isPublic = false;
@@ -43,7 +46,7 @@ namespace CodeGenWrapper
 			{
 				var current = ParserHelper.CurrentIdentifier(section);
 
-				bool IsVisibility(string modifier, [MaybeNullWhenAttribute(false)] out StringSection advancedSection)
+				bool IsVisibility(string modifier, [MaybeNullWhen(false)] out StringSection advancedSection)
 				{
 					advancedSection = section.Shrink(modifier.Length + 1, 0);
 					return current == modifier && section.Length >= modifier.Length + 1 && section[section.First + modifier.Length] == ':';
@@ -65,6 +68,13 @@ namespace CodeGenWrapper
 
 				if (isPublic)
 				{
+					var constructor = ParserConstructor.Parse(className, section);
+					if (constructor != null)
+					{
+						constructors.Add(constructor);
+						section = ParserHelper.AdvanceNextSymbol(new StringSection(section, constructor.LastIndex, section.Last))!;
+						continue;
+					}
 					var method = ParserMethod.Parse(section);
 					if (method != null)
 					{
@@ -87,11 +97,20 @@ namespace CodeGenWrapper
 
 		public void TypeCheck(TypeChecker typeChecker)
 		{
+			Constructors.RemoveAll(ConstructorInvalid);
 			Methods.RemoveAll(MethodInvalid);
+			Events.RemoveAll(EventInvalid);
+
+			bool ConstructorInvalid(ParserConstructor constructor) =>
+				constructor.Parameters.Any(p => !typeChecker.TypeValid(p.Type, Namespaces, TypeChecker.TypeLocation.ConstructorParameter));
 
 			bool MethodInvalid(ParserMethod method) =>
 				method.Parameters.Any(p => !typeChecker.TypeValid(p.Type, Namespaces, TypeChecker.TypeLocation.MethodParameter))
 				|| !typeChecker.TypeValid(method.Result, Namespaces, TypeChecker.TypeLocation.MethodResult);
+
+			bool EventInvalid(ParserEvent @event) =>
+				@event.Parameters.Any(p => !typeChecker.TypeValid(p.Type, Namespaces, TypeChecker.TypeLocation.EventParameter))
+				|| !typeChecker.TypeValid(@event.Result, Namespaces, TypeChecker.TypeLocation.EventResult);
 		}
 
 		public override string ToString()

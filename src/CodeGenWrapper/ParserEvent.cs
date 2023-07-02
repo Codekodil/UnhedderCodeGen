@@ -24,5 +24,8 @@
 
 			return new ParserEvent(name, type, parameters.Parameters, identifiers.Contains(Flags.Ignore), section.First);
 		}
+
+		public override string ToString() =>
+			$"{Result} (*{Name})({string.Join(", ", Parameters.Select(p => $"{p.Type} {p.Name}"))})";
 	}
 }
