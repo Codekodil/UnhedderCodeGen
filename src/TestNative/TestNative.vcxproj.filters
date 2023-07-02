@@ -3,9 +3,9 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="PointerParent.h" />
-    <ClInclude Include="..\Helper.h" />
     <ClInclude Include="PointerChild.h" />
     <ClInclude Include="DifferentNamespaceParent.h" />
+    <ClInclude Include="CodeGen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />

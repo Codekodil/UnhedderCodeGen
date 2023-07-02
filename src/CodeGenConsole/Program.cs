@@ -1,4 +1,5 @@
 ﻿using CodeGenConfig;
+using CodeGenFileOut;
 using CodeGenWrapper;
 
 var config = await ConfigLoader.Load(args.Single());
@@ -19,3 +20,8 @@ foreach (var c in declarations.SelectMany(d => d))
 	foreach (var @event in c.Events)
 		Console.WriteLine("\t" + @event);
 }
+
+var writeHeader = HeaderGenerator.WriteAsync(config);
+
+if (!(await writeHeader))
+	Console.WriteLine($"Could not generate header file [{config.HppResultPath}]");

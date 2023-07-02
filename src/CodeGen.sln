@@ -11,12 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenConfig", "CodeGenCon
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestNative", "TestNative\TestNative.vcxproj", "{7A250193-0353-47B9-A688-8A101412BEC5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFC66485-0A87-4CAC-ACC7-537DB698AC90}"
-	ProjectSection(SolutionItems) = preProject
-		Helper.h = Helper.h
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWrapper", "TestWrapper\TestWrapper.csproj", "{2FFCBA67-310A-48E0-BB82-77B95C00F20E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWrapper", "TestWrapper\TestWrapper.csproj", "{2FFCBA67-310A-48E0-BB82-77B95C00F20E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenFileOut", "CodeGenFileOut\CodeGenFileOut.csproj", "{8272D640-64DB-447B-A2B1-C671F8C7B4F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,6 +85,18 @@ Global
 		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Release|x64.Build.0 = Release|Any CPU
 		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Release|x86.ActiveCfg = Release|Any CPU
 		{2FFCBA67-310A-48E0-BB82-77B95C00F20E}.Release|x86.Build.0 = Release|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Debug|x64.Build.0 = Debug|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Debug|x86.Build.0 = Debug|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Release|x64.ActiveCfg = Release|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Release|x64.Build.0 = Release|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Release|x86.ActiveCfg = Release|Any CPU
+		{8272D640-64DB-447B-A2B1-C671F8C7B4F9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -42,7 +42,10 @@ namespace CodeGenWrapper
 					continiusFilter.Append(previous = c);
 			}
 			var section = new StringSection(continiusFilter.ToString());
-			
+
+			if (section.Length == 0)
+				return new ParserHeader(section);
+
 			return new ParserHeader(section.Shrink(section.Chars[0] == ' ' ? 1 : 0, section[^1..] == " " ? 1 : 0));
 		}
 	}
