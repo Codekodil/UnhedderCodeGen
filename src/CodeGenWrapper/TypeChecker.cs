@@ -1,17 +1,19 @@
-﻿namespace CodeGenWrapper
+﻿using System.Collections.ObjectModel;
+
+namespace CodeGenWrapper
 {
 	public class TypeChecker
 	{
-		private static readonly Dictionary<string, string> _dataTypes;
+		public static IReadOnlySet<string> DataTypes { get; }
 		static TypeChecker()
 		{
-			_dataTypes = new Dictionary<string, string> {
-				{ "bool",   "bool" },
-				{ "int",    "int" },
-				{ "long",   "bool" },
-				{ "short",  "short" },
-				{ "char",   "byte" }
-			};
+			DataTypes = new ReadOnlySet<string>(new HashSet<string> {
+				"bool",
+				"char",
+				"short",
+				"int",
+				"long"
+			});
 		}
 
 		public record MatchedType;
@@ -56,9 +58,12 @@
 						return new MatchedVoid();
 				}
 
-				if (_dataTypes.ContainsKey(type.Name))
+				if (type.Name == "void" && !type.Shared && type.Pointer)
+					return new MatchedData("void");
+
+				if (DataTypes.Contains(type.Name))
 				{
-					if (!type.Span && !type.Pointer && !type.Shared)
+					if ((!type.Span || !type.Pointer) && !type.Shared)
 						return new MatchedData(type.Name);
 				}
 
@@ -80,8 +85,8 @@
 						if (bucket.TryGetValue(ns, out var c))
 						{
 							if ((c.Pointer || c.Shared) &&
-								c.Pointer == type.Pointer &&
-								c.Shared == type.Shared)
+								(type.Pointer != type.Shared) &&
+								(c.Shared || type.Pointer))
 								return new MatchedParsed(c);
 							break;
 						}

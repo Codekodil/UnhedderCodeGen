@@ -5,6 +5,11 @@ using namespace TestNative;
 
 PointerParent::PointerParent(short a) {}
 
+PointerParent::PointerParent(PointerChild* child)
+{
+	SetChild(child);
+}
+
 int PointerParent::Double(int a)
 {
 	return a * 2;

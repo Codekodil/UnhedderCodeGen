@@ -6,21 +6,21 @@ namespace CodeGenWrapper
 	{
 		public IReadOnlyList<ParserNamespace> Namespaces { get; }
 		public IReadOnlyList<ParserClass> Classes { get; }
-		public ParserDeclaration(StringSection section) : this(section, new List<string>()) { }
-		public ParserDeclaration(StringSection section, List<string> namespaces)
+		public ParserDeclaration(StringSection section, string file) : this(section, new string[0], file) { }
+		public ParserDeclaration(StringSection section, IReadOnlyList<string> namespaces, string file)
 		{
 			var parsedNamespaces = new List<ParserNamespace>();
 			var classes = new List<ParserClass>();
 			do
 			{
-				var ns = ParserNamespace.Parse(section, namespaces);
+				var ns = ParserNamespace.Parse(section, namespaces, file);
 				if (ns != null)
 				{
 					parsedNamespaces.Add(ns);
 					section = new StringSection(section, ns.Section.Last + 1, section.Last);
 					continue;
 				}
-				var cl = ParserClass.Parse(section, namespaces);
+				var cl = ParserClass.Parse(section, namespaces, file);
 				if (cl != null)
 				{
 					classes.Add(cl);

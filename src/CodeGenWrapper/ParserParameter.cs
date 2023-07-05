@@ -2,14 +2,14 @@
 {
 	public record ParserParameter(ParserType Type, string Name)
 	{
-		public record Parsed(List<ParserParameter> Parameters, int LastIndex) : ILastIndex;
+		public record Parsed(IReadOnlyList<ParserParameter> Parameters, int LastIndex) : ILastIndex;
 		public static Parsed? Parse(StringSection section)
 		{
 			if (!ParserHelper.RequireAndAdvance('(', ref section!))
 				return null;
 
 			if (ParserHelper.CurrentSymbol(section) == ')')
-				return new Parsed(new List<ParserParameter>(), section.First);
+				return new Parsed(new ParserParameter[0], section.First);
 
 			var parameters = new List<ParserParameter>();
 			StringSection? nextSection = section;
@@ -30,7 +30,7 @@
 			if (ParserHelper.CurrentSymbol(section) != ')')
 				return null;
 
-			return new Parsed(parameters, section.First);
+			return new Parsed(parameters.AsReadOnly(), section.First);
 		}
 	}
 }

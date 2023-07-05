@@ -22,7 +22,7 @@ namespace CodeGenWrapper
 			{
 				using var file = File.OpenRead(h);
 				var header = await ParserHeader.NormalizeHeader(file);
-				return new ParserDeclaration(header.FilteredFile, new List<string>());
+				return new ParserDeclaration(header.FilteredFile, new List<string>(), h);
 			}).ToList();
 
 			return (await Task.WhenAll(headerTasks)).Cast<ParserDeclaration>().ToList();

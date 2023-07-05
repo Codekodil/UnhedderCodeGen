@@ -9,6 +9,7 @@ namespace TestNative
 		PointerChild* _child;
 	public:
 		PointerParent(short a);
+		PointerParent(PointerChild* child);
 
 		int Double(int a);
 

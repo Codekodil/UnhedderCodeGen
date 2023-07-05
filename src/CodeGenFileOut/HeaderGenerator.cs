@@ -10,17 +10,13 @@ namespace CodeGenFileOut
 			if (config.HppResultPath == null)
 				return false;
 
-			try
-			{
-				using var file = new StreamWriter(config.HppResultPath);
-				await file.WriteLineAsync($"#define {Flags.Ignore}");
-				await file.WriteLineAsync($"#define {Flags.Pointer}");
-				await file.WriteLineAsync($"#define {Flags.Shared}");
-			}
-			catch (Exception)
-			{
-				return false;
-			}
+			var file = new FileGenerator(config.HppResultPath);
+			file.WriteLine($"#define {Flags.Ignore}");
+			file.WriteLine($"#define {Flags.Pointer}");
+			file.Write($"#define {Flags.Shared}");
+
+			try { await file.Emplace(); }
+			catch (Exception) { return false; }
 
 			return true;
 		}

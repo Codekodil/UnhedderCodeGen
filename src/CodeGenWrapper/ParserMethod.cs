@@ -1,6 +1,6 @@
 ﻿namespace CodeGenWrapper
 {
-	public record ParserMethod(string Name, ParserType Result, List<ParserParameter> Parameters, bool Ignore, int LastIndex)
+	public record ParserMethod(string Name, ParserType Result, IReadOnlyList<ParserParameter> Parameters, bool Ignore, int LastIndex)
 	{
 		public static ParserMethod? Parse(StringSection section)
 		{

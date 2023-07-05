@@ -1,6 +1,6 @@
 ﻿namespace CodeGenWrapper
 {
-	public record ParserEvent(string Name, ParserType Result, List<ParserParameter> Parameters, bool Ignore, int LastIndex)
+	public record ParserEvent(string Name, ParserType Result, IReadOnlyList<ParserParameter> Parameters, bool Ignore, int LastIndex)
 	{
 		public static ParserEvent? Parse(StringSection section)
 		{

@@ -3,6 +3,8 @@
 
 using namespace TestNative;
 
+PointerChild::PointerChild() {}
+
 void PointerChild::Invoke()
 {
 	auto event = Event;

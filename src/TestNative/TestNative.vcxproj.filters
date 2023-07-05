@@ -12,5 +12,6 @@
     <ClCompile Include="PointerParent.cpp" />
     <ClCompile Include="PointerChild.cpp" />
     <ClCompile Include="DifferentNamespaceParent.cpp" />
+    <ClCompile Include="Export.cpp" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
 		public void EmptyNamespace()
 		{
 			var section = new StringSection("namespace Test { Empty }");
-			var declarations = new ParserDeclaration(section);
+			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(1, declarations.Namespaces.Count);
 			Assert.AreEqual("Test", declarations.Namespaces[0].Name);
 			Assert.AreEqual("Empty ", declarations.Namespaces[0].Section.ToString());
@@ -17,7 +17,7 @@
 		public void TwoNamespaces()
 		{
 			var section = new StringSection("namespace ns1 { hi im ns1!} namespace ns2 {and im here too :) }");
-			var declarations = new ParserDeclaration(section);
+			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(2, declarations.Namespaces.Count);
 			Assert.AreEqual("ns1", declarations.Namespaces[0].Name);
 			Assert.AreEqual("hi im ns1!", declarations.Namespaces[0].Section.ToString());
@@ -29,7 +29,7 @@
 		public void NestedNamespaces()
 		{
 			var section = new StringSection("namespace Outer { Before namespace Inner { Between } After }");
-			var declarations = new ParserDeclaration(section);
+			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(1, declarations.Namespaces.Count);
 			Assert.AreEqual("Outer", declarations.Namespaces[0].Name);
 			Assert.AreEqual("Before namespace Inner { Between } After ", declarations.Namespaces[0].Section.ToString());
@@ -42,7 +42,7 @@
 		public void EmptyClass()
 		{
 			var section = new StringSection("class Wrapper_Pointer name { Empty }");
-			var declarations = new ParserDeclaration(section);
+			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual("name", declarations.Classes[0].Name);
 			Assert.AreEqual(true, declarations.Classes[0].Pointer);
@@ -54,7 +54,7 @@
 		public void ClassInsideNamespace()
 		{
 			var section = new StringSection("namespace Outer { Before class Wrapper_Pointer Wrapper_Shared Inner1 { Between } class Wrapper_Pointer Inner2 { Between } After }");
-			var declarations = new ParserDeclaration(section);
+			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(1, declarations.Namespaces.Count);
 			Assert.AreEqual(2, declarations.Namespaces[0].Declarations.Classes.Count);
 			Assert.AreEqual("Inner1", declarations.Namespaces[0].Declarations.Classes[0].Name);
@@ -71,7 +71,7 @@
 		public void ClassWithSimpleMethods()
 		{
 			var section = new StringSection("class name { void FLAGS M1();public: void Wrapper_Ignore M2();void M3 ( ) ; }");
-			var declarations = new ParserDeclaration(section);
+			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual("name", declarations.Classes[0].Name);
 			Assert.AreEqual(1, declarations.Classes[0].Methods.Count);
@@ -84,7 +84,7 @@
 		public void ClassWithMethodParameters()
 		{
 			var section = new StringSection("class name { public: void M(void p1, My::Custom : : Type p2);}");
-			var declarations = new ParserDeclaration(section);
+			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual(1, declarations.Classes[0].Methods.Count);
 			Assert.AreEqual("M", declarations.Classes[0].Methods[0].Name);
@@ -99,7 +99,7 @@
 		public void ClassWithEvents()
 		{
 			var section = new StringSection("class name { public:void(__stdcall*e1)();byte *(__stdcall*e2)(std::span<int>i)=nullptr;private:void(stdcall*e3)();}");
-			var declarations = new ParserDeclaration(section);
+			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual(2, declarations.Classes[0].Events.Count);
 			Assert.AreEqual("e1", declarations.Classes[0].Events[0].Name);

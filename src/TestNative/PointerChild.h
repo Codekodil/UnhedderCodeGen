@@ -2,9 +2,11 @@
 
 namespace TestNative
 {
-	class Wrapper_Pointer PointerChild
+	class Wrapper_Shared PointerChild
 	{
 	public:
+		PointerChild();
+
 		void(__stdcall* Event)() = nullptr;
 
 		void Invoke();

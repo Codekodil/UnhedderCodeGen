@@ -2,9 +2,9 @@
 
 namespace CodeGenWrapper
 {
-	public record ParserClass(string Name, List<string> Namespaces, bool Abstract, StringSection Section, bool Pointer, bool Shared, List<ParserConstructor> Constructors, List<ParserMethod> Methods, List<ParserEvent> Events)
+	public record ParserClass(string Name, IReadOnlyList<string> Namespaces, string File, bool Abstract, StringSection Section, bool Pointer, bool Shared, List<ParserConstructor> Constructors, List<ParserMethod> Methods, List<ParserEvent> Events)
 	{
-		public static ParserClass? Parse(StringSection section, List<string> namespaces)
+		public static ParserClass? Parse(StringSection section, IReadOnlyList<string> namespaces, string file)
 		{
 			if (!(
 				ParserHelper.RequireAndAdvance("class", ref section!) &&
@@ -33,7 +33,7 @@ namespace CodeGenWrapper
 			events.RemoveAll(e => e.Ignore);
 
 			var isShared = identifiers.Contains(Flags.Shared);
-			return new ParserClass(name, namespaces, isAbstract, block, !isShared && identifiers.Contains(Flags.Pointer), isShared, constructors, methods, events);
+			return new ParserClass(name, namespaces, file, isAbstract, block, !isShared && identifiers.Contains(Flags.Pointer), isShared, constructors, methods, events);
 		}
 
 		private static void ParseMembers(string className, StringSection section, out List<ParserConstructor> constructors, out List<ParserMethod> methods, out List<ParserEvent> events)

@@ -1,6 +1,6 @@
 ﻿namespace CodeGenWrapper
 {
-	public record ParserConstructor(List<ParserParameter> Parameters, bool Ignore, int LastIndex)
+	public record ParserConstructor(IReadOnlyList<ParserParameter> Parameters, bool Ignore, int LastIndex)
 	{
 		public static ParserConstructor? Parse(string className, StringSection section)
 		{
