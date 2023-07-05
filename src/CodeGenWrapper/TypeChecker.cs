@@ -49,6 +49,10 @@ namespace CodeGenWrapper
 
 			MatchedType? FindMatch()
 			{
+				if ((location == TypeLocation.EventParameter || location == TypeLocation.EventResult)
+					&& (type.Shared || type.Span))
+					return null;
+
 				if (location == TypeLocation.MethodResult || location == TypeLocation.EventResult)
 				{
 					if (type.Span)

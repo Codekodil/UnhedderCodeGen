@@ -33,6 +33,8 @@ __declspec(dllexport)
 	child_->get());
 	return ;}
 
+//Events:
+
 //Delete:
 
 __declspec(dllexport)
@@ -61,6 +63,16 @@ __declspec(dllexport)
 	(std::shared_ptr<TestNative::PointerChild>* self){
 	self->get()->Invoke();
 	return ;}
+
+//Events:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Event_TestNative_PointerChild_Event
+	(std::shared_ptr<TestNative::PointerChild>* self,
+	void
+	(__stdcall*event)()){
+	self->get()->Event=event;}
 
 //Delete:
 
@@ -126,6 +138,8 @@ __declspec(dllexport)
 	auto value_result = self->ChildEquals(
 	*child_);
 	return value_result;}
+
+//Events:
 
 //Delete:
 
