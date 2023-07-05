@@ -20,7 +20,7 @@ void PointerParent::SetChild(PointerChild* child)
 	_child = child;
 }
 
-bool PointerParent::ChildEquals(PointerChild* child)
+bool PointerParent::ChildEquals(std::shared_ptr<TestNative::PointerChild> child)
 {
-	return child == _child;
+	return child.get() == _child;
 }

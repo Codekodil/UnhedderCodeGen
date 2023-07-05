@@ -47,6 +47,17 @@ namespace CodeGenFileOut
 #endif
 						file.WriteLine(constructor);
 					}
+#if DEBUG
+					file.WriteLine("");
+					file.WriteLine("//Methods:");
+#endif
+					foreach (var method in c.GenerateMethodCpp())
+					{
+#if DEBUG
+						file.WriteLine("");
+#endif
+						file.WriteLine(method);
+					}
 				}
 
 				file.Write("}");

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PointerChild.h"
+#include <memory>
 
 namespace TestNative
 {
@@ -14,6 +15,6 @@ namespace TestNative
 		int Double(int a);
 
 		void SetChild(PointerChild* child);
-		bool ChildEquals(TestNative::PointerChild* child);
+		bool ChildEquals(std::shared_ptr<TestNative::PointerChild> child);
 	};
 }

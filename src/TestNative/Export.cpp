@@ -21,6 +21,18 @@ __declspec(dllexport)
 	auto pointer_result = new NotTestNative::PointerParent();
 	return new std::shared_ptr<NotTestNative::PointerParent>(pointer_result);}
 
+//Methods:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_NotTestNative_PointerParent_SetChild_0
+	(std::shared_ptr<NotTestNative::PointerParent>* self,
+	std::shared_ptr<TestNative::PointerChild>* child_
+	){
+	self->get()->SetChild(
+	child_->get());
+	return ;}
+
 
 /*------------------------- TestNative::PointerChild -------------------------*/
 
@@ -32,6 +44,15 @@ __declspec(dllexport)
 	(){
 	auto pointer_result = new TestNative::PointerChild();
 	return new std::shared_ptr<TestNative::PointerChild>(pointer_result);}
+
+//Methods:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_TestNative_PointerChild_Invoke_0
+	(std::shared_ptr<TestNative::PointerChild>* self){
+	self->get()->Invoke();
+	return ;}
 
 
 /*------------------------- TestNative::PointerParent -------------------------*/
@@ -57,4 +78,36 @@ __declspec(dllexport)
 	auto pointer_result = new TestNative::PointerParent(
 	child_->get());
 	return pointer_result;}
+
+//Methods:
+
+__declspec(dllexport)
+	int 
+	__stdcall Wrapper_Call_TestNative_PointerParent_Double_0
+	(TestNative::PointerParent* self,
+	int a_
+	){
+	auto value_result = self->Double(
+	a_);
+	return value_result;}
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_TestNative_PointerParent_SetChild_1
+	(TestNative::PointerParent* self,
+	std::shared_ptr<TestNative::PointerChild>* child_
+	){
+	self->SetChild(
+	child_->get());
+	return ;}
+
+__declspec(dllexport)
+	bool 
+	__stdcall Wrapper_Call_TestNative_PointerParent_ChildEquals_2
+	(TestNative::PointerParent* self,
+	std::shared_ptr<TestNative::PointerChild>* child_
+	){
+	auto value_result = self->ChildEquals(
+	*child_);
+	return value_result;}
 }
