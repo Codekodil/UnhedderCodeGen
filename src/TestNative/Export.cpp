@@ -33,6 +33,14 @@ __declspec(dllexport)
 	child_->get());
 	return ;}
 
+//Delete:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Delete_NotTestNative_PointerParent
+	(std::shared_ptr<NotTestNative::PointerParent>* self){
+	delete self;}
+
 
 /*------------------------- TestNative::PointerChild -------------------------*/
 
@@ -53,6 +61,14 @@ __declspec(dllexport)
 	(std::shared_ptr<TestNative::PointerChild>* self){
 	self->get()->Invoke();
 	return ;}
+
+//Delete:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Delete_TestNative_PointerChild
+	(std::shared_ptr<TestNative::PointerChild>* self){
+	delete self;}
 
 
 /*------------------------- TestNative::PointerParent -------------------------*/
@@ -110,4 +126,12 @@ __declspec(dllexport)
 	auto value_result = self->ChildEquals(
 	*child_);
 	return value_result;}
+
+//Delete:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Delete_TestNative_PointerParent
+	(TestNative::PointerParent* self){
+	delete self;}
 }

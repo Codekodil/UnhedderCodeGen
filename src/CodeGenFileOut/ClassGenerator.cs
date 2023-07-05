@@ -14,5 +14,25 @@ namespace CodeGenFileOut
 
 			return ($"{typeInfo.Generated} self", string.Format(typeInfo.TransformFormat, "self"));
 		}
+
+		public static string GenerateDeleteCpp(this ParserClass c)
+		{
+			return string.Join(
+#if DEBUG
+			"\n\t"
+#else
+			""
+#endif
+			, GenerateSections());
+
+			IEnumerable<string> GenerateSections()
+			{
+				yield return "__declspec(dllexport)";
+				yield return "void ";
+				yield return $"__stdcall Wrapper_Delete_{c.UniqueName()}";
+				yield return $"({c.SelfNameCpp().Parameter}){{";
+				yield return $"delete self;}}";
+			}
+		}
 	}
 }

@@ -58,6 +58,12 @@ namespace CodeGenFileOut
 #endif
 						file.WriteLine(method);
 					}
+#if DEBUG
+					file.WriteLine("");
+					file.WriteLine("//Delete:");
+					file.WriteLine("");
+#endif
+					file.WriteLine(c.GenerateDeleteCpp());
 				}
 
 				file.Write("}");
