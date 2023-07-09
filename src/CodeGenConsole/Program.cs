@@ -23,8 +23,11 @@ foreach (var c in declarations.SelectMany(d => d))
 
 var writeHeader = HeaderGenerator.WriteAsync(config);
 var writeCpp = CppGenerator.WriteAsync(config, declarations.AsReadOnly());
+var writeCs = CsGenerator.WriteAsync(config, declarations.AsReadOnly());
 
 if (!(await writeHeader))
 	Console.WriteLine($"Could not generate header file [{config.HppResultPath}]");
 if (!(await writeCpp))
 	Console.WriteLine($"Could not generate cpp file [{config.CppResultPath}]");
+if (!(await writeCs))
+	Console.WriteLine($"Could not generate cs file [{config.CsResultPath}][DllImport({config.NativeLibraryName})]");

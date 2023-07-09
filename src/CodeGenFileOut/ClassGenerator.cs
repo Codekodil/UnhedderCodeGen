@@ -6,6 +6,7 @@ namespace CodeGenFileOut
 	{
 		public static string UniqueName(this ParserClass c) => string.Join("_", c.Namespaces.Concat(new[] { c.Name }));
 		public static string FullNameCpp(this ParserClass c) => string.Join("::", c.Namespaces.Concat(new[] { c.Name }));
+		public static string FullNameCs(this ParserClass c) => string.Join(".", c.Namespaces.Concat(new[] { c.Name }));
 		public static (string Parameter, string Pointer) SelfNameCpp(this ParserClass c)
 		{
 			var typeInfo = new ParserType("", 0, false, true, false)

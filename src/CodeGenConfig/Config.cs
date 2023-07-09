@@ -7,5 +7,6 @@
 		public string? CppResultPath { get; set; }
 		public string? HppResultPath { get; set; }
 		public string? CsResultPath { get; set; }
+		public string? NativeLibraryName { get; set; }
 	}
 }
