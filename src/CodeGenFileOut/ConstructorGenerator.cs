@@ -80,12 +80,14 @@ namespace CodeGenFileOut
 					if (p.Alloc != null)
 						yield return p.Alloc;
 
-				yield return $"Native=Wrapper_New_{c.UniqueName()}_{index}(" + (parameters.Count == 0 ? ");}" : "");
+				var externFunction = $"Wrapper_New_{c.UniqueName()}_{index}";
+
+				yield return $"Native={externFunction}(" + (parameters.Count == 0 ? ");}" : "");
 				for (int i = 0; i < parameters.Count; i++)
 					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");}" : ",");
 
 				yield return dllImport;
-				yield return $"private static extern IntPtr Wrapper_New_{c.UniqueName()}_{index}";
+				yield return $"private static extern IntPtr {externFunction}";
 
 				if (parameters.Count == 0)
 				{

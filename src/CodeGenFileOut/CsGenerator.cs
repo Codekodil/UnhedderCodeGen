@@ -31,7 +31,6 @@ namespace CodeGenFileOut
 #endif
 					file.WriteLine($"namespace {string.Join(".", new[] { config.NativeLibraryName }.Concat(c.Namespaces))}{{");
 					file.WriteLine($"internal class {c.Name}{{public IntPtr?Native;public {c.Name}(IntPtr?native)=>Native=native;");
-
 #if DEBUG
 					file.WriteLine("");
 					file.WriteLine("//Constructors:");
@@ -42,6 +41,17 @@ namespace CodeGenFileOut
 						file.WriteLine("");
 #endif
 						file.WriteLine(constructor);
+					}
+#if DEBUG
+					file.WriteLine("");
+					file.WriteLine("//Methods:");
+#endif
+					foreach (var method in c.GenerateMethodCs(dllImport))
+					{
+#if DEBUG
+						file.WriteLine("");
+#endif
+						file.WriteLine(method);
 					}
 
 					file.WriteLine("}}");

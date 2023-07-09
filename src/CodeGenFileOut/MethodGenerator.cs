@@ -24,26 +24,88 @@ namespace CodeGenFileOut
 
 				yield return $"__stdcall Wrapper_Call_{c.UniqueName()}_{m.Name}_{index}";
 
-				var parameter = m.Parameters.Select(ParameterGenerator.GenerateCpp).ToList();
+				var parameters = m.Parameters.Select(ParameterGenerator.GenerateCpp).ToList();
 				var self = c.SelfNameCpp();
 
-				if (parameter.Count == 0)
+				if (parameters.Count == 0)
 				{
 					yield return $"({self.Parameter}){{";
 				}
 				else
 				{
 					yield return $"({self.Parameter},";
-					for (int i = 0; i < parameter.Count; i++)
-						yield return parameter[i].Parameter + (i == parameter.Count - 1 ? "" : ",");
+					for (int i = 0; i < parameters.Count; i++)
+						yield return parameters[i].Parameter + (i == parameters.Count - 1 ? "" : ",");
 					yield return "){";
 				}
 
-				yield return (returnType.InverseFormat == null ? "" : $"auto value_result = ") + $"{self.Pointer}->{m.Name}(" + (parameter.Count == 0 ? ");" : "");
-				for (int i = 0; i < parameter.Count; i++)
-					yield return parameter[i].Argument + (i == parameter.Count - 1 ? ");" : ",");
+				yield return (returnType.InverseFormat == null ? "" : $"auto value_result=") + $"{self.Pointer}->{m.Name}(" + (parameters.Count == 0 ? ");" : "");
+				for (int i = 0; i < parameters.Count; i++)
+					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
 
 				yield return $"return {string.Format(returnType.InverseFormat ?? "", "value_result")};}}";
+			}
+		}
+
+		public static IEnumerable<string> GenerateMethodCs(this ParserClass c, string dllImport)
+		{
+			return c.Methods.Select(GenerateSections).Select(s => string.Join(
+#if DEBUG
+			"\n\t"
+#else
+			""
+#endif
+			, s));
+
+			IEnumerable<string> GenerateSections(ParserMethod m, int index)
+			{
+				var returnType = m.Result.GenerateCs();
+
+				yield return $"public {returnType.Generated} ";
+
+				//yield return $"Wrapper_Call_{c.UniqueName()}_{m.Name}_{index}";
+				yield return m.Name;
+
+				var parameters = m.Parameters.Select(ParameterGenerator.GenerateCs).ToList();
+
+				if (parameters.Count == 0)
+				{
+					yield return "(){";
+				}
+				else
+				{
+					yield return "(";
+					for (int i = 0; i < parameters.Count; i++)
+						yield return parameters[i].Parameter + (i == parameters.Count - 1 ? "" : ",");
+					yield return "){";
+				}
+
+				foreach (var p in parameters)
+					if (p.Alloc != null)
+						yield return p.Alloc;
+
+				var externFunction = $"Wrapper_Call_{c.UniqueName()}_{m.Name}_{index}";
+
+				yield return (returnType.InverseFormat == null ? "" : $"var value_result=") + $"{externFunction}(Native??throw new System.ObjectDisposedException(nameof({c.Name}))" + (parameters.Count == 0 ? ");" : ",");
+				for (int i = 0; i < parameters.Count; i++)
+					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
+
+				yield return $"return {string.Format(returnType.InverseFormat ?? "", "value_result")};}}";
+
+				yield return dllImport;
+				yield return $"private static extern {returnType.Native} {externFunction}";
+
+				if (parameters.Count == 0)
+				{
+					yield return "(IntPtr self);";
+				}
+				else
+				{
+					yield return "(IntPtr self,";
+					for (int i = 0; i < parameters.Count; i++)
+						yield return parameters[i].Native + (i == parameters.Count - 1 ? "" : ",");
+					yield return ");";
+				}
 			}
 		}
 	}

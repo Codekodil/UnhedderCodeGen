@@ -115,7 +115,7 @@ __declspec(dllexport)
 	(TestNative::PointerParent* self,
 	int a_
 	){
-	auto value_result = self->Double(
+	auto value_result=self->Double(
 	a_);
 	return value_result;}
 
@@ -135,7 +135,7 @@ __declspec(dllexport)
 	(TestNative::PointerParent* self,
 	std::shared_ptr<TestNative::PointerChild>* child_
 	){
-	auto value_result = self->ChildEquals(
+	auto value_result=self->ChildEquals(
 	*child_);
 	return value_result;}
 
