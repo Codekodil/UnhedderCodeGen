@@ -63,7 +63,6 @@ namespace CodeGenFileOut
 
 				yield return $"public {returnType.Generated} ";
 
-				//yield return $"Wrapper_Call_{c.UniqueName()}_{m.Name}_{index}";
 				yield return m.Name;
 
 				var parameters = m.Parameters.Select(ParameterGenerator.GenerateCs).ToList();

@@ -4,7 +4,7 @@
 /*------------------------- NotTestNative.PointerParent -------------------------*/
 
 namespace TestNative.NotTestNative{
-internal class PointerParent{public IntPtr?Native;public PointerParent(IntPtr?native)=>Native=native;
+internal class PointerParent:IDisposable{public IntPtr?Native;public PointerParent(IntPtr?native)=>Native=native;
 
 //Constructors:
 
@@ -31,13 +31,22 @@ public void
 	(IntPtr self,
 	IntPtr child_
 	);
+
+//Delete:
+
+public void Dispose(){
+	if(Native.HasValue)
+	Wrapper_Delete_NotTestNative_PointerParent(Native.Value);}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Delete_NotTestNative_PointerParent(IntPtr native);
+	~PointerParent()=>Dispose();
 }}
 
 
 /*------------------------- TestNative.PointerChild -------------------------*/
 
 namespace TestNative.TestNative{
-internal class PointerChild{public IntPtr?Native;public PointerChild(IntPtr?native)=>Native=native;
+internal class PointerChild:IDisposable{public IntPtr?Native;public PointerChild(IntPtr?native)=>Native=native;
 
 //Constructors:
 
@@ -58,13 +67,22 @@ public void
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Call_TestNative_PointerChild_Invoke_0
 	(IntPtr self);
+
+//Delete:
+
+public void Dispose(){
+	if(Native.HasValue)
+	Wrapper_Delete_TestNative_PointerChild(Native.Value);}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Delete_TestNative_PointerChild(IntPtr native);
+	~PointerChild()=>Dispose();
 }}
 
 
 /*------------------------- TestNative.PointerParent -------------------------*/
 
 namespace TestNative.TestNative{
-internal class PointerParent{public IntPtr?Native;public PointerParent(IntPtr?native)=>Native=native;
+internal class PointerParent:IDisposable{public IntPtr?Native;public PointerParent(IntPtr?native)=>Native=native;
 
 //Constructors:
 
@@ -138,4 +156,13 @@ public bool
 	(IntPtr self,
 	IntPtr child_
 	);
+
+//Delete:
+
+public void Dispose(){
+	if(Native.HasValue)
+	Wrapper_Delete_TestNative_PointerParent(Native.Value);}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Delete_TestNative_PointerParent(IntPtr native);
+	~PointerParent()=>Dispose();
 }}

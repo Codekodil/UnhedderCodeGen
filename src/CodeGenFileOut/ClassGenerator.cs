@@ -32,7 +32,29 @@ namespace CodeGenFileOut
 				yield return "void ";
 				yield return $"__stdcall Wrapper_Delete_{c.UniqueName()}";
 				yield return $"({c.SelfNameCpp().Parameter}){{";
-				yield return $"delete self;}}";
+				yield return "delete self;}";
+			}
+		}
+
+		public static string GenerateDeleteCs(this ParserClass c, string dllImport)
+		{
+			return string.Join(
+#if DEBUG
+			"\n\t"
+#else
+			""
+#endif
+			, GenerateSections());
+
+			IEnumerable<string> GenerateSections()
+			{
+				var externFunction = $"Wrapper_Delete_{c.UniqueName()}";
+				yield return "public void Dispose(){";
+				yield return "if(Native.HasValue)";
+				yield return $"{externFunction}(Native.Value);}}";
+				yield return dllImport;
+				yield return $"private static extern void {externFunction}(IntPtr native);";
+				yield return $"~{c.Name}()=>Dispose();";
 			}
 		}
 	}
