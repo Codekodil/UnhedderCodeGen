@@ -35,8 +35,9 @@ public void
 //Delete:
 
 public void Dispose(){
-	if(Native.HasValue)
-	Wrapper_Delete_NotTestNative_PointerParent(Native.Value);}
+	if(!Native.HasValue)return;
+	Wrapper_Delete_NotTestNative_PointerParent(Native.Value);
+	Native=null;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Delete_NotTestNative_PointerParent(IntPtr native);
 	~PointerParent()=>Dispose();
@@ -71,8 +72,9 @@ public void
 //Delete:
 
 public void Dispose(){
-	if(Native.HasValue)
-	Wrapper_Delete_TestNative_PointerChild(Native.Value);}
+	if(!Native.HasValue)return;
+	Wrapper_Delete_TestNative_PointerChild(Native.Value);
+	Native=null;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Delete_TestNative_PointerChild(IntPtr native);
 	~PointerChild()=>Dispose();
@@ -160,8 +162,9 @@ public bool
 //Delete:
 
 public void Dispose(){
-	if(Native.HasValue)
-	Wrapper_Delete_TestNative_PointerParent(Native.Value);}
+	if(!Native.HasValue)return;
+	Wrapper_Delete_TestNative_PointerParent(Native.Value);
+	Native=null;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Delete_TestNative_PointerParent(IntPtr native);
 	~PointerParent()=>Dispose();

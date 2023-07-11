@@ -50,8 +50,9 @@ namespace CodeGenFileOut
 			{
 				var externFunction = $"Wrapper_Delete_{c.UniqueName()}";
 				yield return "public void Dispose(){";
-				yield return "if(Native.HasValue)";
-				yield return $"{externFunction}(Native.Value);}}";
+				yield return "if(!Native.HasValue)return;";
+				yield return $"{externFunction}(Native.Value);";
+				yield return "Native=default;}";
 				yield return dllImport;
 				yield return $"private static extern void {externFunction}(IntPtr native);";
 				yield return $"~{c.Name}()=>Dispose();";
