@@ -32,15 +32,18 @@ public void
 	IntPtr child_
 	);
 
+//Events:
+
 //Delete:
 
-public void Dispose(){
+public void Dispose()=>Wrapper_Delete();
+	~PointerParent()=>Wrapper_Delete();
+	private void Wrapper_Delete(){
 	if(!Native.HasValue)return;
 	Wrapper_Delete_NotTestNative_PointerParent(Native.Value);
-	Native=null;}
+	Native=default;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Delete_NotTestNative_PointerParent(IntPtr native);
-	~PointerParent()=>Dispose();
 }}
 
 
@@ -69,15 +72,40 @@ public void
 	private static extern void Wrapper_Call_TestNative_PointerChild_Invoke_0
 	(IntPtr self);
 
+//Events:
+
+private delegate void Event_Delegate_Native(
+	);
+	private Event_Delegate_Native? Event_Delegate_Native_Object;
+	[System.Runtime.InteropServices.DllImport("TestNative",CallingConvention=System.Runtime.InteropServices.CallingConvention.StdCall)]
+	private static extern void Wrapper_Event_TestNative_PointerChild_Event
+	(IntPtr self, Event_Delegate_Native? action);
+	public delegate void EventDelegate(
+	);
+	private EventDelegate? EventDelegate_Object;
+	public event EventDelegate Event{add{
+	EventDelegate_Object+=value;
+	if(Event_Delegate_Native_Object==null){
+	Event_Delegate_Native_Object=(
+	)=>
+	EventDelegate_Object?.Invoke(
+	);
+	Wrapper_Event_TestNative_PointerChild_Event(Native??throw new System.ObjectDisposedException(nameof(PointerChild)),Event_Delegate_Native_Object);}}
+	remove{EventDelegate_Object-=value;}}
+
 //Delete:
 
-public void Dispose(){
+public void Dispose()=>Wrapper_Delete();
+	~PointerChild()=>Wrapper_Delete();
+	private void Wrapper_Delete(){
 	if(!Native.HasValue)return;
+	if(Event_Delegate_Native_Object!=null){
+	Wrapper_Event_TestNative_PointerChild_Event(Native.Value,null);
+	Event_Delegate_Native_Object=null;}
 	Wrapper_Delete_TestNative_PointerChild(Native.Value);
-	Native=null;}
+	Native=default;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Delete_TestNative_PointerChild(IntPtr native);
-	~PointerChild()=>Dispose();
 }}
 
 
@@ -159,13 +187,16 @@ public bool
 	IntPtr child_
 	);
 
+//Events:
+
 //Delete:
 
-public void Dispose(){
+public void Dispose()=>Wrapper_Delete();
+	~PointerParent()=>Wrapper_Delete();
+	private void Wrapper_Delete(){
 	if(!Native.HasValue)return;
 	Wrapper_Delete_TestNative_PointerParent(Native.Value);
-	Native=null;}
+	Native=default;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Delete_TestNative_PointerParent(IntPtr native);
-	~PointerParent()=>Dispose();
 }}

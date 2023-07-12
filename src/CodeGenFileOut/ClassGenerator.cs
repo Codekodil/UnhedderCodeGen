@@ -7,6 +7,7 @@ namespace CodeGenFileOut
 		public static string UniqueName(this ParserClass c) => string.Join("_", c.Namespaces.Concat(new[] { c.Name }));
 		public static string FullNameCpp(this ParserClass c) => string.Join("::", c.Namespaces.Concat(new[] { c.Name }));
 		public static string FullNameCs(this ParserClass c) => string.Join(".", c.Namespaces.Concat(new[] { c.Name }));
+		public static string NativeWithCheckCs(this ParserClass c) => $"Native??throw new System.ObjectDisposedException(nameof({c.Name}))";
 		public static (string Parameter, string Pointer) SelfNameCpp(this ParserClass c)
 		{
 			var typeInfo = new ParserType("", 0, false, true, false)
@@ -49,13 +50,20 @@ namespace CodeGenFileOut
 			IEnumerable<string> GenerateSections()
 			{
 				var externFunction = $"Wrapper_Delete_{c.UniqueName()}";
-				yield return "public void Dispose(){";
+				yield return "public void Dispose()=>Wrapper_Delete();";
+				yield return $"~{c.Name}()=>Wrapper_Delete();";
+				yield return "private void Wrapper_Delete(){";
 				yield return "if(!Native.HasValue)return;";
+				foreach (var e in c.Events)
+				{
+					yield return $"if({e.NativeDelegateCs()}_Object!=null){{";
+					yield return $"{e.NativeSetterCs(c)}(Native.Value,null);";
+					yield return $"{e.NativeDelegateCs()}_Object=null;}}";
+				}
 				yield return $"{externFunction}(Native.Value);";
 				yield return "Native=default;}";
 				yield return dllImport;
 				yield return $"private static extern void {externFunction}(IntPtr native);";
-				yield return $"~{c.Name}()=>Dispose();";
 			}
 		}
 	}

@@ -55,6 +55,17 @@ namespace CodeGenFileOut
 					}
 #if DEBUG
 					file.WriteLine("");
+					file.WriteLine("//Events:");
+#endif
+					foreach (var @event in c.GenerateEventCs(dllImport))
+					{
+#if DEBUG
+						file.WriteLine("");
+#endif
+						file.WriteLine(@event);
+					}
+#if DEBUG
+					file.WriteLine("");
 					file.WriteLine("//Delete:");
 					file.WriteLine("");
 #endif
