@@ -35,5 +35,13 @@ namespace TestWrapper
 
 			Assert.AreEqual(21, i);
 		}
+
+		[TestMethod]
+		public void StringParameter()
+		{
+			using var pointer = new PointerChild();
+			
+			Assert.AreEqual(630, pointer.SumCharacters("test 123"));
+		}
 	}
 }

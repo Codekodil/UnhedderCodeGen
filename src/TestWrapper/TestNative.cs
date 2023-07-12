@@ -72,6 +72,20 @@ public void
 	private static extern void Wrapper_Call_TestNative_PointerChild_Invoke_0
 	(IntPtr self);
 
+public int 
+	SumCharacters
+	(
+	string text_
+	){
+	var value_result=Wrapper_Call_TestNative_PointerChild_SumCharacters_1(Native??throw new System.ObjectDisposedException(nameof(PointerChild)),
+	text_);
+	return value_result;}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern int Wrapper_Call_TestNative_PointerChild_SumCharacters_1
+	(IntPtr self,
+	[System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPStr)]string text_
+	);
+
 //Events:
 
 private delegate void Event_Delegate_Native(

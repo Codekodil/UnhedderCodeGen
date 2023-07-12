@@ -64,6 +64,16 @@ __declspec(dllexport)
 	self->get()->Invoke();
 	return ;}
 
+__declspec(dllexport)
+	int 
+	__stdcall Wrapper_Call_TestNative_PointerChild_SumCharacters_1
+	(std::shared_ptr<TestNative::PointerChild>* self,
+	const char* text_
+	){
+	auto value_result=self->get()->SumCharacters(
+	text_);
+	return value_result;}
+
 //Events:
 
 __declspec(dllexport)

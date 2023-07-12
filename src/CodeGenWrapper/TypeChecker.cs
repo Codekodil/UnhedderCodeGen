@@ -20,6 +20,7 @@ namespace CodeGenWrapper
 		public record MatchedParsed(ParserClass Class) : MatchedType;
 		public record MatchedData(string Type) : MatchedType;
 		public record MatchedVoid : MatchedType;
+		public record MatchedString : MatchedType;
 
 		//outer key: name
 		//outer key: namespace
@@ -69,6 +70,16 @@ namespace CodeGenWrapper
 				{
 					if ((!type.Span || !type.Pointer) && !type.Shared)
 						return new MatchedData(type.Name);
+				}
+
+				switch (type.Name)
+				{
+					case "std::string":
+						if (location != TypeLocation.ConstructorParameter && location != TypeLocation.MethodParameter)
+							return null;
+						if (type.Pointer || type.Shared || type.Span)
+							return null;
+						return new MatchedString();
 				}
 
 				var typename = type.Name;

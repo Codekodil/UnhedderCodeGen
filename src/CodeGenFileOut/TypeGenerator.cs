@@ -39,6 +39,11 @@ namespace CodeGenFileOut
 						inverseFormat = $"new std::shared_ptr<{parsed.Class.FullNameCpp()}>({{0}})";
 					}
 					break;
+				case MatchedString:
+					generated = "const char*";
+					asPointer = false;
+					asShared = false;
+					break;
 				default:
 					throw new Exception($"Type {type} was not type checked");
 			}
@@ -85,6 +90,12 @@ namespace CodeGenFileOut
 					alloc = $"var {variableName}={{0}}.Native??throw new System.ObjectDisposedException(nameof({{0}}));";
 					transformFormat = variableName;
 					inverseFormat = null;
+					break;
+				case MatchedString:
+					generated = "string";
+					native = "[System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPStr)]string";
+					asPointer = false;
+					asShared = false;
 					break;
 				default:
 					throw new Exception($"Type {type} was not type checked");
