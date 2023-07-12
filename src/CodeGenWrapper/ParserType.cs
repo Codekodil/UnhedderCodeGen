@@ -59,7 +59,7 @@
 			(string, StringSection)? NextIdentifier()
 			{
 				var nextSection = section;
-				for (var i = 0; i < 2; ++i)
+				for (int i = 0; i < 2; i++)
 				{
 					if ((nextSection = ParserHelper.AdvanceNextSymbol(nextSection)!) == null)
 						return null;

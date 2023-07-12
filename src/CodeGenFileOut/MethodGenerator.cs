@@ -61,7 +61,7 @@ namespace CodeGenFileOut
 			{
 				var returnType = m.Result.GenerateCs();
 
-				yield return $"public {returnType.Generated} ";
+				yield return $"public unsafe {returnType.Generated} ";
 
 				yield return m.Name;
 
@@ -88,6 +88,10 @@ namespace CodeGenFileOut
 				yield return (returnType.InverseFormat == null ? "" : $"var value_result=") + $"{externFunction}({c.NativeWithCheckCs()}" + (parameters.Count == 0 ? ");" : ",");
 				for (int i = 0; i < parameters.Count; i++)
 					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
+
+				foreach (var p in parameters)
+					if (p.Free != null)
+						yield return p.Free;
 
 				yield return $"return {string.Format(returnType.InverseFormat ?? "", "value_result")};}}";
 

@@ -74,6 +74,18 @@ __declspec(dllexport)
 	text_);
 	return value_result;}
 
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_TestNative_PointerChild_ScaleSpan_2
+	(std::shared_ptr<TestNative::PointerChild>* self,
+	int* numbers_,int numbers_Size,
+	int scale_
+	){
+	self->get()->ScaleSpan(
+	std::span<int>(numbers_,numbers_Size),
+	scale_);
+	return ;}
+
 //Events:
 
 __declspec(dllexport)

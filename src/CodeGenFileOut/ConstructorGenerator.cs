@@ -60,7 +60,7 @@ namespace CodeGenFileOut
 
 			IEnumerable<string> GenerateSections(ParserConstructor con, int index)
 			{
-				yield return $"public {c.Name}";
+				yield return $"public unsafe {c.Name}";
 
 				var parameters = con.Parameters.Select(ParameterGenerator.GenerateCs).ToList();
 
@@ -82,9 +82,15 @@ namespace CodeGenFileOut
 
 				var externFunction = $"Wrapper_New_{c.UniqueName()}_{index}";
 
-				yield return $"Native={externFunction}(" + (parameters.Count == 0 ? ");}" : "");
+				yield return $"Native={externFunction}(" + (parameters.Count == 0 ? ");" : "");
 				for (int i = 0; i < parameters.Count; i++)
-					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");}" : ",");
+					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
+
+				foreach (var p in parameters)
+					if (p.Free != null)
+						yield return p.Free;
+
+				yield return "}";
 
 				yield return dllImport;
 				yield return $"private static extern IntPtr {externFunction}";

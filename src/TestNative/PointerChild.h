@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <span>
 
 namespace TestNative
 {
@@ -14,5 +15,6 @@ namespace TestNative
 		void Invoke();
 
 		int SumCharacters(std::string text);
+		void ScaleSpan(std::span<int> numbers, int scale);
 	};
 }

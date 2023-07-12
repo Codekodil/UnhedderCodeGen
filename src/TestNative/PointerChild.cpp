@@ -20,3 +20,9 @@ int PointerChild::SumCharacters(string text)
 		result += (int)c;
 	return result;
 }
+
+void PointerChild::ScaleSpan(span<int> numbers, int scale)
+{
+	for (int& i : numbers)
+		i *= scale;
+}

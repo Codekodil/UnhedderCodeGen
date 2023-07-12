@@ -52,7 +52,10 @@ namespace CodeGenFileOut
 			if (asShared)
 				generated = $"std::shared_ptr<{generated}>*";
 			if (type.Span)
-				transformFormat = $"std::span({transformFormat},{{1}})";
+			{
+				transformFormat = $"std::span<{generated}>({transformFormat},{{1}})";
+				generated += "*";
+			}
 
 			return (generated, transformFormat, inverseFormat, type.Span, null, null);
 		}
@@ -68,6 +71,7 @@ namespace CodeGenFileOut
 			string transformFormat = "{0}";
 			string? inverseFormat = "{0}";
 			string? alloc = null;
+			string? free = null;
 			switch (type.CheckedType)
 			{
 				case MatchedVoid:
@@ -80,6 +84,13 @@ namespace CodeGenFileOut
 					native = generated = data.Type;
 					asPointer = type.Pointer;
 					asShared = type.Shared;
+					if (type.Span)
+					{
+						var fixedName = $"local{_localCount++}";
+						alloc = $"fixed({data.Type}*{fixedName}={{0}}){{{{";
+						transformFormat = $"(IntPtr){fixedName},{{0}}.Length";
+						free = "}}";
+					}
 					break;
 				case MatchedParsed parsed:
 					generated = parsed.Class.FullNameCs();
@@ -101,7 +112,13 @@ namespace CodeGenFileOut
 					throw new Exception($"Type {type} was not type checked");
 			}
 
-			return (generated, native, transformFormat, inverseFormat, type.Span, alloc, null);
+			if (type.Span)
+			{
+				generated += "[]";
+				native = "IntPtr";
+			}
+
+			return (generated, native, transformFormat, inverseFormat, type.Span, alloc, free);
 		}
 	}
 }

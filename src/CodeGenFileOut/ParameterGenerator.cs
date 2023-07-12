@@ -21,15 +21,15 @@ namespace CodeGenFileOut
 		{
 			var typeInfo = param.Type.GenerateCs();
 
-			var generated = $"{typeInfo.Generated} {param.Name}_";
+			var generated = $"{typeInfo.Generated} {param.Name}";
 			var native = $"{typeInfo.Native} {param.Name}_" + (typeInfo.RequireSize ? $",int {param.Name}_Size" : "");
 
 			return (
 				generated,
 				native,
-				string.Format(typeInfo.TransformFormat, $"{param.Name}_", $"{param.Name}_Size"),
-				typeInfo.Alloc == null ? null : string.Format(typeInfo.Alloc, $"{param.Name}_", $"{param.Name}_Size"),
-				typeInfo.Free == null ? null : string.Format(typeInfo.Free, $"{param.Name}_", $"{param.Name}_Size"));
+				string.Format(typeInfo.TransformFormat, $"{param.Name}", $"{param.Name}_Size"),
+				typeInfo.Alloc == null ? null : string.Format(typeInfo.Alloc, $"{param.Name}", $"{param.Name}_Size"),
+				typeInfo.Free == null ? null : string.Format(typeInfo.Free, $"{param.Name}", $"{param.Name}_Size"));
 		}
 	}
 }
