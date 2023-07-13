@@ -115,5 +115,29 @@ namespace TestWrapper
 			foreach (var dispose in filled)
 				dispose!.Dispose();
 		}
+
+		[TestMethod]
+		public void PointerReturn()
+		{
+			using var parent = new PointerParent(2333);
+
+			using var child = parent.MaybeMakePointer(false);
+			Assert.IsNotNull(child);
+
+			var notChild = parent.MaybeMakePointer(true);
+			Assert.IsNull(notChild);
+		}
+
+		[TestMethod]
+		public void SharedReturn()
+		{
+			using var parent = new PointerParent(2333);
+
+			using var child = parent.MaybeMakeShared(false);
+			Assert.IsNotNull(child);
+
+			var notChild = parent.MaybeMakeShared(true);
+			Assert.IsNull(notChild);
+		}
 	}
 }

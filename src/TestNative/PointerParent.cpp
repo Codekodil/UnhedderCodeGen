@@ -49,3 +49,13 @@ void PointerParent::FillNewParents(span<PointerParent*> parents)
 		if (parent == nullptr)
 			parent = new PointerParent(_child);
 }
+
+PointerChild* PointerParent::MaybeMakePointer(bool isNull)
+{
+	return isNull ? nullptr : new PointerChild();
+}
+
+shared_ptr<PointerChild> PointerParent::MaybeMakeShared(bool isNull)
+{
+	return isNull ? nullptr : make_shared<PointerChild>();
+}

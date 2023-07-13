@@ -40,7 +40,7 @@ namespace CodeGenFileOut
 							transformFormat = "({0}?{0}->get():nullptr)";
 						else
 							transformFormat = "({0}?*{0}:nullptr)";
-						inverseFormat = $"new std::shared_ptr<{parsed.Class.FullNameCpp()}>({{0}})";
+						inverseFormat = $"({{0}}?new std::shared_ptr<{parsed.Class.FullNameCpp()}>({{0}}):nullptr)";
 					}
 					if (type.Span)
 					{
@@ -55,8 +55,7 @@ namespace CodeGenFileOut
 								$"{uniqueArray}[{iterator}]={string.Format(transformFormat, $"{{0}}[{iterator}]")};";
 
 							free = $"for(int {iterator}=0;{iterator}<{{1}};{iterator}++)" +
-								$"if({uniqueArray}[{iterator}]==nullptr){{0}}[{iterator}]=nullptr;" +
-								$"else if({uniqueArray}[{iterator}]!={string.Format(transformFormat, $"{{0}}[{iterator}]")}){{0}}[{iterator}]={string.Format(inverseFormat, $"{uniqueArray}[{iterator}]")};";
+								$"if({uniqueArray}[{iterator}]!={string.Format(transformFormat, $"{{0}}[{iterator}]")}){{0}}[{iterator}]={string.Format(inverseFormat, $"{uniqueArray}[{iterator}]")};";
 
 							transformFormat = $"{uniqueArray}.get()";
 						}
@@ -117,26 +116,25 @@ namespace CodeGenFileOut
 					native = "IntPtr";
 					asPointer = false;
 					asShared = false;
+					inverseFormat = $"({{0}}==IntPtr.Zero?null:new {parsed.Class.FullNameCs()}((IntPtr?){{0}}))";
 					if (type.Span)
 					{
 						var fixedName = GetLocal("local", type);
-						var iterateName = GetLocal("i", type);
+						var iterator = GetLocal("i", type);
 
 						alloc = $"fixed(IntPtr*{fixedName}=stackalloc IntPtr[{{0}}.Length]){{{{" +
-							$"for(int {iterateName}=0;{iterateName}<{{0}}.Length;{iterateName}++)" +
-							$"{fixedName}[{iterateName}]={ClassGenerator.ToIntPtr($"{{0}}[{iterateName}]", "nameof({0})")};";
+							$"for(int {iterator}=0;{iterator}<{{0}}.Length;{iterator}++)" +
+							$"{fixedName}[{iterator}]={ClassGenerator.ToIntPtr($"{{0}}[{iterator}]", "nameof({0})")};";
 
 						transformFormat = $"(IntPtr){fixedName},{{0}}.Length";
 
-						free = $"for(int {iterateName}=0;{iterateName}<{{0}}.Length;{iterateName}++)" +
-							$"if({fixedName}[{iterateName}]==IntPtr.Zero){{0}}[{iterateName}]=null;" +
-							$"else if({fixedName}[{iterateName}]!={{0}}[{iterateName}]?.Native){{0}}[{iterateName}]=new {parsed.Class.FullNameCs()}((IntPtr?){fixedName}[{iterateName}]);}}}}";
+						free = $"for(int {iterator}=0;{iterator}<{{0}}.Length;{iterator}++)" +
+							$"if({fixedName}[{iterator}]!={{0}}[{iterator}]?.Native){{0}}[{iterator}]={string.Format(inverseFormat, $"{fixedName}[{iterator}]")};}}}}";
 					}
 					else
 					{
 						transformFormat = ClassGenerator.ToIntPtr("{0}", "nameof({0})");
 					}
-					inverseFormat = null;
 					break;
 				case MatchedString:
 					generated = "string";

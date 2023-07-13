@@ -228,7 +228,7 @@ public unsafe void
 	fixed(IntPtr*local7875=stackalloc IntPtr[children.Length]){for(int i7875=0;i7875<children.Length;i7875++)local7875[i7875]=(children[i7875]==null?IntPtr.Zero:children[i7875].Native??throw new System.ObjectDisposedException(nameof(children)));
 	Wrapper_Call_TestNative_PointerParent_FillNewChildsShared_3(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
 	(IntPtr)local7875,children.Length);
-	for(int i7875=0;i7875<children.Length;i7875++)if(local7875[i7875]==IntPtr.Zero)children[i7875]=null;else if(local7875[i7875]!=children[i7875]?.Native)children[i7875]=new TestNative.PointerChild((IntPtr?)local7875[i7875]);}
+	for(int i7875=0;i7875<children.Length;i7875++)if(local7875[i7875]!=children[i7875]?.Native)children[i7875]=(local7875[i7875]==IntPtr.Zero?null:new TestNative.PointerChild((IntPtr?)local7875[i7875]));}
 	return ;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Call_TestNative_PointerParent_FillNewChildsShared_3
@@ -244,7 +244,7 @@ public unsafe void
 	fixed(IntPtr*local7759=stackalloc IntPtr[children.Length]){for(int i7759=0;i7759<children.Length;i7759++)local7759[i7759]=(children[i7759]==null?IntPtr.Zero:children[i7759].Native??throw new System.ObjectDisposedException(nameof(children)));
 	Wrapper_Call_TestNative_PointerParent_FillNewChildsPointer_4(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
 	(IntPtr)local7759,children.Length);
-	for(int i7759=0;i7759<children.Length;i7759++)if(local7759[i7759]==IntPtr.Zero)children[i7759]=null;else if(local7759[i7759]!=children[i7759]?.Native)children[i7759]=new TestNative.PointerChild((IntPtr?)local7759[i7759]);}
+	for(int i7759=0;i7759<children.Length;i7759++)if(local7759[i7759]!=children[i7759]?.Native)children[i7759]=(local7759[i7759]==IntPtr.Zero?null:new TestNative.PointerChild((IntPtr?)local7759[i7759]));}
 	return ;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Call_TestNative_PointerParent_FillNewChildsPointer_4
@@ -260,12 +260,40 @@ public unsafe void
 	fixed(IntPtr*local3372=stackalloc IntPtr[parents.Length]){for(int i3372=0;i3372<parents.Length;i3372++)local3372[i3372]=(parents[i3372]==null?IntPtr.Zero:parents[i3372].Native??throw new System.ObjectDisposedException(nameof(parents)));
 	Wrapper_Call_TestNative_PointerParent_FillNewParents_5(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
 	(IntPtr)local3372,parents.Length);
-	for(int i3372=0;i3372<parents.Length;i3372++)if(local3372[i3372]==IntPtr.Zero)parents[i3372]=null;else if(local3372[i3372]!=parents[i3372]?.Native)parents[i3372]=new TestNative.PointerParent((IntPtr?)local3372[i3372]);}
+	for(int i3372=0;i3372<parents.Length;i3372++)if(local3372[i3372]!=parents[i3372]?.Native)parents[i3372]=(local3372[i3372]==IntPtr.Zero?null:new TestNative.PointerParent((IntPtr?)local3372[i3372]));}
 	return ;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Call_TestNative_PointerParent_FillNewParents_5
 	(IntPtr self,
 	IntPtr parents_,int parents_Size
+	);
+
+public unsafe TestNative.PointerChild? 
+	MaybeMakePointer
+	(
+	bool isNull
+	){
+	var value_result=Wrapper_Call_TestNative_PointerParent_MaybeMakePointer_6(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
+	isNull);
+	return (value_result==IntPtr.Zero?null:new TestNative.PointerChild((IntPtr?)value_result));}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern IntPtr Wrapper_Call_TestNative_PointerParent_MaybeMakePointer_6
+	(IntPtr self,
+	bool isNull_
+	);
+
+public unsafe TestNative.PointerChild? 
+	MaybeMakeShared
+	(
+	bool isNull
+	){
+	var value_result=Wrapper_Call_TestNative_PointerParent_MaybeMakeShared_7(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
+	isNull);
+	return (value_result==IntPtr.Zero?null:new TestNative.PointerChild((IntPtr?)value_result));}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern IntPtr Wrapper_Call_TestNative_PointerParent_MaybeMakeShared_7
+	(IntPtr self,
+	bool isNull_
 	);
 
 //Events:
