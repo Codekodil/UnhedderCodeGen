@@ -13,6 +13,8 @@ namespace CodeGenFileOut
 			bool asShared;
 			string transformFormat = "{0}";
 			string? inverseFormat = "{0}";
+			string? alloc = null;
+			string? free = null;
 			switch (type.CheckedType)
 			{
 				case MatchedVoid:
@@ -25,6 +27,8 @@ namespace CodeGenFileOut
 					generated = data.Type;
 					asPointer = type.Pointer;
 					asShared = type.Shared;
+					if (type.Span)
+						transformFormat = $"std::span<{generated}>({{0}},{{1}})";
 					break;
 				case MatchedParsed parsed:
 					generated = parsed.Class.FullNameCpp();
@@ -33,10 +37,30 @@ namespace CodeGenFileOut
 					if (parsed.Class.Shared)
 					{
 						if (type.Pointer)
-							transformFormat = "{0}->get()";
+							transformFormat = "({0}?{0}->get():nullptr)";
 						else
-							transformFormat = "*{0}";
+							transformFormat = "({0}?*{0}:nullptr)";
 						inverseFormat = $"new std::shared_ptr<{parsed.Class.FullNameCpp()}>({{0}})";
+					}
+					if (type.Span)
+					{
+						var spanType = type.Shared ? $"std::shared_ptr<{generated}>" : $"{generated}*";
+						if (transformFormat != "{0}")
+						{
+							var uniqueArray = GetLocal("local_", type);
+							var iterator = GetLocal("i_", type);
+
+							alloc = $"auto {uniqueArray}=std::make_unique<{spanType}[]>({{1}});" +
+								$"for(int {iterator}=0;{iterator}<{{1}};{iterator}++)" +
+								$"{uniqueArray}[{iterator}]={string.Format(transformFormat, $"{{0}}[{iterator}]")};";
+
+							free = $"for(int {iterator}=0;{iterator}<{{1}};{iterator}++)" +
+								$"if({uniqueArray}[{iterator}]==nullptr){{0}}[{iterator}]=nullptr;" +
+								$"else if({uniqueArray}[{iterator}]!={string.Format(transformFormat, $"{{0}}[{iterator}]")}){{0}}[{iterator}]={string.Format(inverseFormat, $"{uniqueArray}[{iterator}]")};";
+
+							transformFormat = $"{uniqueArray}.get()";
+						}
+						transformFormat = $"std::span<{spanType}>({transformFormat},{{1}})";
 					}
 					break;
 				case MatchedString:
@@ -52,15 +76,11 @@ namespace CodeGenFileOut
 			if (asShared)
 				generated = $"std::shared_ptr<{generated}>*";
 			if (type.Span)
-			{
-				transformFormat = $"std::span<{generated}>({transformFormat},{{1}})";
 				generated += "*";
-			}
 
-			return (generated, transformFormat, inverseFormat, type.Span, null, null);
+			return (generated, transformFormat, inverseFormat, type.Span, alloc, free);
 		}
 
-		private static int _localCount = 0;
 		public static (string Generated, string Native, string TransformFormat, string? InverseFormat, bool RequireSize, string? Alloc, string? Free) GenerateCs(this ParserType type)
 		{
 			string generated;
@@ -86,20 +106,36 @@ namespace CodeGenFileOut
 					asShared = type.Shared;
 					if (type.Span)
 					{
-						var fixedName = $"local{_localCount++}";
+						var fixedName = GetLocal("local", type);
 						alloc = $"fixed({data.Type}*{fixedName}={{0}}){{{{";
 						transformFormat = $"(IntPtr){fixedName},{{0}}.Length";
 						free = "}}";
 					}
 					break;
 				case MatchedParsed parsed:
-					generated = parsed.Class.FullNameCs();
+					generated = $"{parsed.Class.FullNameCs()}?";
 					native = "IntPtr";
 					asPointer = false;
 					asShared = false;
-					var variableName = $"local{_localCount++}";
-					alloc = $"var {variableName}={{0}}.Native??throw new System.ObjectDisposedException(nameof({{0}}));";
-					transformFormat = variableName;
+					if (type.Span)
+					{
+						var fixedName = GetLocal("local", type);
+						var iterateName = GetLocal("i", type);
+
+						alloc = $"fixed(IntPtr*{fixedName}=stackalloc IntPtr[{{0}}.Length]){{{{" +
+							$"for(int {iterateName}=0;{iterateName}<{{0}}.Length;{iterateName}++)" +
+							$"{fixedName}[{iterateName}]={ClassGenerator.ToIntPtr($"{{0}}[{iterateName}]", "nameof({0})")};";
+
+						transformFormat = $"(IntPtr){fixedName},{{0}}.Length";
+
+						free = $"for(int {iterateName}=0;{iterateName}<{{0}}.Length;{iterateName}++)" +
+							$"if({fixedName}[{iterateName}]==IntPtr.Zero){{0}}[{iterateName}]=null;" +
+							$"else if({fixedName}[{iterateName}]!={{0}}[{iterateName}]?.Native){{0}}[{iterateName}]=new {parsed.Class.FullNameCs()}((IntPtr?){fixedName}[{iterateName}]);}}}}";
+					}
+					else
+					{
+						transformFormat = ClassGenerator.ToIntPtr("{0}", "nameof({0})");
+					}
 					inverseFormat = null;
 					break;
 				case MatchedString:
@@ -114,11 +150,23 @@ namespace CodeGenFileOut
 
 			if (type.Span)
 			{
-				generated += "[]";
+				generated = $"Span<{generated}>";
 				native = "IntPtr";
 			}
 
 			return (generated, native, transformFormat, inverseFormat, type.Span, alloc, free);
+		}
+
+		private static readonly HashSet<string> _locals = new HashSet<string>();
+		private static string GetLocal(string name, ParserType type)
+		{
+			var deterministicHash = Math.Abs($"{type.Name}{type.Span}{type.Pointer}{type.Shared}".Select((c, i) => (i + 1) * c).Sum() % 9000);
+			while (true)
+			{
+				var result = $"{name}{deterministicHash++}";
+				if (_locals.Add(result))
+					return result;
+			}
 		}
 	}
 }

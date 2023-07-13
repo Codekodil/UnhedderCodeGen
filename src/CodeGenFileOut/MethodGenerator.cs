@@ -39,9 +39,17 @@ namespace CodeGenFileOut
 					yield return "){";
 				}
 
+				foreach (var p in parameters)
+					if (p.Alloc != null)
+						yield return p.Alloc;
+
 				yield return (returnType.InverseFormat == null ? "" : $"auto value_result=") + $"{self.Pointer}->{m.Name}(" + (parameters.Count == 0 ? ");" : "");
 				for (int i = 0; i < parameters.Count; i++)
 					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
+
+				foreach (var p in parameters)
+					if (p.Free != null)
+						yield return p.Free;
 
 				yield return $"return {string.Format(returnType.InverseFormat ?? "", "value_result")};}}";
 			}
@@ -85,7 +93,7 @@ namespace CodeGenFileOut
 
 				var externFunction = $"Wrapper_Call_{c.UniqueName()}_{m.Name}_{index}";
 
-				yield return (returnType.InverseFormat == null ? "" : $"var value_result=") + $"{externFunction}({c.NativeWithCheckCs()}" + (parameters.Count == 0 ? ");" : ",");
+				yield return (returnType.InverseFormat == null ? "" : $"var value_result=") + $"{externFunction}({c.ToIntPtr()}" + (parameters.Count == 0 ? ");" : ",");
 				for (int i = 0; i < parameters.Count; i++)
 					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
 

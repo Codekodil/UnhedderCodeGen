@@ -7,7 +7,8 @@ namespace CodeGenFileOut
 		public static string UniqueName(this ParserClass c) => string.Join("_", c.Namespaces.Concat(new[] { c.Name }));
 		public static string FullNameCpp(this ParserClass c) => string.Join("::", c.Namespaces.Concat(new[] { c.Name }));
 		public static string FullNameCs(this ParserClass c) => string.Join(".", c.Namespaces.Concat(new[] { c.Name }));
-		public static string NativeWithCheckCs(this ParserClass c) => $"Native??throw new System.ObjectDisposedException(nameof({c.Name}))";
+		public static string ToIntPtr(string obj, string nameof) => $"({obj}==null?IntPtr.Zero:{obj}.Native??throw new System.ObjectDisposedException({nameof}))";
+		public static string ToIntPtr(this ParserClass c) => $"Native??throw new System.ObjectDisposedException(nameof({c.Name}))";
 		public static (string Parameter, string Pointer) SelfNameCpp(this ParserClass c)
 		{
 			var typeInfo = new ParserType("", 0, false, true, false)

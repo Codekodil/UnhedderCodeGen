@@ -122,7 +122,7 @@ namespace CodeGenFileOut
 					for (int i = 0; i < parameters.Count; i++)
 						yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
 				}
-				yield return $"{externFunction}({c.NativeWithCheckCs()},{nativeDelegate}_Object);}}}}";
+				yield return $"{externFunction}({c.ToIntPtr()},{nativeDelegate}_Object);}}}}";
 				yield return $"remove{{{managedDelegate}_Object-=value;}}}}";
 			}
 		}

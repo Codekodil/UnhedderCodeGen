@@ -21,11 +21,10 @@ public unsafe PointerParent
 public unsafe void 
 	SetChild
 	(
-	TestNative.PointerChild child
+	TestNative.PointerChild? child
 	){
-	var local0=child.Native??throw new System.ObjectDisposedException(nameof(child));
 	Wrapper_Call_NotTestNative_PointerParent_SetChild_0(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
-	local0);
+	(child==null?IntPtr.Zero:child.Native??throw new System.ObjectDisposedException(nameof(child))));
 	return ;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Call_NotTestNative_PointerParent_SetChild_0
@@ -91,12 +90,12 @@ public unsafe int
 public unsafe void 
 	ScaleSpan
 	(
-	int[] numbers,
+	Span<int> numbers,
 	int scale
 	){
-	fixed(int*local1=numbers){
+	fixed(int*local6423=numbers){
 	Wrapper_Call_TestNative_PointerChild_ScaleSpan_2(Native??throw new System.ObjectDisposedException(nameof(PointerChild)),
-	(IntPtr)local1,numbers.Length,
+	(IntPtr)local6423,numbers.Length,
 	scale);
 	}
 	return ;}
@@ -166,11 +165,10 @@ public unsafe PointerParent
 
 public unsafe PointerParent
 	(
-	TestNative.PointerChild child
+	TestNative.PointerChild? child
 	){
-	var local2=child.Native??throw new System.ObjectDisposedException(nameof(child));
 	Native=Wrapper_New_TestNative_PointerParent_1(
-	local2);
+	(child==null?IntPtr.Zero:child.Native??throw new System.ObjectDisposedException(nameof(child))));
 	}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern IntPtr Wrapper_New_TestNative_PointerParent_1
@@ -197,11 +195,10 @@ public unsafe int
 public unsafe void 
 	SetChild
 	(
-	TestNative.PointerChild child
+	TestNative.PointerChild? child
 	){
-	var local3=child.Native??throw new System.ObjectDisposedException(nameof(child));
 	Wrapper_Call_TestNative_PointerParent_SetChild_1(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
-	local3);
+	(child==null?IntPtr.Zero:child.Native??throw new System.ObjectDisposedException(nameof(child))));
 	return ;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Call_TestNative_PointerParent_SetChild_1
@@ -212,16 +209,63 @@ public unsafe void
 public unsafe bool 
 	ChildEquals
 	(
-	TestNative.PointerChild child
+	TestNative.PointerChild? child
 	){
-	var local4=child.Native??throw new System.ObjectDisposedException(nameof(child));
 	var value_result=Wrapper_Call_TestNative_PointerParent_ChildEquals_2(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
-	local4);
+	(child==null?IntPtr.Zero:child.Native??throw new System.ObjectDisposedException(nameof(child))));
 	return value_result;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern bool Wrapper_Call_TestNative_PointerParent_ChildEquals_2
 	(IntPtr self,
 	IntPtr child_
+	);
+
+public unsafe void 
+	FillNewChildsShared
+	(
+	Span<TestNative.PointerChild?> children
+	){
+	fixed(IntPtr*local7875=stackalloc IntPtr[children.Length]){for(int i7875=0;i7875<children.Length;i7875++)local7875[i7875]=(children[i7875]==null?IntPtr.Zero:children[i7875].Native??throw new System.ObjectDisposedException(nameof(children)));
+	Wrapper_Call_TestNative_PointerParent_FillNewChildsShared_3(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
+	(IntPtr)local7875,children.Length);
+	for(int i7875=0;i7875<children.Length;i7875++)if(local7875[i7875]==IntPtr.Zero)children[i7875]=null;else if(local7875[i7875]!=children[i7875]?.Native)children[i7875]=new TestNative.PointerChild((IntPtr?)local7875[i7875]);}
+	return ;}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Call_TestNative_PointerParent_FillNewChildsShared_3
+	(IntPtr self,
+	IntPtr children_,int children_Size
+	);
+
+public unsafe void 
+	FillNewChildsPointer
+	(
+	Span<TestNative.PointerChild?> children
+	){
+	fixed(IntPtr*local7759=stackalloc IntPtr[children.Length]){for(int i7759=0;i7759<children.Length;i7759++)local7759[i7759]=(children[i7759]==null?IntPtr.Zero:children[i7759].Native??throw new System.ObjectDisposedException(nameof(children)));
+	Wrapper_Call_TestNative_PointerParent_FillNewChildsPointer_4(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
+	(IntPtr)local7759,children.Length);
+	for(int i7759=0;i7759<children.Length;i7759++)if(local7759[i7759]==IntPtr.Zero)children[i7759]=null;else if(local7759[i7759]!=children[i7759]?.Native)children[i7759]=new TestNative.PointerChild((IntPtr?)local7759[i7759]);}
+	return ;}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Call_TestNative_PointerParent_FillNewChildsPointer_4
+	(IntPtr self,
+	IntPtr children_,int children_Size
+	);
+
+public unsafe void 
+	FillNewParents
+	(
+	Span<TestNative.PointerParent?> parents
+	){
+	fixed(IntPtr*local3372=stackalloc IntPtr[parents.Length]){for(int i3372=0;i3372<parents.Length;i3372++)local3372[i3372]=(parents[i3372]==null?IntPtr.Zero:parents[i3372].Native??throw new System.ObjectDisposedException(nameof(parents)));
+	Wrapper_Call_TestNative_PointerParent_FillNewParents_5(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
+	(IntPtr)local3372,parents.Length);
+	for(int i3372=0;i3372<parents.Length;i3372++)if(local3372[i3372]==IntPtr.Zero)parents[i3372]=null;else if(local3372[i3372]!=parents[i3372]?.Native)parents[i3372]=new TestNative.PointerParent((IntPtr?)local3372[i3372]);}
+	return ;}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Call_TestNative_PointerParent_FillNewParents_5
+	(IntPtr self,
+	IntPtr parents_,int parents_Size
 	);
 
 //Events:

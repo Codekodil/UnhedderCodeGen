@@ -9,10 +9,10 @@ namespace TestWrapper
 		public void CreatePointer()
 		{
 			using var pointer = new PointerChild();
-			Assert.AreEqual(true, pointer.Native.HasValue);
+			Assert.IsTrue(pointer.Native.HasValue);
 			Assert.AreNotEqual(IntPtr.Zero, pointer.Native);
 			pointer.Dispose();
-			Assert.AreEqual(false, pointer.Native.HasValue);
+			Assert.IsFalse(pointer.Native.HasValue);
 		}
 
 		[TestMethod]
