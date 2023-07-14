@@ -2,7 +2,7 @@
 
 namespace CodeGenWrapper
 {
-	public record ParserClass(string Name, IReadOnlyList<string> Namespaces, string File, bool Abstract, StringSection Section, bool Pointer, bool Shared, List<ParserConstructor> Constructors, List<ParserMethod> Methods, List<ParserEvent> Events)
+	public record ParserClass(string Name, IReadOnlyList<string> Namespaces, string File, bool Abstract, StringSection Section, bool Pointer, bool Shared, bool ThreadSafe, List<ParserConstructor> Constructors, List<ParserMethod> Methods, List<ParserEvent> Events)
 	{
 		public static ParserClass? Parse(StringSection section, IReadOnlyList<string> namespaces, string file)
 		{
@@ -33,7 +33,7 @@ namespace CodeGenWrapper
 			events.RemoveAll(e => e.Ignore);
 
 			var isShared = identifiers.Contains(Flags.Shared);
-			return new ParserClass(name, namespaces, file, isAbstract, block, !isShared && identifiers.Contains(Flags.Pointer), isShared, constructors, methods, events);
+			return new ParserClass(name, namespaces, file, isAbstract, block, !isShared && identifiers.Contains(Flags.Pointer), isShared, identifiers.Contains(Flags.ThreadSafe), constructors, methods, events);
 		}
 
 		private static void ParseMembers(string className, StringSection section, out List<ParserConstructor> constructors, out List<ParserMethod> methods, out List<ParserEvent> events)
@@ -118,6 +118,7 @@ namespace CodeGenWrapper
 			var result = string.Join("::", Namespaces.Concat(new[] { Name }));
 			if (Pointer) result += " " + Flags.Pointer;
 			if (Shared) result += " " + Flags.Shared;
+			if (ThreadSafe) result += " " + Flags.ThreadSafe;
 			return result;
 		}
 	}

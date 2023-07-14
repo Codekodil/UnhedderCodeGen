@@ -4,12 +4,14 @@
 	{
 		public static ParserConstructor? Parse(string className, StringSection section)
 		{
+			var ogSection = section;
 			if (!(
+				ParserHelper.PreviousSymbol(section) != '~' &&
 				ParserHelper.GetIdentifiersAndAdvance(out var identifiers, ref section!) &&
 				identifiers.Count > 0 &&
 				identifiers[^1] == className &&
 				ParserHelper.GetAndAdvance(ParserParameter.Parse, out var parameters, ref section!) &&
-				ParserHelper.CurrentSymbol(section) == ';'))
+				";{".Contains(ParserHelper.CurrentSymbol(section) ?? '_')))
 				return null;
 
 			identifiers.RemoveAt(identifiers.Count - 1);

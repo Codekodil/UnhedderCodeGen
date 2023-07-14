@@ -120,9 +120,21 @@ namespace CodeGenFileOut
 				else
 				{
 					for (int i = 0; i < parameters.Count; i++)
-						yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
+						yield return (parameters[i].InverseArgument ?? throw new Exception($"Parameter {e.Parameters[i].Name} was not correctly type checked")) + (i == parameters.Count - 1 ? ");" : ",");
 				}
-				yield return $"{externFunction}({c.ToIntPtr()},{nativeDelegate}_Object);}}}}";
+
+				string self;
+				if (c.ThreadSafe)
+				{
+					yield return $"using var selfLocker = _safeGuard.Lock(nameof({c.Name}));";
+					self = "Native!.Value";
+				}
+				else
+				{
+					self = c.ToIntPtr();
+				}
+
+				yield return $"{externFunction}({self},{nativeDelegate}_Object);}}}}";
 				yield return $"remove{{{managedDelegate}_Object-=value;}}}}";
 			}
 		}

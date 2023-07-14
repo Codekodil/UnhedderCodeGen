@@ -1,8 +1,6 @@
 #pragma once
 
 #include "PointerChild.h"
-#include <memory>
-#include <span>
 
 namespace TestNative
 {

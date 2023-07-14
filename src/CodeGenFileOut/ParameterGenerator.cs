@@ -17,7 +17,7 @@ namespace CodeGenFileOut
 				typeInfo.Free == null ? null : string.Format(typeInfo.Free, $"{param.Name}_", $"{param.Name}_Size"));
 		}
 
-		public static (string Parameter, string Native, string Argument, string? Alloc, string? Free) GenerateCs(this ParserParameter param)
+		public static (string Parameter, string Native, string Argument, string? InverseArgument, string? Alloc, string? Free) GenerateCs(this ParserParameter param)
 		{
 			var typeInfo = param.Type.GenerateCs();
 
@@ -28,6 +28,7 @@ namespace CodeGenFileOut
 				generated,
 				native,
 				string.Format(typeInfo.TransformFormat, $"{param.Name}", $"{param.Name}_Size"),
+				typeInfo.InverseFormat==null?null:string.Format(typeInfo.InverseFormat, $"{param.Name}_"),
 				typeInfo.Alloc == null ? null : string.Format(typeInfo.Alloc, $"{param.Name}", $"{param.Name}_Size"),
 				typeInfo.Free == null ? null : string.Format(typeInfo.Free, $"{param.Name}", $"{param.Name}_Size"));
 		}

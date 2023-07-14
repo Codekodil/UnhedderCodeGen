@@ -3,6 +3,7 @@
 #include"DifferentNamespaceParent.h"
 #include"PointerChild.h"
 #include"PointerParent.h"
+#include"SafeObject.h"
 #include<memory>
 #include<vector>
 #include<string>
@@ -223,5 +224,67 @@ __declspec(dllexport)
 	void 
 	__stdcall Wrapper_Delete_TestNative_PointerParent
 	(TestNative::PointerParent* self){
+	delete self;}
+
+
+/*------------------------- TestNative::SafeObject -------------------------*/
+
+//Constructors:
+
+__declspec(dllexport)
+	std::shared_ptr<TestNative::SafeObject>*
+	__stdcall Wrapper_New_TestNative_SafeObject_0
+	(){
+	auto pointer_result = new TestNative::SafeObject();
+	return new std::shared_ptr<TestNative::SafeObject>(pointer_result);}
+
+//Methods:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_TestNative_SafeObject_ConnectCallback_0
+	(std::shared_ptr<TestNative::SafeObject>* self,
+	std::shared_ptr<TestNative::SafeObject>* target_
+	){
+	(self?self->get():nullptr)->ConnectCallback(
+	(target_?target_->get():nullptr));
+	return ;}
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_TestNative_SafeObject_WaitThenSend_1
+	(std::shared_ptr<TestNative::SafeObject>* self,
+	int callback_
+	){
+	(self?self->get():nullptr)->WaitThenSend(
+	callback_);
+	return ;}
+
+//Events:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Event_TestNative_SafeObject_Callback
+	(std::shared_ptr<TestNative::SafeObject>* self,
+	void
+	(__stdcall*event)(
+	int index_
+	)){
+	(self?self->get():nullptr)->Callback=event;}
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Event_TestNative_SafeObject_Await
+	(std::shared_ptr<TestNative::SafeObject>* self,
+	void
+	(__stdcall*event)()){
+	(self?self->get():nullptr)->Await=event;}
+
+//Delete:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Delete_TestNative_SafeObject
+	(std::shared_ptr<TestNative::SafeObject>* self){
 	delete self;}
 }

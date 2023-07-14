@@ -1,10 +1,10 @@
 {
-  "Pch": "../../../../TestNative/pch.h",
+  "Pch": "../TestNative/pch.h",
   "HeaderDirectories": [
-    "../../../../TestNative"
+    "../TestNative"
   ],
-  "CppResultPath": "../../../../TestNative/Export.cpp",
-  "HppResultPath": "../../../../TestNative/CodeGen.h",
-  "CsResultPath": "../../../../TestWrapper/TestNative.cs",
+  "CppResultPath": "../TestNative/Export.cpp",
+  "HppResultPath": "../TestNative/CodeGen.h",
+  "CsResultPath": "../TestWrapper/TestNative.cs",
   "NativeLibraryName": "TestNative"
 }

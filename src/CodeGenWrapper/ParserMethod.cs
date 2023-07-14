@@ -9,7 +9,7 @@
 				ParserHelper.GetIdentifiersAndAdvance(out var identifiers, ref section!) &&
 				identifiers.Count > 0 &&
 				ParserHelper.GetAndAdvance(ParserParameter.Parse, out var parameters, ref section!) &&
-				ParserHelper.CurrentSymbol(section) == ';'))
+				";{".Contains(ParserHelper.CurrentSymbol(section) ?? '_')))
 				return null;
 
 			var name = identifiers[^1];

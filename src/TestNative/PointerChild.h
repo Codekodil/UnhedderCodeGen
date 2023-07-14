@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include <span>
-
 namespace TestNative
 {
 	class Wrapper_Shared PointerChild

@@ -9,10 +9,8 @@ namespace CodeGenWrapper
 
 		public void PathsFromConfig(Config config)
 		{
-			PchPath = config.Pch == null ? null : Path.GetFullPath(config.Pch);
 			HeaderFilePaths = config.HeaderDirectories
-				.SelectMany(p => Directory.GetFiles(Path.GetFullPath(p), "*.h"))
-				.Where(p => p != PchPath)
+				.SelectMany(p => Directory.GetFiles(p, "*.h"))
 				.ToList();
 		}
 

@@ -75,7 +75,6 @@ namespace CodeGenFileOut
 						yield return parameters[i].Parameter + (i == parameters.Count - 1 ? "" : ",");
 					yield return "){";
 				}
-
 				foreach (var p in parameters)
 					if (p.Alloc != null)
 						yield return p.Alloc;
@@ -89,6 +88,9 @@ namespace CodeGenFileOut
 				foreach (var p in parameters)
 					if (p.Free != null)
 						yield return p.Free;
+
+				if (c.ThreadSafe)
+					yield return "_safeGuard=new SafeGuard(Wrapper_Delete);";
 
 				yield return "}";
 

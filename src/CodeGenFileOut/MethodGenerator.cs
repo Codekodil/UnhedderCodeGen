@@ -87,13 +87,24 @@ namespace CodeGenFileOut
 					yield return "){";
 				}
 
+				string self;
+				if (c.ThreadSafe)
+				{
+					yield return $"using var selfLocker = _safeGuard.Lock(nameof({c.Name}));";
+					self = "Native!.Value";
+				}
+				else
+				{
+					self = c.ToIntPtr();
+				}
+
 				foreach (var p in parameters)
 					if (p.Alloc != null)
 						yield return p.Alloc;
 
 				var externFunction = $"Wrapper_Call_{c.UniqueName()}_{m.Name}_{index}";
 
-				yield return (returnType.InverseFormat == null ? "" : $"var value_result=") + $"{externFunction}({c.ToIntPtr()}" + (parameters.Count == 0 ? ");" : ",");
+				yield return (returnType.InverseFormat == null ? "" : $"var value_result=") + $"{externFunction}({self}" + (parameters.Count == 0 ? ");" : ",");
 				for (int i = 0; i < parameters.Count; i++)
 					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
 

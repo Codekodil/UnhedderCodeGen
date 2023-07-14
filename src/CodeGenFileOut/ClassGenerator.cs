@@ -51,7 +51,16 @@ namespace CodeGenFileOut
 			IEnumerable<string> GenerateSections()
 			{
 				var externFunction = $"Wrapper_Delete_{c.UniqueName()}";
-				yield return "public void Dispose()=>Wrapper_Delete();";
+				if (c.ThreadSafe)
+				{
+					yield return "internal SafeGuard _safeGuard;";
+					yield return "public Task DisposeAsync()=>_safeGuard.DeleteAsync();";
+					yield return "public void Dispose()=>DisposeAsync().GetAwaiter().GetResult();";
+				}
+				else
+				{
+					yield return "public void Dispose()=>Wrapper_Delete();";
+				}
 				yield return $"~{c.Name}()=>Wrapper_Delete();";
 				yield return "private void Wrapper_Delete(){";
 				yield return "if(!Native.HasValue)return;";

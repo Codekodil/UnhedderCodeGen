@@ -2,7 +2,7 @@
   "profiles": {
     "CodeGenConsole": {
       "commandName": "Project",
-      "commandLineArgs": "../../../testConfig.json"
+      "commandLineArgs": "$(ProjectDir)testConfig.json"
     }
   }
 }

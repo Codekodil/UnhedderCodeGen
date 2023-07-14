@@ -124,7 +124,7 @@ namespace CodeGenFileOut
 
 						alloc = $"fixed(IntPtr*{fixedName}=stackalloc IntPtr[{{0}}.Length]){{{{" +
 							$"for(int {iterator}=0;{iterator}<{{0}}.Length;{iterator}++)" +
-							$"{fixedName}[{iterator}]={ClassGenerator.ToIntPtr($"{{0}}[{iterator}]", "nameof({0})")};";
+							$"{fixedName}[{iterator}]={ClassGenerator.ToIntPtr($"({{0}}[{iterator}]!)", "nameof({0})")};";
 
 						transformFormat = $"(IntPtr){fixedName},{{0}}.Length";
 

@@ -34,6 +34,17 @@ namespace CodeGenWrapper
 			return IsLetterOrDigit(symbol) ? null : symbol;
 		}
 
+		public static char? PreviousSymbol(StringSection section)
+		{
+			var i = section.First;
+			while (i-->0)
+			{
+				if (!char.IsWhiteSpace(section[i]))
+					return IsLetterOrDigit(section[i]) ? null : section[i];
+			}
+			return null;
+		}
+
 		public static StringSection? AdvanceNextSymbol(StringSection section)
 		{
 			if (section.Length <= 0)
