@@ -30,7 +30,7 @@ namespace CodeGenFileOut
 					file.WriteLine("");
 #endif
 					file.WriteLine($"namespace {string.Join(".", new[] { config.NativeLibraryName }.Concat(c.Namespaces))}{{");
-					file.WriteLine($"internal class {c.Name}:IDisposable{{public IntPtr?Native;public {c.Name}(IntPtr?native){{Native=native;{(c.ThreadSafe ? "_safeGuard=new SafeGuard(Wrapper_Delete);" : "")}}}");
+					file.WriteLine($"internal class {c.Name}:IDisposable{{public IntPtr?Native;public {c.Name}(IntPtr?native){{Native=native;{(c.ThreadSafe ? "_safeGuard=new _SafeGuard(Wrapper_Delete);" : "")}}}");
 #if DEBUG
 					file.WriteLine("");
 					file.WriteLine("//Constructors:");
@@ -87,12 +87,12 @@ namespace CodeGenFileOut
 			"",
 #endif
 			$"namespace {config.NativeLibraryName}{{",
-			"internal class SafeGuard{",
+			"internal class _SafeGuard{",
 			"private readonly object _locker = new object();",
 			"private int _callCount = 0;",
 			"private TaskCompletionSource? _disposeTask;",
 			"private Action _delete;",
-			"public SafeGuard(Action delete)=>_delete = delete;",
+			"public _SafeGuard(Action delete)=>_delete = delete;",
 			"public DisposableLock Lock(string objectName)=>new DisposableLock(this, objectName);",
 			"",
 			"public Task DeleteAsync(){",
@@ -101,9 +101,9 @@ namespace CodeGenFileOut
 			"if(doDelete){try{_delete();_disposeTask.SetResult();}catch(Exception e){_disposeTask.SetException(e);}}",
 			"return _disposeTask.Task;}",
 			"public struct DisposableLock:IDisposable{",
-			"private readonly SafeGuard _guard;",
+			"private readonly _SafeGuard _guard;",
 			"",
-			"public DisposableLock(SafeGuard guard,string objectName){",
+			"public DisposableLock(_SafeGuard guard,string objectName){",
 			"_guard = guard;",
 			"lock(guard._locker){if(guard._disposeTask!=null)throw new ObjectDisposedException(objectName);guard._callCount++;}}",
 			"public void Dispose(){",

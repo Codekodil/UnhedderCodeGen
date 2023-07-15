@@ -168,9 +168,9 @@ __declspec(dllexport)
 	(TestNative::PointerParent* self,
 	std::shared_ptr<TestNative::PointerChild>** children_,int children_Size
 	){
-	auto local_7875=std::make_unique<std::shared_ptr<TestNative::PointerChild>[]>(children_Size);for(int i_7875=0;i_7875<children_Size;i_7875++)local_7875[i_7875]=(children_[i_7875]?*children_[i_7875]:nullptr);
+	auto local_7875=std::vector<std::shared_ptr<TestNative::PointerChild>>(children_Size);for(int i_7875=0;i_7875<children_Size;i_7875++)local_7875[i_7875]=(children_[i_7875]?*children_[i_7875]:nullptr);
 	self->FillNewChildsShared(
-	std::span<std::shared_ptr<TestNative::PointerChild>>(local_7875.get(),children_Size));
+	std::span<std::shared_ptr<TestNative::PointerChild>>(&local_7875[0],children_Size));
 	for(int i_7875=0;i_7875<children_Size;i_7875++)if(local_7875[i_7875]!=(children_[i_7875]?*children_[i_7875]:nullptr))children_[i_7875]=(local_7875[i_7875]?new std::shared_ptr<TestNative::PointerChild>(local_7875[i_7875]):nullptr);
 	return ;}
 
@@ -180,9 +180,9 @@ __declspec(dllexport)
 	(TestNative::PointerParent* self,
 	std::shared_ptr<TestNative::PointerChild>** children_,int children_Size
 	){
-	auto local_7759=std::make_unique<TestNative::PointerChild*[]>(children_Size);for(int i_7759=0;i_7759<children_Size;i_7759++)local_7759[i_7759]=(children_[i_7759]?children_[i_7759]->get():nullptr);
+	auto local_7759=std::vector<TestNative::PointerChild*>(children_Size);for(int i_7759=0;i_7759<children_Size;i_7759++)local_7759[i_7759]=(children_[i_7759]?children_[i_7759]->get():nullptr);
 	self->FillNewChildsPointer(
-	std::span<TestNative::PointerChild*>(local_7759.get(),children_Size));
+	std::span<TestNative::PointerChild*>(&local_7759[0],children_Size));
 	for(int i_7759=0;i_7759<children_Size;i_7759++)if(local_7759[i_7759]!=(children_[i_7759]?children_[i_7759]->get():nullptr))children_[i_7759]=(local_7759[i_7759]?new std::shared_ptr<TestNative::PointerChild>(local_7759[i_7759]):nullptr);
 	return ;}
 
@@ -242,17 +242,29 @@ __declspec(dllexport)
 
 __declspec(dllexport)
 	void 
-	__stdcall Wrapper_Call_TestNative_SafeObject_ConnectCallback_0
+	__stdcall Wrapper_Call_TestNative_SafeObject_ConnectToCallback_0
 	(std::shared_ptr<TestNative::SafeObject>* self,
 	std::shared_ptr<TestNative::SafeObject>* target_
 	){
-	(self?self->get():nullptr)->ConnectCallback(
+	(self?self->get():nullptr)->ConnectToCallback(
 	(target_?target_->get():nullptr));
 	return ;}
 
 __declspec(dllexport)
 	void 
-	__stdcall Wrapper_Call_TestNative_SafeObject_WaitThenSend_1
+	__stdcall Wrapper_Call_TestNative_SafeObject_ConnectAndWaitMultithread_1
+	(std::shared_ptr<TestNative::SafeObject>* self,
+	std::shared_ptr<TestNative::SafeObject>** waiters_,int waiters_Size
+	){
+	auto local_1080=std::vector<TestNative::SafeObject*>(waiters_Size);for(int i_1080=0;i_1080<waiters_Size;i_1080++)local_1080[i_1080]=(waiters_[i_1080]?waiters_[i_1080]->get():nullptr);
+	(self?self->get():nullptr)->ConnectAndWaitMultithread(
+	std::span<TestNative::SafeObject*>(&local_1080[0],waiters_Size));
+	for(int i_1080=0;i_1080<waiters_Size;i_1080++)if(local_1080[i_1080]!=(waiters_[i_1080]?waiters_[i_1080]->get():nullptr))waiters_[i_1080]=(local_1080[i_1080]?new std::shared_ptr<TestNative::SafeObject>(local_1080[i_1080]):nullptr);
+	return ;}
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_TestNative_SafeObject_WaitThenSend_2
 	(std::shared_ptr<TestNative::SafeObject>* self,
 	int callback_
 	){

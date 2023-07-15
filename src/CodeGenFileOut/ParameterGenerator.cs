@@ -28,7 +28,7 @@ namespace CodeGenFileOut
 				generated,
 				native,
 				string.Format(typeInfo.TransformFormat, $"{param.Name}", $"{param.Name}_Size"),
-				typeInfo.InverseFormat==null?null:string.Format(typeInfo.InverseFormat, $"{param.Name}_"),
+				typeInfo.InverseFormat == null ? null : string.Format(typeInfo.InverseFormat, $"{param.Name}_"),
 				typeInfo.Alloc == null ? null : string.Format(typeInfo.Alloc, $"{param.Name}", $"{param.Name}_Size"),
 				typeInfo.Free == null ? null : string.Format(typeInfo.Free, $"{param.Name}", $"{param.Name}_Size"));
 		}

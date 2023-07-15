@@ -11,9 +11,35 @@ SafeObject::~SafeObject()
 		call(-1);
 }
 
-void SafeObject::ConnectCallback(SafeObject* target)
+void SafeObject::ConnectToCallback(SafeObject* target)
 {
 	_connectedCallback = target->Callback;
+}
+
+struct threadMemory
+{
+	SafeObject* SafeObject;
+	int Index;
+};
+
+void threadAction(threadMemory memory)
+{
+	memory.SafeObject->WaitThenSend(memory.Index);
+}
+
+void SafeObject::ConnectAndWaitMultithread(span<SafeObject*> waiters)
+{
+	vector<jthread> threads(waiters.size());
+
+	for (int i = 0; i < waiters.size(); i++)
+	{
+		SafeObject*& waiter = waiters[i];
+		if (waiter)
+		{
+			waiter->ConnectToCallback(this);
+			threads[i] = jthread(threadAction, threadMemory{ .SafeObject = waiter, .Index = i });
+		}
+	}
 }
 
 void SafeObject::WaitThenSend(int callback)

@@ -18,7 +18,7 @@ namespace TestWrapper
 				lock (callbacks)
 					callbacks.Add(i);
 			};
-			safeObject.ConnectCallback(callbackContainer);
+			safeObject.ConnectToCallback(callbackContainer);
 
 			await safeObject.DisposeAsync();
 
@@ -39,7 +39,7 @@ namespace TestWrapper
 				lock (callbacks)
 					callbacks.Add(i);
 			};
-			safeObject.ConnectCallback(callbackContainer);
+			safeObject.ConnectToCallback(callbackContainer);
 			var reset = new ManualResetEvent(false);
 			safeObject.Await += () => reset.WaitOne();
 
@@ -66,16 +66,10 @@ namespace TestWrapper
 			await safeObject.DisposeAsync();
 
 			Assert.AreEqual(3, callbacks.Count);
-			if (callbacks[0] == 1)
-			{
-				Assert.AreEqual(2, callbacks[1]);
-			}
-			else
-			{
-				Assert.AreEqual(2, callbacks[0]);
-				Assert.AreEqual(1, callbacks[1]);
-			}
 			Assert.AreEqual(-1, callbacks[2]);
+			callbacks.Sort();
+			Assert.AreEqual(1, callbacks[1]);
+			Assert.AreEqual(2, callbacks[2]);
 		}
 
 		[TestMethod]
@@ -91,7 +85,7 @@ namespace TestWrapper
 				lock (callbacks)
 					callbacks.Add(i);
 			};
-			safeObject.ConnectCallback(callbackContainer);
+			safeObject.ConnectToCallback(callbackContainer);
 			var reset = new ManualResetEvent(false);
 			safeObject.Await += () => reset.WaitOne();
 
@@ -120,16 +114,81 @@ namespace TestWrapper
 			await dispose;
 
 			Assert.AreEqual(3, callbacks.Count);
-			if (callbacks[0] == 1)
-			{
-				Assert.AreEqual(2, callbacks[1]);
-			}
-			else
-			{
-				Assert.AreEqual(2, callbacks[0]);
-				Assert.AreEqual(1, callbacks[1]);
-			}
 			Assert.AreEqual(-1, callbacks[2]);
+			callbacks.Sort();
+			Assert.AreEqual(1, callbacks[1]);
+			Assert.AreEqual(2, callbacks[2]);
+		}
+
+		[TestMethod]
+		public async Task DisposeSpan()
+		{
+			using var callbackContainer = new SafeObject();
+
+			var safeObjects = new SafeObject?[16];
+
+			safeObjects[0] = new SafeObject();
+			safeObjects[1] = new SafeObject();
+			safeObjects[2] = new SafeObject();
+			safeObjects[3] = new SafeObject();
+
+			safeObjects[6] = new SafeObject();
+			safeObjects[7] = new SafeObject();
+			safeObjects[8] = new SafeObject();
+			safeObjects[9] = new SafeObject();
+
+			safeObjects[11] = safeObjects[1];
+			safeObjects[12] = safeObjects[2];
+			safeObjects[13] = safeObjects[7];
+			safeObjects[14] = safeObjects[8];
+
+			var callbacks = new List<int>();
+			callbackContainer.Callback += i =>
+			{
+				lock (callbacks)
+					callbacks.Add(i);
+			};
+
+			var threadStarted = new TaskCompletionSource();
+			var reset = new ManualResetEvent(false);
+			foreach (var safeObject in safeObjects)
+				if (safeObject != null)
+					safeObject.Await += () =>
+					{
+						threadStarted.TrySetResult();
+						reset.WaitOne();
+					};
+
+			new Thread(() => callbackContainer.ConnectAndWaitMultithread(safeObjects)).Start();
+
+			await threadStarted.Task;
+
+			var dispose = Task.WhenAll(safeObjects.OfType<SafeObject>().Select(safeObject => safeObject.DisposeAsync()));
+
+			reset.Set();
+
+			await dispose;
+
+			Assert.AreEqual(20, callbacks.Count);
+
+			var freeable = 0;
+			foreach (var callback in callbacks)
+			{
+				if (callback < 0)
+					Assert.IsTrue(freeable-- > 0);
+				else
+					freeable++;
+			}
+			Assert.AreEqual(4, freeable);
+
+			callbacks.Sort();
+			for (int i = 0; i < 4; i++)
+			{
+				Assert.AreEqual(i, callbacks[i + 8]);
+				Assert.AreEqual(i + 6, callbacks[i + 12]);
+				Assert.AreEqual(i + 11, callbacks[i + 16]);
+			}
+
 		}
 	}
 }

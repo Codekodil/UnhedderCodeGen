@@ -1,5 +1,4 @@
 ﻿using TestNative.TestNative;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace TestWrapper
 {

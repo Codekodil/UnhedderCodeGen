@@ -7,7 +7,7 @@ namespace CodeGenFileOut
 		public static string UniqueName(this ParserClass c) => string.Join("_", c.Namespaces.Concat(new[] { c.Name }));
 		public static string FullNameCpp(this ParserClass c) => string.Join("::", c.Namespaces.Concat(new[] { c.Name }));
 		public static string FullNameCs(this ParserClass c) => string.Join(".", c.Namespaces.Concat(new[] { c.Name }));
-		public static string ToIntPtr(string obj, string nameof) => $"({obj}==null?IntPtr.Zero:{obj}.Native??throw new System.ObjectDisposedException({nameof}))";
+		public static string ToIntPtr(string obj, string nameof) => $"({obj}==null?IntPtr.Zero:{obj}!.Native??throw new System.ObjectDisposedException({nameof}))";
 		public static string ToIntPtr(this ParserClass c) => $"Native??throw new System.ObjectDisposedException(nameof({c.Name}))";
 		public static (string Parameter, string Pointer) SelfNameCpp(this ParserClass c)
 		{
@@ -53,9 +53,9 @@ namespace CodeGenFileOut
 				var externFunction = $"Wrapper_Delete_{c.UniqueName()}";
 				if (c.ThreadSafe)
 				{
-					yield return "internal SafeGuard _safeGuard;";
+					yield return "internal _SafeGuard _safeGuard;";
 					yield return "public Task DisposeAsync()=>_safeGuard.DeleteAsync();";
-					yield return "public void Dispose()=>DisposeAsync().GetAwaiter().GetResult();";
+					yield return "public void Dispose(){var task=DisposeAsync();if(Thread.CurrentThread.IsThreadPoolThread)task.GetAwaiter().GetResult();}";
 				}
 				else
 				{

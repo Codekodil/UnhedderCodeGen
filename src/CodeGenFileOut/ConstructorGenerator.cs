@@ -90,7 +90,7 @@ namespace CodeGenFileOut
 						yield return p.Free;
 
 				if (c.ThreadSafe)
-					yield return "_safeGuard=new SafeGuard(Wrapper_Delete);";
+					yield return "_safeGuard=new _SafeGuard(Wrapper_Delete);";
 
 				yield return "}";
 

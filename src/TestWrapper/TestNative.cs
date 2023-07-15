@@ -24,7 +24,7 @@ public unsafe void
 	TestNative.PointerChild? child
 	){
 	Wrapper_Call_NotTestNative_PointerParent_SetChild_0(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
-	(child==null?IntPtr.Zero:child.Native??throw new System.ObjectDisposedException(nameof(child))));
+	(child==null?IntPtr.Zero:child!.Native??throw new System.ObjectDisposedException(nameof(child))));
 	return ;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Call_NotTestNative_PointerParent_SetChild_0
@@ -168,7 +168,7 @@ public unsafe PointerParent
 	TestNative.PointerChild? child
 	){
 	Native=Wrapper_New_TestNative_PointerParent_1(
-	(child==null?IntPtr.Zero:child.Native??throw new System.ObjectDisposedException(nameof(child))));
+	(child==null?IntPtr.Zero:child!.Native??throw new System.ObjectDisposedException(nameof(child))));
 	}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern IntPtr Wrapper_New_TestNative_PointerParent_1
@@ -198,7 +198,7 @@ public unsafe void
 	TestNative.PointerChild? child
 	){
 	Wrapper_Call_TestNative_PointerParent_SetChild_1(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
-	(child==null?IntPtr.Zero:child.Native??throw new System.ObjectDisposedException(nameof(child))));
+	(child==null?IntPtr.Zero:child!.Native??throw new System.ObjectDisposedException(nameof(child))));
 	return ;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern void Wrapper_Call_TestNative_PointerParent_SetChild_1
@@ -212,7 +212,7 @@ public unsafe bool
 	TestNative.PointerChild? child
 	){
 	var value_result=Wrapper_Call_TestNative_PointerParent_ChildEquals_2(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
-	(child==null?IntPtr.Zero:child.Native??throw new System.ObjectDisposedException(nameof(child))));
+	(child==null?IntPtr.Zero:child!.Native??throw new System.ObjectDisposedException(nameof(child))));
 	return value_result;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern bool Wrapper_Call_TestNative_PointerParent_ChildEquals_2
@@ -225,7 +225,7 @@ public unsafe void
 	(
 	Span<TestNative.PointerChild?> children
 	){
-	fixed(IntPtr*local7875=stackalloc IntPtr[children.Length]){for(int i7875=0;i7875<children.Length;i7875++)local7875[i7875]=((children[i7875]!)==null?IntPtr.Zero:(children[i7875]!).Native??throw new System.ObjectDisposedException(nameof(children)));
+	fixed(IntPtr*local7875=stackalloc IntPtr[children.Length]){for(int i7875=0;i7875<children.Length;i7875++)local7875[i7875]=((children[i7875])==null?IntPtr.Zero:(children[i7875])!.Native??throw new System.ObjectDisposedException(nameof(children)));
 	Wrapper_Call_TestNative_PointerParent_FillNewChildsShared_3(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
 	(IntPtr)local7875,children.Length);
 	for(int i7875=0;i7875<children.Length;i7875++)if(local7875[i7875]!=children[i7875]?.Native)children[i7875]=(local7875[i7875]==IntPtr.Zero?null:new TestNative.PointerChild((IntPtr?)local7875[i7875]));}
@@ -241,7 +241,7 @@ public unsafe void
 	(
 	Span<TestNative.PointerChild?> children
 	){
-	fixed(IntPtr*local7759=stackalloc IntPtr[children.Length]){for(int i7759=0;i7759<children.Length;i7759++)local7759[i7759]=((children[i7759]!)==null?IntPtr.Zero:(children[i7759]!).Native??throw new System.ObjectDisposedException(nameof(children)));
+	fixed(IntPtr*local7759=stackalloc IntPtr[children.Length]){for(int i7759=0;i7759<children.Length;i7759++)local7759[i7759]=((children[i7759])==null?IntPtr.Zero:(children[i7759])!.Native??throw new System.ObjectDisposedException(nameof(children)));
 	Wrapper_Call_TestNative_PointerParent_FillNewChildsPointer_4(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
 	(IntPtr)local7759,children.Length);
 	for(int i7759=0;i7759<children.Length;i7759++)if(local7759[i7759]!=children[i7759]?.Native)children[i7759]=(local7759[i7759]==IntPtr.Zero?null:new TestNative.PointerChild((IntPtr?)local7759[i7759]));}
@@ -257,7 +257,7 @@ public unsafe void
 	(
 	Span<TestNative.PointerParent?> parents
 	){
-	fixed(IntPtr*local3372=stackalloc IntPtr[parents.Length]){for(int i3372=0;i3372<parents.Length;i3372++)local3372[i3372]=((parents[i3372]!)==null?IntPtr.Zero:(parents[i3372]!).Native??throw new System.ObjectDisposedException(nameof(parents)));
+	fixed(IntPtr*local3372=stackalloc IntPtr[parents.Length]){for(int i3372=0;i3372<parents.Length;i3372++)local3372[i3372]=((parents[i3372])==null?IntPtr.Zero:(parents[i3372])!.Native??throw new System.ObjectDisposedException(nameof(parents)));
 	Wrapper_Call_TestNative_PointerParent_FillNewParents_5(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
 	(IntPtr)local3372,parents.Length);
 	for(int i3372=0;i3372<parents.Length;i3372++)if(local3372[i3372]!=parents[i3372]?.Native)parents[i3372]=(local3372[i3372]==IntPtr.Zero?null:new TestNative.PointerParent((IntPtr?)local3372[i3372]));}
@@ -314,14 +314,14 @@ public void Dispose()=>Wrapper_Delete();
 /*------------------------- TestNative.SafeObject -------------------------*/
 
 namespace TestNative.TestNative{
-internal class SafeObject:IDisposable{public IntPtr?Native;public SafeObject(IntPtr?native){Native=native;_safeGuard=new SafeGuard(Wrapper_Delete);}
+internal class SafeObject:IDisposable{public IntPtr?Native;public SafeObject(IntPtr?native){Native=native;_safeGuard=new _SafeGuard(Wrapper_Delete);}
 
 //Constructors:
 
 public unsafe SafeObject
 	(){
 	Native=Wrapper_New_TestNative_SafeObject_0();
-	_safeGuard=new SafeGuard(Wrapper_Delete);
+	_safeGuard=new _SafeGuard(Wrapper_Delete);
 	}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
 	private static extern IntPtr Wrapper_New_TestNative_SafeObject_0
@@ -330,18 +330,36 @@ public unsafe SafeObject
 //Methods:
 
 public unsafe void 
-	ConnectCallback
+	ConnectToCallback
 	(
 	TestNative.SafeObject? target
 	){
 	using var selfLocker = _safeGuard.Lock(nameof(SafeObject));
-	Wrapper_Call_TestNative_SafeObject_ConnectCallback_0(Native!.Value,
-	(target==null?IntPtr.Zero:target.Native??throw new System.ObjectDisposedException(nameof(target))));
+	using var lock3223=target?._safeGuard.Lock(nameof(target));
+	Wrapper_Call_TestNative_SafeObject_ConnectToCallback_0(Native!.Value,
+	target!.Native!.Value);
 	return ;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
-	private static extern void Wrapper_Call_TestNative_SafeObject_ConnectCallback_0
+	private static extern void Wrapper_Call_TestNative_SafeObject_ConnectToCallback_0
 	(IntPtr self,
 	IntPtr target_
+	);
+
+public unsafe void 
+	ConnectAndWaitMultithread
+	(
+	Span<TestNative.SafeObject?> waiters
+	){
+	using var selfLocker = _safeGuard.Lock(nameof(SafeObject));
+	fixed(IntPtr*local1080=stackalloc IntPtr[waiters.Length]){var locks1080=new _SafeGuard.DisposableLock?[waiters.Length];for(int i1080=0;i1080<waiters.Length;i1080++)locks1080[i1080]=waiters[i1080]==null?null:waiters[i1080]!._safeGuard.Lock(nameof(waiters));try{for(int i1080=0;i1080<waiters.Length;i1080++)local1080[i1080]=((waiters[i1080])==null?IntPtr.Zero:(waiters[i1080])!.Native??throw new System.ObjectDisposedException(nameof(waiters)));
+	Wrapper_Call_TestNative_SafeObject_ConnectAndWaitMultithread_1(Native!.Value,
+	(IntPtr)local1080,waiters.Length);
+	for(int i1080=0;i1080<waiters.Length;i1080++)if(local1080[i1080]!=waiters[i1080]?.Native)waiters[i1080]=(local1080[i1080]==IntPtr.Zero?null:new TestNative.SafeObject((IntPtr?)local1080[i1080]));}finally{for(int i1080=0;i1080<waiters.Length;i1080++)locks1080[i1080]?.Dispose();}}
+	return ;}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Call_TestNative_SafeObject_ConnectAndWaitMultithread_1
+	(IntPtr self,
+	IntPtr waiters_,int waiters_Size
 	);
 
 public unsafe void 
@@ -350,11 +368,11 @@ public unsafe void
 	int callback
 	){
 	using var selfLocker = _safeGuard.Lock(nameof(SafeObject));
-	Wrapper_Call_TestNative_SafeObject_WaitThenSend_1(Native!.Value,
+	Wrapper_Call_TestNative_SafeObject_WaitThenSend_2(Native!.Value,
 	callback);
 	return ;}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
-	private static extern void Wrapper_Call_TestNative_SafeObject_WaitThenSend_1
+	private static extern void Wrapper_Call_TestNative_SafeObject_WaitThenSend_2
 	(IntPtr self,
 	int callback_
 	);
@@ -403,9 +421,9 @@ private delegate void Await_Delegate_Native(
 
 //Delete:
 
-internal SafeGuard _safeGuard;
+internal _SafeGuard _safeGuard;
 	public Task DisposeAsync()=>_safeGuard.DeleteAsync();
-	public void Dispose()=>DisposeAsync().GetAwaiter().GetResult();
+	public void Dispose(){var task=DisposeAsync();if(Thread.CurrentThread.IsThreadPoolThread)task.GetAwaiter().GetResult();}
 	~SafeObject()=>Wrapper_Delete();
 	private void Wrapper_Delete(){
 	if(!Native.HasValue)return;
@@ -425,12 +443,12 @@ internal SafeGuard _safeGuard;
 /*------------------------- SafeGuard -------------------------*/
 
 namespace TestNative{
-	internal class SafeGuard{
+	internal class _SafeGuard{
 	private readonly object _locker = new object();
 	private int _callCount = 0;
 	private TaskCompletionSource? _disposeTask;
 	private Action _delete;
-	public SafeGuard(Action delete)=>_delete = delete;
+	public _SafeGuard(Action delete)=>_delete = delete;
 	public DisposableLock Lock(string objectName)=>new DisposableLock(this, objectName);
 	
 	public Task DeleteAsync(){
@@ -439,9 +457,9 @@ namespace TestNative{
 	if(doDelete){try{_delete();_disposeTask.SetResult();}catch(Exception e){_disposeTask.SetException(e);}}
 	return _disposeTask.Task;}
 	public struct DisposableLock:IDisposable{
-	private readonly SafeGuard _guard;
+	private readonly _SafeGuard _guard;
 	
-	public DisposableLock(SafeGuard guard,string objectName){
+	public DisposableLock(_SafeGuard guard,string objectName){
 	_guard = guard;
 	lock(guard._locker){if(guard._disposeTask!=null)throw new ObjectDisposedException(objectName);guard._callCount++;}}
 	public void Dispose(){

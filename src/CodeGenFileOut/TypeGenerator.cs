@@ -47,17 +47,17 @@ namespace CodeGenFileOut
 						var spanType = type.Shared ? $"std::shared_ptr<{generated}>" : $"{generated}*";
 						if (transformFormat != "{0}")
 						{
-							var uniqueArray = GetLocal("local_", type);
+							var vector = GetLocal("local_", type);
 							var iterator = GetLocal("i_", type);
 
-							alloc = $"auto {uniqueArray}=std::make_unique<{spanType}[]>({{1}});" +
+							alloc = $"auto {vector}=std::vector<{spanType}>({{1}});" +
 								$"for(int {iterator}=0;{iterator}<{{1}};{iterator}++)" +
-								$"{uniqueArray}[{iterator}]={string.Format(transformFormat, $"{{0}}[{iterator}]")};";
+								$"{vector}[{iterator}]={string.Format(transformFormat, $"{{0}}[{iterator}]")};";
 
 							free = $"for(int {iterator}=0;{iterator}<{{1}};{iterator}++)" +
-								$"if({uniqueArray}[{iterator}]!={string.Format(transformFormat, $"{{0}}[{iterator}]")}){{0}}[{iterator}]={string.Format(inverseFormat, $"{uniqueArray}[{iterator}]")};";
+								$"if({vector}[{iterator}]!={string.Format(transformFormat, $"{{0}}[{iterator}]")}){{0}}[{iterator}]={string.Format(inverseFormat, $"{vector}[{iterator}]")};";
 
-							transformFormat = $"{uniqueArray}.get()";
+							transformFormat = $"&{vector}[0]";
 						}
 						transformFormat = $"std::span<{spanType}>({transformFormat},{{1}})";
 					}
@@ -121,19 +121,50 @@ namespace CodeGenFileOut
 					{
 						var fixedName = GetLocal("local", type);
 						var iterator = GetLocal("i", type);
+						var locks = GetLocal("locks", type);
 
-						alloc = $"fixed(IntPtr*{fixedName}=stackalloc IntPtr[{{0}}.Length]){{{{" +
-							$"for(int {iterator}=0;{iterator}<{{0}}.Length;{iterator}++)" +
-							$"{fixedName}[{iterator}]={ClassGenerator.ToIntPtr($"({{0}}[{iterator}]!)", "nameof({0})")};";
+						alloc = $"fixed(IntPtr*{fixedName}=stackalloc IntPtr[{{0}}.Length]){{{{";
+						if (parsed.Class.ThreadSafe)
+						{
+							alloc += $"var {locks}=new _SafeGuard.DisposableLock?[{{0}}.Length];";
+							alloc += $"for(int {iterator}=0;{iterator}<{{0}}.Length;{iterator}++)";
+							alloc += $"{locks}[{iterator}]={{0}}[{iterator}]==null?null:{{0}}[{iterator}]!._safeGuard.Lock(nameof({{0}}));";
+							alloc += "try{{";
+							alloc += $"for(int {iterator}=0;{iterator}<{{0}}.Length;{iterator}++)";
+							alloc += $"{fixedName}[{iterator}]={ClassGenerator.ToIntPtr($"({{0}}[{iterator}])", "nameof({0})")};";
+						}
+						else
+						{
+							alloc += $"for(int {iterator}=0;{iterator}<{{0}}.Length;{iterator}++)";
+							alloc += $"{fixedName}[{iterator}]={ClassGenerator.ToIntPtr($"({{0}}[{iterator}])", "nameof({0})")};";
+						}
 
 						transformFormat = $"(IntPtr){fixedName},{{0}}.Length";
 
 						free = $"for(int {iterator}=0;{iterator}<{{0}}.Length;{iterator}++)" +
-							$"if({fixedName}[{iterator}]!={{0}}[{iterator}]?.Native){{0}}[{iterator}]={string.Format(inverseFormat, $"{fixedName}[{iterator}]")};}}}}";
+							$"if({fixedName}[{iterator}]!={{0}}[{iterator}]?.Native){{0}}[{iterator}]={string.Format(inverseFormat, $"{fixedName}[{iterator}]")};";
+
+						if (parsed.Class.ThreadSafe)
+						{
+							free += "}}finally{{";
+							free += $"for(int {iterator}=0;{iterator}<{{0}}.Length;{iterator}++)";
+							free += $"{locks}[{iterator}]?.Dispose();";
+							free += "}}";
+						}
+
+						free += "}}";
 					}
 					else
 					{
-						transformFormat = ClassGenerator.ToIntPtr("{0}", "nameof({0})");
+						if (parsed.Class.ThreadSafe)
+						{
+							alloc = $"using var {GetLocal("lock", type)}={{0}}?._safeGuard.Lock(nameof({{0}}));";
+							transformFormat = "{0}!.Native!.Value";
+						}
+						else
+						{
+							transformFormat = ClassGenerator.ToIntPtr("{0}", "nameof({0})");
+						}
 					}
 					break;
 				case MatchedString:
