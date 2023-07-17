@@ -20,7 +20,7 @@ namespace CodeGenFileOut
 			void Generate()
 			{
 				var dllImport = $"[System.Runtime.InteropServices.DllImport(\"{config.NativeLibraryName}\")]";
-				foreach (var c in declarations.SelectMany(d => d))
+				foreach (var c in declarations.SelectMany(d => d).Where(c => c.Pointer || c.Shared))
 				{
 #if DEBUG
 					file.WriteLine("");

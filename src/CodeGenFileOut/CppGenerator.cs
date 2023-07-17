@@ -19,7 +19,9 @@ namespace CodeGenFileOut
 
 			void Generate()
 			{
-				foreach (var include in new[] { config.Pch }.Concat(declarations.SelectMany(d => d.Select(c => c.File))).Distinct())
+				var classes = declarations.SelectMany(d => d).Where(c => c.Pointer || c.Shared).ToList();
+
+				foreach (var include in new[] { config.Pch }.Concat(classes.Select(c => c.File)).Distinct())
 					if (include != null)
 						file.WriteLine($@"#include""{Path.GetRelativePath(Path.GetDirectoryName(config.CppResultPath)!, include)}""");
 
@@ -30,7 +32,7 @@ namespace CodeGenFileOut
 
 				file.WriteLine("__declspec(dllexport)void*__stdcall Wrapper_Shared_Ptr_Get(std::shared_ptr<void>*self){return self->get();}");
 
-				foreach (var c in declarations.SelectMany(d => d))
+				foreach (var c in classes)
 				{
 #if DEBUG
 					file.WriteLine("");

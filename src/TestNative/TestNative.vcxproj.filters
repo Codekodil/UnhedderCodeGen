@@ -7,6 +7,7 @@
     <ClInclude Include="DifferentNamespaceParent.h" />
     <ClInclude Include="CodeGen.h" />
     <ClInclude Include="SafeObject.h" />
+    <ClInclude Include="DontWrap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -15,5 +16,6 @@
     <ClCompile Include="DifferentNamespaceParent.cpp" />
     <ClCompile Include="Export.cpp" />
     <ClCompile Include="SafeObject.cpp" />
+    <ClCompile Include="DontWrap.cpp" />
   </ItemGroup>
 </Project>
