@@ -144,7 +144,17 @@ __declspec(dllexport)
 
 __declspec(dllexport)
 	void 
-	__stdcall Wrapper_Call_TestNative_PointerParent_SetChild_1
+	__stdcall Wrapper_Call_TestNative_PointerParent_Double_1
+	(TestNative::PointerParent* self,
+	int* a_
+	){
+	self->Double(
+	a_);
+	return ;}
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_TestNative_PointerParent_SetChild_2
 	(TestNative::PointerParent* self,
 	std::shared_ptr<TestNative::PointerChild>* child_
 	){
@@ -154,7 +164,7 @@ __declspec(dllexport)
 
 __declspec(dllexport)
 	bool 
-	__stdcall Wrapper_Call_TestNative_PointerParent_ChildEquals_2
+	__stdcall Wrapper_Call_TestNative_PointerParent_ChildEquals_3
 	(TestNative::PointerParent* self,
 	std::shared_ptr<TestNative::PointerChild>* child_
 	){
@@ -164,7 +174,7 @@ __declspec(dllexport)
 
 __declspec(dllexport)
 	void 
-	__stdcall Wrapper_Call_TestNative_PointerParent_FillNewChildsShared_3
+	__stdcall Wrapper_Call_TestNative_PointerParent_FillNewChildsShared_4
 	(TestNative::PointerParent* self,
 	std::shared_ptr<TestNative::PointerChild>** children_,int children_Size
 	){
@@ -176,7 +186,7 @@ __declspec(dllexport)
 
 __declspec(dllexport)
 	void 
-	__stdcall Wrapper_Call_TestNative_PointerParent_FillNewChildsPointer_4
+	__stdcall Wrapper_Call_TestNative_PointerParent_FillNewChildsPointer_5
 	(TestNative::PointerParent* self,
 	std::shared_ptr<TestNative::PointerChild>** children_,int children_Size
 	){
@@ -188,7 +198,7 @@ __declspec(dllexport)
 
 __declspec(dllexport)
 	void 
-	__stdcall Wrapper_Call_TestNative_PointerParent_FillNewParents_5
+	__stdcall Wrapper_Call_TestNative_PointerParent_FillNewParents_6
 	(TestNative::PointerParent* self,
 	TestNative::PointerParent** parents_,int parents_Size
 	){
@@ -198,7 +208,7 @@ __declspec(dllexport)
 
 __declspec(dllexport)
 	std::shared_ptr<TestNative::PointerChild>* 
-	__stdcall Wrapper_Call_TestNative_PointerParent_MaybeMakePointer_6
+	__stdcall Wrapper_Call_TestNative_PointerParent_MaybeMakePointer_7
 	(TestNative::PointerParent* self,
 	bool isNull_
 	){
@@ -208,7 +218,7 @@ __declspec(dllexport)
 
 __declspec(dllexport)
 	std::shared_ptr<TestNative::PointerChild>* 
-	__stdcall Wrapper_Call_TestNative_PointerParent_MaybeMakeShared_7
+	__stdcall Wrapper_Call_TestNative_PointerParent_MaybeMakeShared_8
 	(TestNative::PointerParent* self,
 	bool isNull_
 	){

@@ -19,6 +19,11 @@ int PointerParent::Double(int a)
 	return a * 2;
 }
 
+void PointerParent::Double(int* a)
+{
+	*a *= 2;
+}
+
 void PointerParent::SetChild(PointerChild* child)
 {
 	_child = child;

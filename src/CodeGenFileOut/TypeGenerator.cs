@@ -103,6 +103,15 @@ namespace CodeGenFileOut
 					native = generated = data.Type;
 					asPointer = type.Pointer;
 					asShared = type.Shared;
+					if (type.Pointer)
+					{
+						generated = $"ref {generated}";
+						native = "IntPtr";
+						var fixedName = GetLocal("local", type);
+						alloc = $"fixed({data.Type}*{fixedName}=&{{0}}){{{{";
+						transformFormat = $"(IntPtr){fixedName}";
+						free = "}}";
+					}
 					if (type.Span)
 					{
 						var fixedName = GetLocal("local", type);

@@ -12,6 +12,7 @@ namespace TestNative
 		PointerParent(PointerChild* child);
 
 		int Double(int a);
+		void Double(int* a);
 
 		void SetChild(PointerChild* child);
 		bool ChildEquals(std::shared_ptr<TestNative::PointerChild> child);

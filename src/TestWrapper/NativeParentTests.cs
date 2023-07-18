@@ -13,6 +13,15 @@ namespace TestWrapper
 		}
 
 		[TestMethod]
+		public void RefValue()
+		{
+			using var parent = new PointerParent(2333);
+			var i = 21;
+			parent.Double(ref i);
+			Assert.AreEqual(42, i);
+		}
+
+		[TestMethod]
 		public void PointersMatch()
 		{
 			using var parent = new PointerParent(2333);
