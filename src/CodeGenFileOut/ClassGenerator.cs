@@ -54,8 +54,7 @@ namespace CodeGenFileOut
 				if (c.ThreadSafe)
 				{
 					yield return "internal _SafeGuard _safeGuard;";
-					yield return "public Task DisposeAsync()=>_safeGuard.DeleteAsync();";
-					yield return "public void Dispose(){var task=DisposeAsync();if(Thread.CurrentThread.IsThreadPoolThread)task.GetAwaiter().GetResult();}";
+					yield return "public ValueTask DisposeAsync()=>new ValueTask(_safeGuard.DeleteAsync());";
 				}
 				else
 				{

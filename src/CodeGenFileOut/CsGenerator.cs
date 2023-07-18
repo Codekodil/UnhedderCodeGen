@@ -30,7 +30,7 @@ namespace CodeGenFileOut
 					file.WriteLine("");
 #endif
 					file.WriteLine($"namespace {string.Join(".", new[] { config.NativeLibraryName }.Concat(c.Namespaces))}{{");
-					file.WriteLine($"internal class {c.Name}:IDisposable{{public IntPtr?Native;public {c.Name}(IntPtr?native){{Native=native;{(c.ThreadSafe ? "_safeGuard=new _SafeGuard(Wrapper_Delete);" : "")}}}");
+					file.WriteLine($"internal class {c.Name}:{(c.ThreadSafe ? nameof(IAsyncDisposable) : nameof(IDisposable))}{{public IntPtr?Native;public {c.Name}(IntPtr?native){{Native=native;{(c.ThreadSafe ? "_safeGuard=new _SafeGuard(Wrapper_Delete);" : "")}}}");
 #if DEBUG
 					file.WriteLine("");
 					file.WriteLine("//Constructors:");

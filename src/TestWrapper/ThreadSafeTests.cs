@@ -8,7 +8,7 @@ namespace TestWrapper
 		[TestMethod]
 		public async Task DisposeImidiatly()
 		{
-			using var callbackContainer = new SafeObject();
+			await using var callbackContainer = new SafeObject();
 
 			var safeObject = new SafeObject();
 
@@ -29,7 +29,7 @@ namespace TestWrapper
 		[TestMethod]
 		public async Task DisposeAfter()
 		{
-			using var callbackContainer = new SafeObject();
+			await using var callbackContainer = new SafeObject();
 
 			var safeObject = new SafeObject();
 
@@ -75,7 +75,7 @@ namespace TestWrapper
 		[TestMethod]
 		public async Task DisposeDuring()
 		{
-			using var callbackContainer = new SafeObject();
+			await using var callbackContainer = new SafeObject();
 
 			var safeObject = new SafeObject();
 
@@ -123,7 +123,7 @@ namespace TestWrapper
 		[TestMethod]
 		public async Task DisposeSpan()
 		{
-			using var callbackContainer = new SafeObject();
+			await using var callbackContainer = new SafeObject();
 
 			var safeObjects = new SafeObject?[16];
 
@@ -163,7 +163,7 @@ namespace TestWrapper
 
 			await threadStarted.Task;
 
-			var dispose = Task.WhenAll(safeObjects.OfType<SafeObject>().Select(safeObject => safeObject.DisposeAsync()));
+			var dispose = Task.WhenAll(safeObjects.OfType<SafeObject>().Select(safeObject => safeObject.DisposeAsync().AsTask()));
 
 			reset.Set();
 

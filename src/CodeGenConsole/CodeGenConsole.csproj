@@ -14,8 +14,4 @@
     <ProjectReference Include="..\CodeGenWrapper\CodeGenWrapper.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="bin\" />
-  </ItemGroup>
-
 </Project>

@@ -314,7 +314,7 @@ public void Dispose()=>Wrapper_Delete();
 /*------------------------- TestNative.SafeObject -------------------------*/
 
 namespace TestNative.TestNative{
-internal class SafeObject:IDisposable{public IntPtr?Native;public SafeObject(IntPtr?native){Native=native;_safeGuard=new _SafeGuard(Wrapper_Delete);}
+internal class SafeObject:IAsyncDisposable{public IntPtr?Native;public SafeObject(IntPtr?native){Native=native;_safeGuard=new _SafeGuard(Wrapper_Delete);}
 
 //Constructors:
 
@@ -422,8 +422,7 @@ private delegate void Await_Delegate_Native(
 //Delete:
 
 internal _SafeGuard _safeGuard;
-	public Task DisposeAsync()=>_safeGuard.DeleteAsync();
-	public void Dispose(){var task=DisposeAsync();if(Thread.CurrentThread.IsThreadPoolThread)task.GetAwaiter().GetResult();}
+	public ValueTask DisposeAsync()=>new ValueTask(_safeGuard.DeleteAsync());
 	~SafeObject()=>Wrapper_Delete();
 	private void Wrapper_Delete(){
 	if(!Native.HasValue)return;
