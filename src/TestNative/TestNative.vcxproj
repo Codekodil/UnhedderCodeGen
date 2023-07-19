@@ -150,6 +150,7 @@
     <ClInclude Include="PointerChild.h" />
     <ClInclude Include="PointerParent.h" />
     <ClInclude Include="SafeObject.h" />
+    <ClInclude Include="Lookups.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DifferentNamespaceParent.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="PointerChild.cpp" />
     <ClCompile Include="PointerParent.cpp" />
     <ClCompile Include="SafeObject.cpp" />
+    <ClCompile Include="Lookups.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

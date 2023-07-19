@@ -34,18 +34,11 @@ bool PointerParent::ChildEquals(shared_ptr<PointerChild> child)
 	return child.get() == _child;
 }
 
-void PointerParent::FillNewChildsShared(span<shared_ptr<PointerChild>> children)
+void PointerParent::FillNewChildren(span<shared_ptr<PointerChild>> children)
 {
 	for (auto& child : children)
 		if (child == nullptr)
 			child = make_shared<PointerChild>();
-}
-
-void PointerParent::FillNewChildsPointer(span<PointerChild*> children)
-{
-	for (auto& child : children)
-		if (child == nullptr)
-			child = new PointerChild();
 }
 
 void PointerParent::FillNewParents(span<PointerParent*> parents)
@@ -55,12 +48,7 @@ void PointerParent::FillNewParents(span<PointerParent*> parents)
 			parent = new PointerParent(_child);
 }
 
-PointerChild* PointerParent::MaybeMakePointer(bool isNull)
-{
-	return isNull ? nullptr : new PointerChild();
-}
-
-shared_ptr<PointerChild> PointerParent::MaybeMakeShared(bool isNull)
+shared_ptr<PointerChild> PointerParent::MaybeMake(bool isNull)
 {
 	return isNull ? nullptr : make_shared<PointerChild>();
 }

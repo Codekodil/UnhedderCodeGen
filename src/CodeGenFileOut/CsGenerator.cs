@@ -20,6 +20,13 @@ namespace CodeGenFileOut
 			void Generate()
 			{
 				var dllImport = $"[System.Runtime.InteropServices.DllImport(\"{config.NativeLibraryName}\")]";
+
+#if DEBUG
+				file.WriteLine("");
+				file.WriteLine("");
+#endif
+				file.WriteLine($"namespace {config.NativeLibraryName}{{internal static class SharedPointer{{{dllImport}public static extern IntPtr Wrapper_Shared_Ptr_Get(IntPtr self);{dllImport}public static extern void Wrapper_Shared_Ptr_Delete(IntPtr self);}}}}");
+
 				foreach (var c in declarations.SelectMany(d => d).Where(c => c.Pointer || c.Shared))
 				{
 #if DEBUG
@@ -31,6 +38,9 @@ namespace CodeGenFileOut
 #endif
 					file.WriteLine($"namespace {string.Join(".", new[] { config.NativeLibraryName }.Concat(c.Namespaces))}{{");
 					file.WriteLine($"internal class {c.Name}:{(c.ThreadSafe ? nameof(IAsyncDisposable) : nameof(IDisposable))}{{public IntPtr?Native;public {c.Name}(IntPtr?native){{Native=native;{(c.ThreadSafe ? "_safeGuard=new _SafeGuard(Wrapper_Delete);" : "")}}}");
+
+					if (c.Lookup)
+						file.WriteLine($"internal class {c.Name}PointerLookup:PointerLookup<{c.Name}>{{protected override {c.Name} New(IntPtr ptr)=>new {c.Name}((IntPtr?)ptr);protected override bool Shared()=>{(c.Shared ? "true" : "false")};protected override void Delete(IntPtr ptr)=>Wrapper_Delete_{c.UniqueName()}(ptr);}}internal static readonly {c.Name}PointerLookup _lookup=new {c.Name}PointerLookup();");
 #if DEBUG
 					file.WriteLine("");
 					file.WriteLine("//Constructors:");
@@ -109,8 +119,40 @@ namespace CodeGenFileOut
 			"public void Dispose(){",
 			"var doDelete=false;",
 			"lock(_guard._locker){if(--_guard._callCount==0)doDelete=_guard._disposeTask!=null;}",
-			"if(doDelete){try{_guard._delete();_guard._disposeTask!.SetResult();}catch(Exception e){_guard._disposeTask!.SetException(e);}}}",
-			"}}}"));
+			"if(doDelete){try{_guard._delete();_guard._disposeTask!.SetResult();}catch(Exception e){_guard._disposeTask!.SetException(e);}}}}",
+			"}}"));
+
+#if DEBUG
+				file.WriteLine("");
+				file.WriteLine("");
+				file.WriteLine($"/*------------------------- PointerLookup -------------------------*/");
+
+				file.WriteLine("");
+#endif
+				file.WriteLine(string.Join(
+#if DEBUG
+			"\n\t",
+#else
+			"",
+#endif
+			$"namespace {config.NativeLibraryName}{{",
+			"internal abstract class PointerLookup<T>where T:class{",
+			"",
+			"protected abstract T New(IntPtr ptr);",
+			"protected abstract bool Shared();",
+			"protected abstract void Delete(IntPtr ptr);",
+			"",
+			"private readonly Dictionary<IntPtr,WeakReference<T>>_references=new Dictionary<IntPtr,WeakReference<T>>();",
+			"public PointerLookup(){PeriodicGC();",
+			"async void PeriodicGC(){while(true){await Task.Delay(10000);lock(_references){",
+			"var toRemove=new List<IntPtr>();",
+			"foreach(var kv in _references)if(!kv.Value.TryGetTarget(out _))toRemove.Add(kv.Key);",
+			"foreach(var remove in toRemove)_references.Remove(remove);}}}}",
+			"",
+			"public T GetOrMake(IntPtr ptr){lock(_references){var memory=Shared()?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr;",
+			"if(!(_references.TryGetValue(memory,out var weak)&&weak.TryGetTarget(out var t)))_references[memory]=new WeakReference<T>(t=New(ptr));else if(Shared())Delete(ptr);return t;}}",
+			"public void Add(T reference,IntPtr ptr){lock(_references)_references[Shared()?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr]=new WeakReference<T>(reference);}",
+			"}}"));
 			}
 		}
 	}

@@ -6,5 +6,6 @@
 		public const string Shared = "Wrapper_Shared";
 		public const string Ignore = "Wrapper_Ignore";
 		public const string ThreadSafe = "Wrapper_ThreadSafe";
+		public const string Lookup = "Wrapper_Lookup";
 	}
 }

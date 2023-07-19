@@ -17,11 +17,9 @@ namespace TestNative
 		void SetChild(PointerChild* child);
 		bool ChildEquals(std::shared_ptr<TestNative::PointerChild> child);
 
-		void FillNewChildsShared(std::span<std::shared_ptr<TestNative::PointerChild>> children);
-		void FillNewChildsPointer(std::span<TestNative::PointerChild*> children);
+		void FillNewChildren(std::span<std::shared_ptr<TestNative::PointerChild>> children);
 		void FillNewParents(std::span<TestNative::PointerParent*> parents);
 
-		PointerChild* MaybeMakePointer(bool isNull);
-		std::shared_ptr<PointerChild> MaybeMakeShared(bool isNull);
+		std::shared_ptr<PointerChild> MaybeMake(bool isNull);
 	};
 }

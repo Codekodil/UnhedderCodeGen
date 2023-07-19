@@ -3,3 +3,4 @@
 #define Wrapper_Shared
 #define Wrapper_Ignore
 #define Wrapper_ThreadSafe
+#define Wrapper_Lookup

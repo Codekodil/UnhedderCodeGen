@@ -13,7 +13,7 @@ namespace TestNative
 		void(__stdcall* Await)() = nullptr;
 
 		void ConnectToCallback(SafeObject* target);
-		void ConnectAndWaitMultithread(std::span<SafeObject*> waiters);
+		void ConnectAndWaitMultithread(std::span<std::shared_ptr<SafeObject>> waiters);
 
 		void WaitThenSend(int callback);
 	};

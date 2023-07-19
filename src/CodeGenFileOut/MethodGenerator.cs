@@ -39,11 +39,14 @@ namespace CodeGenFileOut
 					yield return "){";
 				}
 
+				if(returnType.InverseFormat != null)
+					yield return $"{returnType.BufferType} value_result;";
+
 				foreach (var p in parameters)
 					if (p.Alloc != null)
 						yield return p.Alloc;
 
-				yield return (returnType.InverseFormat == null ? "" : $"auto value_result=") + $"{self.Pointer}->{m.Name}(" + (parameters.Count == 0 ? ");" : "");
+				yield return (returnType.InverseFormat == null ? "" : $"value_result=") + $"{self.Pointer}->{m.Name}(" + (parameters.Count == 0 ? ");" : "");
 				for (int i = 0; i < parameters.Count; i++)
 					yield return parameters[i].Argument + (i == parameters.Count - 1 ? ");" : ",");
 

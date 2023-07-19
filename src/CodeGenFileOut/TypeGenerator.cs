@@ -5,9 +5,10 @@ namespace CodeGenFileOut
 {
 	public static class TypeGenerator
 	{
-		public static (string Generated, string TransformFormat, string? InverseFormat, bool RequireSize, string? Alloc, string? Free) GenerateCpp(this ParserType type)
+		public static (string Generated, string BufferType, string TransformFormat, string? InverseFormat, bool RequireSize, string? Alloc, string? Free) GenerateCpp(this ParserType type)
 		{
 			string generated;
+			string? bufferType = null;
 
 			bool asPointer;
 			bool asShared;
@@ -37,10 +38,15 @@ namespace CodeGenFileOut
 					if (parsed.Class.Shared)
 					{
 						if (type.Pointer)
+						{
 							transformFormat = "({0}?{0}->get():nullptr)";
+							inverseFormat = null;
+						}
 						else
+						{
 							transformFormat = "({0}?*{0}:nullptr)";
-						inverseFormat = $"({{0}}?new std::shared_ptr<{parsed.Class.FullNameCpp()}>({{0}}):nullptr)";
+							inverseFormat = $"({{0}}?new std::shared_ptr<{parsed.Class.FullNameCpp()}>({{0}}):nullptr)";
+						}
 					}
 					if (type.Span)
 					{
@@ -55,7 +61,7 @@ namespace CodeGenFileOut
 								$"{vector}[{iterator}]={string.Format(transformFormat, $"{{0}}[{iterator}]")};";
 
 							free = $"for(int {iterator}=0;{iterator}<{{1}};{iterator}++)" +
-								$"if({vector}[{iterator}]!={string.Format(transformFormat, $"{{0}}[{iterator}]")}){{0}}[{iterator}]={string.Format(inverseFormat, $"{vector}[{iterator}]")};";
+								$"if({vector}[{iterator}]!={string.Format(transformFormat, $"{{0}}[{iterator}]")}){{0}}[{iterator}]={string.Format(inverseFormat!, $"{vector}[{iterator}]")};";
 
 							transformFormat = $"&{vector}[0]";
 						}
@@ -70,6 +76,10 @@ namespace CodeGenFileOut
 				default:
 					throw new Exception($"Type {type} was not type checked");
 			}
+			if (type.Pointer)
+				bufferType = generated + "*";
+			if (type.Shared)
+				bufferType = $"std::shared_ptr<{generated}>";
 			if (asPointer)
 				generated += "*";
 			if (asShared)
@@ -77,7 +87,7 @@ namespace CodeGenFileOut
 			if (type.Span)
 				generated += "*";
 
-			return (generated, transformFormat, inverseFormat, type.Span, alloc, free);
+			return (generated, bufferType ?? generated, transformFormat, inverseFormat, type.Span, alloc, free);
 		}
 
 		public static (string Generated, string Native, string TransformFormat, string? InverseFormat, bool RequireSize, string? Alloc, string? Free) GenerateCs(this ParserType type)
@@ -125,7 +135,9 @@ namespace CodeGenFileOut
 					native = "IntPtr";
 					asPointer = false;
 					asShared = false;
-					inverseFormat = $"({{0}}==IntPtr.Zero?null:new {parsed.Class.FullNameCs()}((IntPtr?){{0}}))";
+					inverseFormat = parsed.Class.Lookup ?
+						$"{parsed.Class.FullNameCs()}._lookup.GetOrMake({{0}})" :
+						$"({{0}}==IntPtr.Zero?null:new {parsed.Class.FullNameCs()}((IntPtr?){{0}}))";
 					if (type.Span)
 					{
 						var fixedName = GetLocal("local", type);

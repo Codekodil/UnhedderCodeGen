@@ -76,7 +76,7 @@ namespace TestWrapper
 
 			var filled = children.ToArray();
 
-			parent.FillNewChildsShared(filled);
+			parent.FillNewChildren(filled);
 
 			Assert.AreEqual(children[0], filled[0]);
 
@@ -92,48 +92,6 @@ namespace TestWrapper
 
 			foreach (var dispose in filled)
 				dispose!.Dispose();
-		}
-
-		[TestMethod]
-		public void FillSharedWithPointers()
-		{
-			using var parent = new PointerParent(2333);
-
-			var children = new PointerChild?[5];
-			children[0] = new PointerChild();
-			children[2] = new PointerChild();
-			children[3] = children[2];
-
-			var filled = children.ToArray();
-
-			parent.FillNewChildsPointer(filled);
-
-			Assert.AreEqual(children[0], filled[0]);
-
-			Assert.IsNotNull(filled[1]);
-			Assert.IsFalse(children.Contains(filled[1]));
-
-			Assert.AreEqual(children[2], filled[2]);
-			Assert.AreEqual(children[3], filled[3]);
-
-			Assert.IsNotNull(filled[4]);
-			Assert.IsFalse(children.Contains(filled[4]));
-			Assert.AreNotEqual(filled[1], filled[4]);
-
-			foreach (var dispose in filled)
-				dispose!.Dispose();
-		}
-
-		[TestMethod]
-		public void PointerReturn()
-		{
-			using var parent = new PointerParent(2333);
-
-			using var child = parent.MaybeMakePointer(false);
-			Assert.IsNotNull(child);
-
-			var notChild = parent.MaybeMakePointer(true);
-			Assert.IsNull(notChild);
 		}
 
 		[TestMethod]
@@ -141,10 +99,10 @@ namespace TestWrapper
 		{
 			using var parent = new PointerParent(2333);
 
-			using var child = parent.MaybeMakeShared(false);
+			using var child = parent.MaybeMake(false);
 			Assert.IsNotNull(child);
 
-			var notChild = parent.MaybeMakeShared(true);
+			var notChild = parent.MaybeMake(true);
 			Assert.IsNull(notChild);
 		}
 	}

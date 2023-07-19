@@ -99,6 +99,10 @@ namespace CodeGenWrapper
 					{
 						if (bucket.TryGetValue(ns, out var c))
 						{
+							if (c.Shared && type.Pointer &&
+								(type.Span || location == TypeLocation.MethodResult || location == TypeLocation.EventResult))
+								break;
+
 							if ((c.Pointer || c.Shared) &&
 								(type.Pointer != type.Shared) &&
 								(c.Shared || type.Pointer))

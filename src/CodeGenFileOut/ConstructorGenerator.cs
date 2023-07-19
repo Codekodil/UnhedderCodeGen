@@ -92,6 +92,9 @@ namespace CodeGenFileOut
 				if (c.ThreadSafe)
 					yield return "_safeGuard=new _SafeGuard(Wrapper_Delete);";
 
+				if (c.Lookup)
+					yield return "_lookup.Add(this,Native.Value);";
+
 				yield return "}";
 
 				yield return dllImport;

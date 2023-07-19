@@ -87,7 +87,12 @@ namespace TestWrapper
 			};
 			safeObject.ConnectToCallback(callbackContainer);
 			var reset = new ManualResetEvent(false);
-			safeObject.Await += () => reset.WaitOne();
+			var waiting = 0;
+			safeObject.Await += () =>
+			{
+				Interlocked.Increment(ref waiting);
+				reset.WaitOne();
+			};
 
 			var thread1Started = new ManualResetEvent(false);
 			var thread2Started = new ManualResetEvent(false);
@@ -106,6 +111,8 @@ namespace TestWrapper
 
 			thread1Started.WaitOne();
 			thread2Started.WaitOne();
+
+			while (waiting < 2) ;
 
 			var dispose = safeObject.DisposeAsync();
 

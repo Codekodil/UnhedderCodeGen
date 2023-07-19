@@ -27,17 +27,17 @@ void threadAction(threadMemory memory)
 	memory.SafeObject->WaitThenSend(memory.Index);
 }
 
-void SafeObject::ConnectAndWaitMultithread(span<SafeObject*> waiters)
+void SafeObject::ConnectAndWaitMultithread(span<shared_ptr<SafeObject>> waiters)
 {
 	vector<jthread> threads(waiters.size());
 
 	for (int i = 0; i < waiters.size(); i++)
 	{
-		SafeObject*& waiter = waiters[i];
+		auto& waiter = waiters[i];
 		if (waiter)
 		{
 			waiter->ConnectToCallback(this);
-			threads[i] = jthread(threadAction, threadMemory{ .SafeObject = waiter, .Index = i });
+			threads[i] = jthread(threadAction, threadMemory{ .SafeObject = waiter.get(), .Index = i});
 		}
 	}
 }
