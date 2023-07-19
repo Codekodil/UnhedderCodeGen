@@ -146,6 +146,7 @@
     <ClInclude Include="CodeGen.h" />
     <ClInclude Include="DifferentNamespaceParent.h" />
     <ClInclude Include="DontWrap.h" />
+    <ClInclude Include="ExceptionObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PointerChild.h" />
     <ClInclude Include="PointerParent.h" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <ClCompile Include="DifferentNamespaceParent.cpp" />
     <ClCompile Include="DontWrap.cpp" />
+    <ClCompile Include="ExceptionObject.cpp" />
     <ClCompile Include="Export.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

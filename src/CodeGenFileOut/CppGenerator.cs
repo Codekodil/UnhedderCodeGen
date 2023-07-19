@@ -25,12 +25,16 @@ namespace CodeGenFileOut
 					if (include != null)
 						file.WriteLine($@"#include""{Path.GetRelativePath(Path.GetDirectoryName(config.CppResultPath)!, include)}""");
 
-				foreach (var std in new[] { "memory", "vector", "string" })
+				foreach (var std in new[] { "memory", "vector", "string", "exception" })
 					file.WriteLine($"#include<{std}>");
 
+				file.WriteLine(@"thread_local std::string exceptionMessage="""";");
 				file.WriteLine(@"extern""C""{");
 
 				file.WriteLine("__declspec(dllexport)void*__stdcall Wrapper_Shared_Ptr_Get(std::shared_ptr<void>*self){return self->get();}");
+				file.WriteLine("__declspec(dllexport)int __stdcall Wrapper_Get_Exception(char*buffer,int maxSize){int length=std::min(maxSize,(int)exceptionMessage.size());memcpy(buffer,exceptionMessage.c_str(),length);return length;}");
+				file.WriteLine("#pragma warning(push)");
+				file.WriteLine("#pragma warning(disable:4297)");
 
 				foreach (var c in classes)
 				{
@@ -79,7 +83,8 @@ namespace CodeGenFileOut
 					file.WriteLine(c.GenerateDeleteCpp());
 				}
 
-				file.Write("}");
+				file.WriteLine("}");
+				file.WriteLine("#pragma warning(pop)");
 			}
 		}
 	}

@@ -31,17 +31,20 @@ namespace CodeGenFileOut
 
 				if (parameters.Count == 0)
 				{
-					yield return "(__stdcall*event)()){";
+					yield return "(__stdcall*event)()){try{";
 				}
 				else
 				{
 					yield return "(__stdcall*event)(";
 					for (int i = 0; i < parameters.Count; i++)
 						yield return parameters[i].Parameter + (i == parameters.Count - 1 ? "" : ",");
-					yield return ")){";
+					yield return ")){try{";
 				}
 
+				yield return ExceptionTransfer.TestSelf;
+
 				yield return $"{self.Pointer}->{e.Name}=event;}}";
+				yield return @"catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage=""unknown"";throw;}}";
 			}
 		}
 
@@ -99,7 +102,7 @@ namespace CodeGenFileOut
 
 				yield return $"private {managedDelegate}? {managedDelegate}_Object;";
 
-				yield return $"public event {managedDelegate} {e.Name}{{add{{";
+				yield return $"public event {managedDelegate} {e.Name}{{add{{try{{";
 				yield return $"{managedDelegate}_Object+=value;";
 				yield return $"if({nativeDelegate}_Object==null){{";
 				yield return $"{nativeDelegate}_Object=(";
@@ -135,6 +138,7 @@ namespace CodeGenFileOut
 				}
 
 				yield return $"{externFunction}({self},{nativeDelegate}_Object);}}}}";
+				yield return "catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}";
 				yield return $"remove{{{managedDelegate}_Object-=value;}}}}";
 			}
 		}

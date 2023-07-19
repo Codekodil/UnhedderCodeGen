@@ -15,7 +15,7 @@ namespace CodeGenFileOut
 			{ CheckedType = new TypeChecker.MatchedParsed(c) }
 			.GenerateCpp();
 
-			return ($"{typeInfo.Generated} self", string.Format(typeInfo.TransformFormat, "self"));
+			return ($"{typeInfo.Generated} self", c.Shared ? "(*self)" : "self");
 		}
 
 		public static string GenerateDeleteCpp(this ParserClass c)
@@ -33,8 +33,9 @@ namespace CodeGenFileOut
 				yield return "__declspec(dllexport)";
 				yield return "void ";
 				yield return $"__stdcall Wrapper_Delete_{c.UniqueName()}";
-				yield return $"({c.SelfNameCpp().Parameter}){{";
+				yield return $"({c.SelfNameCpp().Parameter}){{try{{";
 				yield return "delete self;}";
+				yield return @"catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage=""unknown"";throw;}}";
 			}
 		}
 
@@ -61,7 +62,7 @@ namespace CodeGenFileOut
 					yield return "public void Dispose()=>Wrapper_Delete();";
 				}
 				yield return $"~{c.Name}()=>Wrapper_Delete();";
-				yield return "private void Wrapper_Delete(){";
+				yield return "private void Wrapper_Delete(){try{";
 				yield return "if(!Native.HasValue)return;";
 				foreach (var e in c.Events)
 				{
@@ -71,6 +72,7 @@ namespace CodeGenFileOut
 				}
 				yield return $"{externFunction}(Native.Value);";
 				yield return "Native=default;}";
+				yield return "catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}";
 				yield return dllImport;
 				yield return $"private static extern void {externFunction}(IntPtr native);";
 			}

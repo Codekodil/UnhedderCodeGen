@@ -29,17 +29,19 @@ namespace CodeGenFileOut
 
 				if (parameters.Count == 0)
 				{
-					yield return $"({self.Parameter}){{";
+					yield return $"({self.Parameter}){{try{{";
 				}
 				else
 				{
 					yield return $"({self.Parameter},";
 					for (int i = 0; i < parameters.Count; i++)
 						yield return parameters[i].Parameter + (i == parameters.Count - 1 ? "" : ",");
-					yield return "){";
+					yield return "){try{";
 				}
 
-				if(returnType.InverseFormat != null)
+				yield return ExceptionTransfer.TestSelf;
+
+				if (returnType.InverseFormat != null)
 					yield return $"{returnType.BufferType} value_result;";
 
 				foreach (var p in parameters)
@@ -55,6 +57,7 @@ namespace CodeGenFileOut
 						yield return p.Free;
 
 				yield return $"return {string.Format(returnType.InverseFormat ?? "", "value_result")};}}";
+				yield return @"catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage=""unknown"";throw;}}";
 			}
 		}
 
@@ -80,14 +83,14 @@ namespace CodeGenFileOut
 
 				if (parameters.Count == 0)
 				{
-					yield return "(){";
+					yield return "(){try{";
 				}
 				else
 				{
 					yield return "(";
 					for (int i = 0; i < parameters.Count; i++)
 						yield return parameters[i].Parameter + (i == parameters.Count - 1 ? "" : ",");
-					yield return "){";
+					yield return "){try{";
 				}
 
 				string self;
@@ -116,6 +119,7 @@ namespace CodeGenFileOut
 						yield return p.Free;
 
 				yield return $"return {string.Format(returnType.InverseFormat ?? "", "value_result")};}}";
+				yield return "catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}";
 
 				yield return dllImport;
 				yield return $"private static extern {returnType.Native} {externFunction}";

@@ -9,6 +9,7 @@
     <ClInclude Include="SafeObject.h" />
     <ClInclude Include="DontWrap.h" />
     <ClInclude Include="Lookups.h" />
+    <ClInclude Include="ExceptionObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -19,5 +20,6 @@
     <ClCompile Include="SafeObject.cpp" />
     <ClCompile Include="DontWrap.cpp" />
     <ClCompile Include="Lookups.cpp" />
+    <ClCompile Include="ExceptionObject.cpp" />
   </ItemGroup>
 </Project>
