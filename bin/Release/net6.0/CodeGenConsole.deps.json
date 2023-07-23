@@ -1,0 +1,65 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "CodeGenConsole/1.0.0": {
+        "dependencies": {
+          "CodeGenConfig": "1.0.0",
+          "CodeGenFileOut": "1.0.0",
+          "CodeGenWrapper": "1.0.0"
+        },
+        "runtime": {
+          "CodeGenConsole.dll": {}
+        }
+      },
+      "CodeGenConfig/1.0.0": {
+        "runtime": {
+          "CodeGenConfig.dll": {}
+        }
+      },
+      "CodeGenFileOut/1.0.0": {
+        "dependencies": {
+          "CodeGenConfig": "1.0.0",
+          "CodeGenWrapper": "1.0.0"
+        },
+        "runtime": {
+          "CodeGenFileOut.dll": {}
+        }
+      },
+      "CodeGenWrapper/1.0.0": {
+        "dependencies": {
+          "CodeGenConfig": "1.0.0"
+        },
+        "runtime": {
+          "CodeGenWrapper.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CodeGenConsole/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CodeGenConfig/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CodeGenFileOut/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CodeGenWrapper/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
