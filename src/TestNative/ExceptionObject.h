@@ -2,7 +2,7 @@
 
 namespace TestNative
 {
-	class Wrapper_Pointer ExceptionObject
+	class Wrapper_Generate ExceptionObject
 	{
 	public:
 		ExceptionObject() {}

@@ -1,6 +1,5 @@
 ﻿using CodeGenConfig;
 using CodeGenWrapper;
-using System.Reflection;
 
 namespace CodeGenFileOut
 {
@@ -12,8 +11,8 @@ namespace CodeGenFileOut
 				return false;
 
 			var file = new FileGenerator(config.HppResultPath);
-			foreach (var flag in typeof(Flags).GetFields(BindingFlags.Public | BindingFlags.Static))
-				file.WriteLine($"#define {flag.GetValue(null)}");
+			foreach (var flag in Flags.All)
+				file.WriteLine($"#define {flag}");
 
 			try { await file.Emplace(); }
 			catch (Exception) { return false; }

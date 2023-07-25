@@ -4,7 +4,7 @@
 
 namespace TestNative
 {
-	class Wrapper_Pointer PointerParent
+	class Wrapper_Generate PointerParent
 	{
 		PointerChild* _child;
 	public:

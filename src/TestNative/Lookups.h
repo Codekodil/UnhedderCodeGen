@@ -4,7 +4,7 @@ namespace TestNative
 {
 	class LookupShared;
 
-	class Wrapper_Pointer Wrapper_Lookup LookupPointer
+	class Wrapper_Lookup LookupPointer
 	{
 		std::shared_ptr<LookupShared> _ptr;
 	public:

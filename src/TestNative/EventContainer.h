@@ -2,7 +2,7 @@
 
 namespace TestNative
 {
-	class Wrapper_Pointer EventContainer
+	class Wrapper_Generate EventContainer
 	{
 	public:
 		EventContainer() {}

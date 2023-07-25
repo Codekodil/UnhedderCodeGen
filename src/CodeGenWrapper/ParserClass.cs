@@ -35,7 +35,7 @@ namespace CodeGenWrapper
 			var isShared = identifiers.Contains(Flags.Shared);
 			return new ParserClass(
 				name, namespaces, file, isAbstract, block,
-				!isShared && identifiers.Contains(Flags.Pointer),
+				!isShared && Flags.All.Any(identifiers.Contains),
 				isShared, identifiers.Contains(Flags.ThreadSafe),
 				identifiers.Contains(Flags.Lookup),
 				constructors, methods, events);
@@ -121,7 +121,7 @@ namespace CodeGenWrapper
 		public override string ToString()
 		{
 			var result = string.Join("::", Namespaces.Concat(new[] { Name }));
-			if (Pointer) result += " " + Flags.Pointer;
+			if (Pointer) result += " " + Flags.Wrapper;
 			if (Shared) result += " " + Flags.Shared;
 			if (ThreadSafe) result += " " + Flags.ThreadSafe;
 			return result;

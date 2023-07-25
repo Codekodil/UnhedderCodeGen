@@ -41,7 +41,7 @@
 		[TestMethod]
 		public void EmptyClass()
 		{
-			var section = new StringSection("class Wrapper_Pointer name { Empty }");
+			var section = new StringSection("class Wrapper_Generate name { Empty }");
 			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(1, declarations.Classes.Count);
 			Assert.AreEqual("name", declarations.Classes[0].Name);
@@ -53,7 +53,7 @@
 		[TestMethod]
 		public void ClassInsideNamespace()
 		{
-			var section = new StringSection("namespace Outer { Before class Wrapper_Pointer Wrapper_Shared Inner1 { Between } class Wrapper_Pointer Inner2 { Between } After }");
+			var section = new StringSection("namespace Outer { Before class Wrapper_Shared Inner1 { Between } class Wrapper_Generate Inner2 { Between } After }");
 			var declarations = new ParserDeclaration(section, "test.h");
 			Assert.AreEqual(1, declarations.Namespaces.Count);
 			Assert.AreEqual(2, declarations.Namespaces[0].Declarations.Classes.Count);
