@@ -25,8 +25,12 @@ namespace CodeGenFileOut
 				file.WriteLine("");
 				file.WriteLine("");
 #endif
-				file.WriteLine($"namespace {config.NativeLibraryName}{{internal static class SharedPointer{{{dllImport}public static extern IntPtr Wrapper_Shared_Ptr_Get(IntPtr self);}}}}");
-				file.WriteLine($"namespace {config.NativeLibraryName}{{internal class NativeException:Exception{{private NativeException(string message):base(message){{}}{dllImport}private static extern int Wrapper_Get_Exception(IntPtr buffer,int maxSize);public static unsafe Exception GetNative(){{fixed(byte*buffer=stackalloc byte[128]){{return System.Text.Encoding.ASCII.GetString(buffer,Wrapper_Get_Exception((IntPtr)buffer,128))switch{{nameof(NullReferenceException)=>new NullReferenceException(),nameof(ArgumentException)=>new ArgumentException(),nameof(ArgumentNullException)=>new ArgumentNullException(),nameof(ArgumentOutOfRangeException)=>new ArgumentOutOfRangeException(),var message => new NativeException(message)}};}}}}}}}}");
+				file.WriteLine($"namespace {config.NativeLibraryName}{{");
+				file.WriteLine($"internal static class SharedPointer{{{dllImport}public static extern IntPtr Wrapper_Shared_Ptr_Get(IntPtr self);}}");
+				file.WriteLine($"internal class NativeException:Exception{{private NativeException(string message):base(message){{}}{dllImport}private static extern int Wrapper_Get_Exception(IntPtr buffer,int maxSize);[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]public static unsafe Exception GetNative(){{fixed(byte*buffer=stackalloc byte[128]){{return System.Text.Encoding.ASCII.GetString(buffer,Wrapper_Get_Exception((IntPtr)buffer,128))switch{{nameof(NullReferenceException)=>new NullReferenceException(),nameof(ArgumentException)=>new ArgumentException(),nameof(ArgumentNullException)=>new ArgumentNullException(),nameof(ArgumentOutOfRangeException)=>new ArgumentOutOfRangeException(),var message => new NativeException(message)}};}}}}}}");
+				file.WriteLine("internal abstract class Wrapper{public IntPtr?Native;public virtual IntPtr MemoryLocation=>Native??throw new ObjectDisposedException(GetType().Name);}");
+				file.WriteLine($"internal abstract class SharedWrapper:Wrapper{{[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]{dllImport}public static extern IntPtr Wrapper_Shared_Ptr_Get(IntPtr self);override public IntPtr MemoryLocation=>Wrapper_Shared_Ptr_Get(base.MemoryLocation);}}");
+				file.WriteLine("}");
 
 				foreach (var c in declarations.SelectMany(d => d).Where(c => c.Pointer || c.Shared))
 				{
@@ -38,10 +42,10 @@ namespace CodeGenFileOut
 					file.WriteLine("");
 #endif
 					file.WriteLine($"namespace {string.Join(".", new[] { config.NativeLibraryName }.Concat(c.Namespaces))}{{");
-					file.WriteLine($"internal class {c.Name}:{(c.ThreadSafe ? nameof(IAsyncDisposable) : nameof(IDisposable))}{{public IntPtr?Native;public {c.Name}(IntPtr?native){{Native=native;{(c.ThreadSafe ? "_safeGuard=new _SafeGuard(Wrapper_Delete);" : "")}}}");
+					file.WriteLine($"internal class {c.Name}:{(c.Shared ? "SharedWrapper" : "Wrapper")},{(c.ThreadSafe ? nameof(IAsyncDisposable) : nameof(IDisposable))}{{public {c.Name}(IntPtr?native){{Native=native;{(c.ThreadSafe ? "_safeGuard=new _SafeGuard(Wrapper_Delete);" : "")}}}");
 
 					if (c.Lookup)
-						file.WriteLine($"internal class {c.Name}PointerLookup:PointerLookup<{c.Name}>{{protected override {c.Name} New(IntPtr ptr)=>new {c.Name}((IntPtr?)ptr);protected override bool Shared()=>{(c.Shared ? "true" : "false")};protected override void Delete(IntPtr ptr)=>Wrapper_Delete_{c.UniqueName()}(ptr);}}internal static readonly {c.Name}PointerLookup _lookup=new {c.Name}PointerLookup();");
+						file.WriteLine($"internal class {c.Name}PointerLookup:PointerLookup<{c.Name}>{{protected override {c.Name} New(IntPtr ptr)=>new {c.Name}((IntPtr?)ptr);protected override void Delete(IntPtr ptr)=>Wrapper_Delete_{c.UniqueName()}(ptr);}}internal static readonly {c.Name}PointerLookup _lookup=new {c.Name}PointerLookup();");
 #if DEBUG
 					file.WriteLine("");
 					file.WriteLine("//Constructors:");
@@ -137,22 +141,22 @@ namespace CodeGenFileOut
 					"",
 #endif
 					$"namespace {config.NativeLibraryName}{{",
-					"internal abstract class PointerLookup<T>where T:class{",
+					"internal abstract class PointerLookup<T>where T:Wrapper{",
 					"",
 					"protected abstract T New(IntPtr ptr);",
-					"protected abstract bool Shared();",
 					"protected abstract void Delete(IntPtr ptr);",
 					"",
 					"private readonly Dictionary<IntPtr,WeakReference<T>>_references=new Dictionary<IntPtr,WeakReference<T>>();",
+					"private readonly bool _shared=typeof(SharedWrapper).IsAssignableFrom(typeof(T));",
 					"public PointerLookup(){PeriodicGC();",
 					"async void PeriodicGC(){while(true){await Task.Delay(10000);lock(_references){",
 					"var toRemove=new List<IntPtr>();",
 					"foreach(var kv in _references)if(!kv.Value.TryGetTarget(out _))toRemove.Add(kv.Key);",
 					"foreach(var remove in toRemove)_references.Remove(remove);}}}}",
 					"",
-					"public T GetOrMake(IntPtr ptr){lock(_references){var memory=Shared()?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr;",
-					"if(!(_references.TryGetValue(memory,out var weak)&&weak.TryGetTarget(out var t)))_references[memory]=new WeakReference<T>(t=New(ptr));else if(Shared())Delete(ptr);return t;}}",
-					"public void Add(T reference,IntPtr ptr){lock(_references)_references[Shared()?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr]=new WeakReference<T>(reference);}",
+					"public T GetOrMake(IntPtr ptr){lock(_references){var memory=_shared?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr;",
+					"if(!(_references.TryGetValue(memory,out var weak)&&weak.TryGetTarget(out var t)&&t.Native.HasValue))_references[memory]=new WeakReference<T>(t=New(ptr));else if(_shared)Delete(ptr);return t;}}",
+					"public void Add(T reference,IntPtr ptr){lock(_references)_references[_shared?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr]=new WeakReference<T>(reference);}",
 					"}}"));
 			}
 		}

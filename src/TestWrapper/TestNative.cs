@@ -1,14 +1,18 @@
 //Generated with https://github.com/Codekodil/UnhedderCodeGen
 
 
-namespace TestNative{internal static class SharedPointer{[System.Runtime.InteropServices.DllImport("TestNative")]public static extern IntPtr Wrapper_Shared_Ptr_Get(IntPtr self);}}
-namespace TestNative{internal class NativeException:Exception{private NativeException(string message):base(message){}[System.Runtime.InteropServices.DllImport("TestNative")]private static extern int Wrapper_Get_Exception(IntPtr buffer,int maxSize);public static unsafe Exception GetNative(){fixed(byte*buffer=stackalloc byte[128]){return System.Text.Encoding.ASCII.GetString(buffer,Wrapper_Get_Exception((IntPtr)buffer,128))switch{nameof(NullReferenceException)=>new NullReferenceException(),nameof(ArgumentException)=>new ArgumentException(),nameof(ArgumentNullException)=>new ArgumentNullException(),nameof(ArgumentOutOfRangeException)=>new ArgumentOutOfRangeException(),var message => new NativeException(message)};}}}}
+namespace TestNative{
+internal static class SharedPointer{[System.Runtime.InteropServices.DllImport("TestNative")]public static extern IntPtr Wrapper_Shared_Ptr_Get(IntPtr self);}
+internal class NativeException:Exception{private NativeException(string message):base(message){}[System.Runtime.InteropServices.DllImport("TestNative")]private static extern int Wrapper_Get_Exception(IntPtr buffer,int maxSize);[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]public static unsafe Exception GetNative(){fixed(byte*buffer=stackalloc byte[128]){return System.Text.Encoding.ASCII.GetString(buffer,Wrapper_Get_Exception((IntPtr)buffer,128))switch{nameof(NullReferenceException)=>new NullReferenceException(),nameof(ArgumentException)=>new ArgumentException(),nameof(ArgumentNullException)=>new ArgumentNullException(),nameof(ArgumentOutOfRangeException)=>new ArgumentOutOfRangeException(),var message => new NativeException(message)};}}}
+internal abstract class Wrapper{public IntPtr?Native;public virtual IntPtr MemoryLocation=>Native??throw new ObjectDisposedException(GetType().Name);}
+internal abstract class SharedWrapper:Wrapper{[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)][System.Runtime.InteropServices.DllImport("TestNative")]public static extern IntPtr Wrapper_Shared_Ptr_Get(IntPtr self);override public IntPtr MemoryLocation=>Wrapper_Shared_Ptr_Get(base.MemoryLocation);}
+}
 
 
 /*------------------------- NotTestNative.PointerParent -------------------------*/
 
 namespace TestNative.NotTestNative{
-internal class PointerParent:IDisposable{public IntPtr?Native;public PointerParent(IntPtr?native){Native=native;}
+internal class PointerParent:SharedWrapper,IDisposable{public PointerParent(IntPtr?native){Native=native;}
 
 //Constructors:
 
@@ -56,7 +60,7 @@ public void Dispose()=>Wrapper_Delete();
 /*------------------------- TestNative.EventContainer -------------------------*/
 
 namespace TestNative.TestNative{
-internal class EventContainer:IDisposable{public IntPtr?Native;public EventContainer(IntPtr?native){Native=native;}
+internal class EventContainer:Wrapper,IDisposable{public EventContainer(IntPtr?native){Native=native;}
 
 //Constructors:
 
@@ -243,7 +247,7 @@ public void Dispose()=>Wrapper_Delete();
 /*------------------------- TestNative.ExceptionObject -------------------------*/
 
 namespace TestNative.TestNative{
-internal class ExceptionObject:IDisposable{public IntPtr?Native;public ExceptionObject(IntPtr?native){Native=native;}
+internal class ExceptionObject:Wrapper,IDisposable{public ExceptionObject(IntPtr?native){Native=native;}
 
 //Constructors:
 
@@ -314,8 +318,8 @@ public void Dispose()=>Wrapper_Delete();
 /*------------------------- TestNative.LookupPointer -------------------------*/
 
 namespace TestNative.TestNative{
-internal class LookupPointer:IDisposable{public IntPtr?Native;public LookupPointer(IntPtr?native){Native=native;}
-internal class LookupPointerPointerLookup:PointerLookup<LookupPointer>{protected override LookupPointer New(IntPtr ptr)=>new LookupPointer((IntPtr?)ptr);protected override bool Shared()=>false;protected override void Delete(IntPtr ptr)=>Wrapper_Delete_TestNative_LookupPointer(ptr);}internal static readonly LookupPointerPointerLookup _lookup=new LookupPointerPointerLookup();
+internal class LookupPointer:Wrapper,IDisposable{public LookupPointer(IntPtr?native){Native=native;}
+internal class LookupPointerPointerLookup:PointerLookup<LookupPointer>{protected override LookupPointer New(IntPtr ptr)=>new LookupPointer((IntPtr?)ptr);protected override void Delete(IntPtr ptr)=>Wrapper_Delete_TestNative_LookupPointer(ptr);}internal static readonly LookupPointerPointerLookup _lookup=new LookupPointerPointerLookup();
 
 //Constructors:
 
@@ -374,8 +378,8 @@ public void Dispose()=>Wrapper_Delete();
 /*------------------------- TestNative.LookupShared -------------------------*/
 
 namespace TestNative.TestNative{
-internal class LookupShared:IDisposable{public IntPtr?Native;public LookupShared(IntPtr?native){Native=native;}
-internal class LookupSharedPointerLookup:PointerLookup<LookupShared>{protected override LookupShared New(IntPtr ptr)=>new LookupShared((IntPtr?)ptr);protected override bool Shared()=>true;protected override void Delete(IntPtr ptr)=>Wrapper_Delete_TestNative_LookupShared(ptr);}internal static readonly LookupSharedPointerLookup _lookup=new LookupSharedPointerLookup();
+internal class LookupShared:SharedWrapper,IDisposable{public LookupShared(IntPtr?native){Native=native;}
+internal class LookupSharedPointerLookup:PointerLookup<LookupShared>{protected override LookupShared New(IntPtr ptr)=>new LookupShared((IntPtr?)ptr);protected override void Delete(IntPtr ptr)=>Wrapper_Delete_TestNative_LookupShared(ptr);}internal static readonly LookupSharedPointerLookup _lookup=new LookupSharedPointerLookup();
 
 //Constructors:
 
@@ -434,7 +438,7 @@ public void Dispose()=>Wrapper_Delete();
 /*------------------------- TestNative.PointerChild -------------------------*/
 
 namespace TestNative.TestNative{
-internal class PointerChild:IDisposable{public IntPtr?Native;public PointerChild(IntPtr?native){Native=native;}
+internal class PointerChild:SharedWrapper,IDisposable{public PointerChild(IntPtr?native){Native=native;}
 
 //Constructors:
 
@@ -503,7 +507,7 @@ public void Dispose()=>Wrapper_Delete();
 /*------------------------- TestNative.PointerParent -------------------------*/
 
 namespace TestNative.TestNative{
-internal class PointerParent:IDisposable{public IntPtr?Native;public PointerParent(IntPtr?native){Native=native;}
+internal class PointerParent:Wrapper,IDisposable{public PointerParent(IntPtr?native){Native=native;}
 
 //Constructors:
 
@@ -668,7 +672,7 @@ public void Dispose()=>Wrapper_Delete();
 /*------------------------- TestNative.SafeObject -------------------------*/
 
 namespace TestNative.TestNative{
-internal class SafeObject:IAsyncDisposable{public IntPtr?Native;public SafeObject(IntPtr?native){Native=native;_safeGuard=new _SafeGuard(Wrapper_Delete);}
+internal class SafeObject:SharedWrapper,IAsyncDisposable{public SafeObject(IntPtr?native){Native=native;_safeGuard=new _SafeGuard(Wrapper_Delete);}
 
 //Constructors:
 
@@ -833,20 +837,20 @@ namespace TestNative{
 /*------------------------- PointerLookup -------------------------*/
 
 namespace TestNative{
-	internal abstract class PointerLookup<T>where T:class{
+	internal abstract class PointerLookup<T>where T:Wrapper{
 	
 	protected abstract T New(IntPtr ptr);
-	protected abstract bool Shared();
 	protected abstract void Delete(IntPtr ptr);
 	
 	private readonly Dictionary<IntPtr,WeakReference<T>>_references=new Dictionary<IntPtr,WeakReference<T>>();
+	private readonly bool _shared=typeof(SharedWrapper).IsAssignableFrom(typeof(T));
 	public PointerLookup(){PeriodicGC();
 	async void PeriodicGC(){while(true){await Task.Delay(10000);lock(_references){
 	var toRemove=new List<IntPtr>();
 	foreach(var kv in _references)if(!kv.Value.TryGetTarget(out _))toRemove.Add(kv.Key);
 	foreach(var remove in toRemove)_references.Remove(remove);}}}}
 	
-	public T GetOrMake(IntPtr ptr){lock(_references){var memory=Shared()?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr;
-	if(!(_references.TryGetValue(memory,out var weak)&&weak.TryGetTarget(out var t)))_references[memory]=new WeakReference<T>(t=New(ptr));else if(Shared())Delete(ptr);return t;}}
-	public void Add(T reference,IntPtr ptr){lock(_references)_references[Shared()?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr]=new WeakReference<T>(reference);}
+	public T GetOrMake(IntPtr ptr){lock(_references){var memory=_shared?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr;
+	if(!(_references.TryGetValue(memory,out var weak)&&weak.TryGetTarget(out var t)&&t.Native.HasValue))_references[memory]=new WeakReference<T>(t=New(ptr));else if(_shared)Delete(ptr);return t;}}
+	public void Add(T reference,IntPtr ptr){lock(_references)_references[_shared?SharedPointer.Wrapper_Shared_Ptr_Get(ptr):ptr]=new WeakReference<T>(reference);}
 	}}
