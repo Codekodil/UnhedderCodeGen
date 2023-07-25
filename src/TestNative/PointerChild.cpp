@@ -4,15 +4,6 @@
 using namespace TestNative;
 using namespace std;
 
-PointerChild::PointerChild() {}
-
-void PointerChild::Invoke()
-{
-	auto event = Event;
-	if (event != nullptr)
-		event();
-}
-
 int PointerChild::SumCharacters(string text)
 {
 	int result = 0;

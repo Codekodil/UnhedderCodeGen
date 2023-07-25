@@ -53,6 +53,193 @@ public void Dispose()=>Wrapper_Delete();
 }}
 
 
+/*------------------------- TestNative.EventContainer -------------------------*/
+
+namespace TestNative.TestNative{
+internal class EventContainer:IDisposable{public IntPtr?Native;public EventContainer(IntPtr?native){Native=native;}
+
+//Constructors:
+
+public unsafe EventContainer
+	(){try{
+	Native=Wrapper_New_TestNative_EventContainer_0();
+	}catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern IntPtr Wrapper_New_TestNative_EventContainer_0
+	();
+
+//Methods:
+
+public unsafe void 
+	Invoke
+	(){try{
+	Wrapper_Call_TestNative_EventContainer_Invoke_0(Native??throw new System.ObjectDisposedException(nameof(EventContainer)));
+	return ;}
+	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Call_TestNative_EventContainer_Invoke_0
+	(IntPtr self);
+
+public unsafe int 
+	GetHash
+	(
+	int n
+	){try{
+	int value_result;
+	value_result=Wrapper_Call_TestNative_EventContainer_GetHash_1(Native??throw new System.ObjectDisposedException(nameof(EventContainer)),
+	n);
+	return value_result;}
+	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern int Wrapper_Call_TestNative_EventContainer_GetHash_1
+	(IntPtr self,
+	int n_
+	);
+
+public unsafe int 
+	PtrValue
+	(){try{
+	int value_result;
+	value_result=Wrapper_Call_TestNative_EventContainer_PtrValue_2(Native??throw new System.ObjectDisposedException(nameof(EventContainer)));
+	return value_result;}
+	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern int Wrapper_Call_TestNative_EventContainer_PtrValue_2
+	(IntPtr self);
+
+public unsafe void 
+	SendSelf
+	(
+	ref int index
+	){try{
+	fixed(int*local6539=&index){
+	Wrapper_Call_TestNative_EventContainer_SendSelf_3(Native??throw new System.ObjectDisposedException(nameof(EventContainer)),
+	(IntPtr)local6539);
+	}
+	return ;}
+	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Call_TestNative_EventContainer_SendSelf_3
+	(IntPtr self,
+	IntPtr index_
+	);
+
+//Events:
+
+private delegate void Event_Delegate_Native(
+	);
+	private Event_Delegate_Native? Event_Delegate_Native_Object;
+	[System.Runtime.InteropServices.DllImport("TestNative",CallingConvention=System.Runtime.InteropServices.CallingConvention.StdCall)]
+	private static extern void Wrapper_Event_TestNative_EventContainer_Event
+	(IntPtr self, Event_Delegate_Native? action);
+	public delegate void EventDelegate(
+	);
+	private EventDelegate? EventDelegate_Object;
+	public event EventDelegate Event{add{try{
+	EventDelegate_Object+=value;
+	if(Event_Delegate_Native_Object==null){
+	Event_Delegate_Native_Object=Delegate;unsafe void Delegate(
+	)=>
+	EventDelegate_Object?.Invoke(
+	)
+	;
+	Wrapper_Event_TestNative_EventContainer_Event(Native??throw new System.ObjectDisposedException(nameof(EventContainer)),Event_Delegate_Native_Object);}}
+	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	remove{EventDelegate_Object-=value;}}
+
+private delegate int Hash_Delegate_Native(
+	int n_);
+	private Hash_Delegate_Native? Hash_Delegate_Native_Object;
+	[System.Runtime.InteropServices.DllImport("TestNative",CallingConvention=System.Runtime.InteropServices.CallingConvention.StdCall)]
+	private static extern void Wrapper_Event_TestNative_EventContainer_Hash
+	(IntPtr self, Hash_Delegate_Native? action);
+	public delegate int HashDelegate(
+	int n);
+	private HashDelegate? HashDelegate_Object;
+	public event HashDelegate Hash{add{try{
+	HashDelegate_Object+=value;
+	if(Hash_Delegate_Native_Object==null){
+	Hash_Delegate_Native_Object=Delegate;unsafe int Delegate(
+	int n_)=>
+	HashDelegate_Object?.Invoke(
+	n_)
+	??default;
+	Wrapper_Event_TestNative_EventContainer_Hash(Native??throw new System.ObjectDisposedException(nameof(EventContainer)),Hash_Delegate_Native_Object);}}
+	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	remove{HashDelegate_Object-=value;}}
+
+private delegate IntPtr Ptr_Delegate_Native(
+	);
+	private Ptr_Delegate_Native? Ptr_Delegate_Native_Object;
+	[System.Runtime.InteropServices.DllImport("TestNative",CallingConvention=System.Runtime.InteropServices.CallingConvention.StdCall)]
+	private static extern void Wrapper_Event_TestNative_EventContainer_Ptr
+	(IntPtr self, Ptr_Delegate_Native? action);
+	public delegate IntPtr PtrDelegate(
+	);
+	private PtrDelegate? PtrDelegate_Object;
+	public event PtrDelegate Ptr{add{try{
+	PtrDelegate_Object+=value;
+	if(Ptr_Delegate_Native_Object==null){
+	Ptr_Delegate_Native_Object=Delegate;unsafe IntPtr Delegate(
+	)=>
+	PtrDelegate_Object?.Invoke(
+	)
+	??default;
+	Wrapper_Event_TestNative_EventContainer_Ptr(Native??throw new System.ObjectDisposedException(nameof(EventContainer)),Ptr_Delegate_Native_Object);}}
+	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	remove{PtrDelegate_Object-=value;}}
+
+private delegate void Receive_Delegate_Native(
+	IntPtr ptr_,
+	IntPtr index_);
+	private Receive_Delegate_Native? Receive_Delegate_Native_Object;
+	[System.Runtime.InteropServices.DllImport("TestNative",CallingConvention=System.Runtime.InteropServices.CallingConvention.StdCall)]
+	private static extern void Wrapper_Event_TestNative_EventContainer_Receive
+	(IntPtr self, Receive_Delegate_Native? action);
+	public delegate void ReceiveDelegate(
+	IntPtr ptr,
+	ref int index);
+	private ReceiveDelegate? ReceiveDelegate_Object;
+	public event ReceiveDelegate Receive{add{try{
+	ReceiveDelegate_Object+=value;
+	if(Receive_Delegate_Native_Object==null){
+	Receive_Delegate_Native_Object=Delegate;unsafe void Delegate(
+	IntPtr ptr_,
+	IntPtr index_)=>
+	ReceiveDelegate_Object?.Invoke(
+	ptr_,
+	ref System.Runtime.CompilerServices.Unsafe.AsRef<int>((void*)index_))
+	;
+	Wrapper_Event_TestNative_EventContainer_Receive(Native??throw new System.ObjectDisposedException(nameof(EventContainer)),Receive_Delegate_Native_Object);}}
+	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	remove{ReceiveDelegate_Object-=value;}}
+
+//Delete:
+
+public void Dispose()=>Wrapper_Delete();
+	~EventContainer()=>Wrapper_Delete();
+	private void Wrapper_Delete(){try{
+	if(!Native.HasValue)return;
+	if(Event_Delegate_Native_Object!=null){
+	Wrapper_Event_TestNative_EventContainer_Event(Native.Value,null);
+	Event_Delegate_Native_Object=null;}
+	if(Hash_Delegate_Native_Object!=null){
+	Wrapper_Event_TestNative_EventContainer_Hash(Native.Value,null);
+	Hash_Delegate_Native_Object=null;}
+	if(Ptr_Delegate_Native_Object!=null){
+	Wrapper_Event_TestNative_EventContainer_Ptr(Native.Value,null);
+	Ptr_Delegate_Native_Object=null;}
+	if(Receive_Delegate_Native_Object!=null){
+	Wrapper_Event_TestNative_EventContainer_Receive(Native.Value,null);
+	Receive_Delegate_Native_Object=null;}
+	Wrapper_Delete_TestNative_EventContainer(Native.Value);
+	Native=default;}
+	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
+	[System.Runtime.InteropServices.DllImport("TestNative")]
+	private static extern void Wrapper_Delete_TestNative_EventContainer(IntPtr native);
+}}
+
+
 /*------------------------- TestNative.ExceptionObject -------------------------*/
 
 namespace TestNative.TestNative{
@@ -160,7 +347,8 @@ public unsafe LookupPointer
 public unsafe TestNative.LookupShared? 
 	GetPtr
 	(){try{
-	var value_result=Wrapper_Call_TestNative_LookupPointer_GetPtr_0(Native??throw new System.ObjectDisposedException(nameof(LookupPointer)));
+	IntPtr value_result;
+	value_result=Wrapper_Call_TestNative_LookupPointer_GetPtr_0(Native??throw new System.ObjectDisposedException(nameof(LookupPointer)));
 	return TestNative.LookupShared._lookup.GetOrMake(value_result);}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
@@ -219,7 +407,8 @@ public unsafe LookupShared
 public unsafe TestNative.LookupPointer? 
 	GetPtr
 	(){try{
-	var value_result=Wrapper_Call_TestNative_LookupShared_GetPtr_0(Native??throw new System.ObjectDisposedException(nameof(LookupShared)));
+	IntPtr value_result;
+	value_result=Wrapper_Call_TestNative_LookupShared_GetPtr_0(Native??throw new System.ObjectDisposedException(nameof(LookupShared)));
 	return TestNative.LookupPointer._lookup.GetOrMake(value_result);}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
@@ -259,27 +448,18 @@ public unsafe PointerChild
 
 //Methods:
 
-public unsafe void 
-	Invoke
-	(){try{
-	Wrapper_Call_TestNative_PointerChild_Invoke_0(Native??throw new System.ObjectDisposedException(nameof(PointerChild)));
-	return ;}
-	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
-	[System.Runtime.InteropServices.DllImport("TestNative")]
-	private static extern void Wrapper_Call_TestNative_PointerChild_Invoke_0
-	(IntPtr self);
-
 public unsafe int 
 	SumCharacters
 	(
 	string text
 	){try{
-	var value_result=Wrapper_Call_TestNative_PointerChild_SumCharacters_1(Native??throw new System.ObjectDisposedException(nameof(PointerChild)),
+	int value_result;
+	value_result=Wrapper_Call_TestNative_PointerChild_SumCharacters_0(Native??throw new System.ObjectDisposedException(nameof(PointerChild)),
 	text);
 	return value_result;}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
-	private static extern int Wrapper_Call_TestNative_PointerChild_SumCharacters_1
+	private static extern int Wrapper_Call_TestNative_PointerChild_SumCharacters_0
 	(IntPtr self,
 	[System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPStr)]string text_
 	);
@@ -291,14 +471,14 @@ public unsafe void
 	int scale
 	){try{
 	fixed(int*local6423=numbers){
-	Wrapper_Call_TestNative_PointerChild_ScaleSpan_2(Native??throw new System.ObjectDisposedException(nameof(PointerChild)),
+	Wrapper_Call_TestNative_PointerChild_ScaleSpan_1(Native??throw new System.ObjectDisposedException(nameof(PointerChild)),
 	(IntPtr)local6423,numbers.Length,
 	scale);
 	}
 	return ;}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
 	[System.Runtime.InteropServices.DllImport("TestNative")]
-	private static extern void Wrapper_Call_TestNative_PointerChild_ScaleSpan_2
+	private static extern void Wrapper_Call_TestNative_PointerChild_ScaleSpan_1
 	(IntPtr self,
 	IntPtr numbers_,int numbers_Size,
 	int scale_
@@ -306,35 +486,12 @@ public unsafe void
 
 //Events:
 
-private delegate void Event_Delegate_Native(
-	);
-	private Event_Delegate_Native? Event_Delegate_Native_Object;
-	[System.Runtime.InteropServices.DllImport("TestNative",CallingConvention=System.Runtime.InteropServices.CallingConvention.StdCall)]
-	private static extern void Wrapper_Event_TestNative_PointerChild_Event
-	(IntPtr self, Event_Delegate_Native? action);
-	public delegate void EventDelegate(
-	);
-	private EventDelegate? EventDelegate_Object;
-	public event EventDelegate Event{add{try{
-	EventDelegate_Object+=value;
-	if(Event_Delegate_Native_Object==null){
-	Event_Delegate_Native_Object=(
-	)=>
-	EventDelegate_Object?.Invoke(
-	);
-	Wrapper_Event_TestNative_PointerChild_Event(Native??throw new System.ObjectDisposedException(nameof(PointerChild)),Event_Delegate_Native_Object);}}
-	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
-	remove{EventDelegate_Object-=value;}}
-
 //Delete:
 
 public void Dispose()=>Wrapper_Delete();
 	~PointerChild()=>Wrapper_Delete();
 	private void Wrapper_Delete(){try{
 	if(!Native.HasValue)return;
-	if(Event_Delegate_Native_Object!=null){
-	Wrapper_Event_TestNative_PointerChild_Event(Native.Value,null);
-	Event_Delegate_Native_Object=null;}
 	Wrapper_Delete_TestNative_PointerChild(Native.Value);
 	Native=default;}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
@@ -383,7 +540,8 @@ public unsafe int
 	(
 	int a
 	){try{
-	var value_result=Wrapper_Call_TestNative_PointerParent_Double_0(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
+	int value_result;
+	value_result=Wrapper_Call_TestNative_PointerParent_Double_0(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
 	a);
 	return value_result;}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
@@ -398,9 +556,9 @@ public unsafe void
 	(
 	ref int a
 	){try{
-	fixed(int*local6539=&a){
+	fixed(int*local6542=&a){
 	Wrapper_Call_TestNative_PointerParent_Double_1(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
-	(IntPtr)local6539);
+	(IntPtr)local6542);
 	}
 	return ;}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
@@ -430,7 +588,8 @@ public unsafe bool
 	(
 	TestNative.PointerChild? child
 	){try{
-	var value_result=Wrapper_Call_TestNative_PointerParent_ChildEquals_3(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
+	bool value_result;
+	value_result=Wrapper_Call_TestNative_PointerParent_ChildEquals_3(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
 	(child==null?IntPtr.Zero:child!.Native??throw new System.ObjectDisposedException(nameof(child))));
 	return value_result;}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
@@ -479,7 +638,8 @@ public unsafe TestNative.PointerChild?
 	(
 	bool isNull
 	){try{
-	var value_result=Wrapper_Call_TestNative_PointerParent_MaybeMake_6(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
+	IntPtr value_result;
+	value_result=Wrapper_Call_TestNative_PointerParent_MaybeMake_6(Native??throw new System.ObjectDisposedException(nameof(PointerParent)),
 	isNull);
 	return (value_result==IntPtr.Zero?null:new TestNative.PointerChild((IntPtr?)value_result));}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
@@ -588,10 +748,11 @@ private delegate void Callback_Delegate_Native(
 	public event CallbackDelegate Callback{add{try{
 	CallbackDelegate_Object+=value;
 	if(Callback_Delegate_Native_Object==null){
-	Callback_Delegate_Native_Object=(
+	Callback_Delegate_Native_Object=Delegate;unsafe void Delegate(
 	int index_)=>
 	CallbackDelegate_Object?.Invoke(
-	index_);
+	index_)
+	;
 	using var selfLocker = _safeGuard.Lock(nameof(SafeObject));
 	Wrapper_Event_TestNative_SafeObject_Callback(Native!.Value,Callback_Delegate_Native_Object);}}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}
@@ -609,10 +770,11 @@ private delegate void Await_Delegate_Native(
 	public event AwaitDelegate Await{add{try{
 	AwaitDelegate_Object+=value;
 	if(Await_Delegate_Native_Object==null){
-	Await_Delegate_Native_Object=(
+	Await_Delegate_Native_Object=Delegate;unsafe void Delegate(
 	)=>
 	AwaitDelegate_Object?.Invoke(
-	);
+	)
+	;
 	using var selfLocker = _safeGuard.Lock(nameof(SafeObject));
 	Wrapper_Event_TestNative_SafeObject_Await(Native!.Value,Await_Delegate_Native_Object);}}
 	catch(System.Runtime.InteropServices.SEHException){throw NativeException.GetNative();}}

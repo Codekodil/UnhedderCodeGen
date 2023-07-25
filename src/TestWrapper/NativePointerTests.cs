@@ -16,27 +16,6 @@ namespace TestWrapper
 		}
 
 		[TestMethod]
-		public void InvokeNativeAction()
-		{
-			using var pointer1 = new PointerChild();
-			using var pointer2 = new PointerChild();
-
-			var i = 0;
-			pointer2.Event += () => i++;
-			pointer1.Event += () =>
-			{
-				pointer2.Invoke();
-				i *= 2;
-				pointer2.Invoke();
-			};
-			pointer1.Invoke();
-			pointer1.Invoke();
-			pointer1.Invoke();
-
-			Assert.AreEqual(21, i);
-		}
-
-		[TestMethod]
 		public void StringParameter()
 		{
 			using var pointer = new PointerChild();

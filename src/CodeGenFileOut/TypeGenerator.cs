@@ -115,7 +115,15 @@ namespace CodeGenFileOut
 					asShared = type.Shared;
 					if (type.Pointer)
 					{
-						generated = $"ref {generated}";
+						if (generated == "void")
+						{
+							generated = "IntPtr";
+						}
+						else
+						{
+							inverseFormat = $"ref System.Runtime.CompilerServices.Unsafe.AsRef<{generated}>((void*){{0}})";
+							generated = $"ref {generated}";
+						}
 						native = "IntPtr";
 						var fixedName = GetLocal("local", type);
 						alloc = $"fixed({data.Type}*{fixedName}=&{{0}}){{{{";

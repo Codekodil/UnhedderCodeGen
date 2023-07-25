@@ -146,6 +146,7 @@
     <ClInclude Include="CodeGen.h" />
     <ClInclude Include="DifferentNamespaceParent.h" />
     <ClInclude Include="DontWrap.h" />
+    <ClInclude Include="EventContainer.h" />
     <ClInclude Include="ExceptionObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PointerChild.h" />
@@ -156,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="DifferentNamespaceParent.cpp" />
     <ClCompile Include="DontWrap.cpp" />
+    <ClCompile Include="EventContainer.cpp" />
     <ClCompile Include="ExceptionObject.cpp" />
     <ClCompile Include="Export.cpp" />
     <ClCompile Include="pch.cpp">

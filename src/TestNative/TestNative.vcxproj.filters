@@ -10,6 +10,7 @@
     <ClInclude Include="DontWrap.h" />
     <ClInclude Include="Lookups.h" />
     <ClInclude Include="ExceptionObject.h" />
+    <ClInclude Include="EventContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -21,5 +22,6 @@
     <ClCompile Include="DontWrap.cpp" />
     <ClCompile Include="Lookups.cpp" />
     <ClCompile Include="ExceptionObject.cpp" />
+    <ClCompile Include="EventContainer.cpp" />
   </ItemGroup>
 </Project>

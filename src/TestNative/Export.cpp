@@ -1,6 +1,7 @@
 //Generated with https://github.com/Codekodil/UnhedderCodeGen
 #include"pch.h"
 #include"DifferentNamespaceParent.h"
+#include"EventContainer.h"
 #include"ExceptionObject.h"
 #include"Lookups.h"
 #include"PointerChild.h"
@@ -52,6 +53,121 @@ __declspec(dllexport)
 	void 
 	__stdcall Wrapper_Delete_NotTestNative_PointerParent
 	(std::shared_ptr<NotTestNative::PointerParent>* self){try{
+	delete self;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+
+/*------------------------- TestNative::EventContainer -------------------------*/
+
+//Constructors:
+
+__declspec(dllexport)
+	TestNative::EventContainer*
+	__stdcall Wrapper_New_TestNative_EventContainer_0
+	(){try{
+	auto pointer_result = new TestNative::EventContainer();
+	return pointer_result;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+//Methods:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_TestNative_EventContainer_Invoke_0
+	(TestNative::EventContainer* self){try{
+	if(!self)throw std::exception("NullReferenceException");
+	self->Invoke();
+	return ;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+__declspec(dllexport)
+	int 
+	__stdcall Wrapper_Call_TestNative_EventContainer_GetHash_1
+	(TestNative::EventContainer* self,
+	int n_
+	){try{
+	if(!self)throw std::exception("NullReferenceException");
+	int value_result;
+	value_result=self->GetHash(
+	n_);
+	return value_result;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+__declspec(dllexport)
+	int 
+	__stdcall Wrapper_Call_TestNative_EventContainer_PtrValue_2
+	(TestNative::EventContainer* self){try{
+	if(!self)throw std::exception("NullReferenceException");
+	int value_result;
+	value_result=self->PtrValue();
+	return value_result;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Call_TestNative_EventContainer_SendSelf_3
+	(TestNative::EventContainer* self,
+	int* index_
+	){try{
+	if(!self)throw std::exception("NullReferenceException");
+	self->SendSelf(
+	index_);
+	return ;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+//Events:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Event_TestNative_EventContainer_Event
+	(TestNative::EventContainer* self,
+	void
+	(__stdcall*event)()){try{
+	if(!self)throw std::exception("NullReferenceException");
+	self->Event=event;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Event_TestNative_EventContainer_Hash
+	(TestNative::EventContainer* self,
+	int
+	(__stdcall*event)(
+	int n_
+	)){try{
+	if(!self)throw std::exception("NullReferenceException");
+	self->Hash=event;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Event_TestNative_EventContainer_Ptr
+	(TestNative::EventContainer* self,
+	int*
+	(__stdcall*event)()){try{
+	if(!self)throw std::exception("NullReferenceException");
+	self->Ptr=event;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Event_TestNative_EventContainer_Receive
+	(TestNative::EventContainer* self,
+	void
+	(__stdcall*event)(
+	void* ptr_,
+	int* index_
+	)){try{
+	if(!self)throw std::exception("NullReferenceException");
+	self->Receive=event;}
+	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
+
+//Delete:
+
+__declspec(dllexport)
+	void 
+	__stdcall Wrapper_Delete_TestNative_EventContainer
+	(TestNative::EventContainer* self){try{
 	delete self;}
 	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
 
@@ -223,17 +339,8 @@ __declspec(dllexport)
 //Methods:
 
 __declspec(dllexport)
-	void 
-	__stdcall Wrapper_Call_TestNative_PointerChild_Invoke_0
-	(std::shared_ptr<TestNative::PointerChild>* self){try{
-	if(!self)throw std::exception("NullReferenceException");
-	(*self)->Invoke();
-	return ;}
-	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
-
-__declspec(dllexport)
 	int 
-	__stdcall Wrapper_Call_TestNative_PointerChild_SumCharacters_1
+	__stdcall Wrapper_Call_TestNative_PointerChild_SumCharacters_0
 	(std::shared_ptr<TestNative::PointerChild>* self,
 	const char* text_
 	){try{
@@ -246,7 +353,7 @@ __declspec(dllexport)
 
 __declspec(dllexport)
 	void 
-	__stdcall Wrapper_Call_TestNative_PointerChild_ScaleSpan_2
+	__stdcall Wrapper_Call_TestNative_PointerChild_ScaleSpan_1
 	(std::shared_ptr<TestNative::PointerChild>* self,
 	int* numbers_,int numbers_Size,
 	int scale_
@@ -259,16 +366,6 @@ __declspec(dllexport)
 	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
 
 //Events:
-
-__declspec(dllexport)
-	void 
-	__stdcall Wrapper_Event_TestNative_PointerChild_Event
-	(std::shared_ptr<TestNative::PointerChild>* self,
-	void
-	(__stdcall*event)()){try{
-	if(!self)throw std::exception("NullReferenceException");
-	(*self)->Event=event;}
-	catch(std::exception&e){exceptionMessage=e.what();throw;}catch(...){exceptionMessage="unknown";throw;}}
 
 //Delete:
 

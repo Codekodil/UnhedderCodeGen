@@ -16,8 +16,6 @@ namespace CodeGenFileOut
 
 			IEnumerable<string> GenerateSections(ParserEvent e)
 			{
-				//__declspec(dllexport) void __stdcall Wrappy_Surface_SetEvent_Signaling(std::shared_ptr<UnhedderNative::Surface>* self, void(__stdcall* event)(int arg_index,bool arg_errorcatched)){(*self)->Signaling = event;}
-
 				yield return "__declspec(dllexport)";
 				yield return "void ";
 				yield return $"__stdcall Wrapper_Event_{c.UniqueName()}_{e.Name}";
@@ -66,9 +64,10 @@ namespace CodeGenFileOut
 				var nativeDelegate = e.NativeDelegateCs();
 				var managedDelegate = $"{e.Name}Delegate";
 
+				var returnType = e.Result.GenerateCs();
 				var parameters = e.Parameters.Select(ParameterGenerator.GenerateCs).ToList();
 
-				yield return $"private delegate void {nativeDelegate}(";
+				yield return $"private delegate {returnType.Native} {nativeDelegate}(";
 				if (parameters.Count == 0)
 				{
 					yield return ");";
@@ -89,7 +88,7 @@ namespace CodeGenFileOut
 				yield return $"private static extern void {externFunction}";
 				yield return $"(IntPtr self, {nativeDelegate}? action);";
 
-				yield return $"public delegate void {managedDelegate}(";
+				yield return $"public delegate {returnType.Native} {managedDelegate}(";
 				if (parameters.Count == 0)
 				{
 					yield return ");";
@@ -105,7 +104,7 @@ namespace CodeGenFileOut
 				yield return $"public event {managedDelegate} {e.Name}{{add{{try{{";
 				yield return $"{managedDelegate}_Object+=value;";
 				yield return $"if({nativeDelegate}_Object==null){{";
-				yield return $"{nativeDelegate}_Object=(";
+				yield return $"{nativeDelegate}_Object=Delegate;unsafe {returnType.Native} Delegate(";
 				if (parameters.Count == 0)
 				{
 					yield return ")=>";
@@ -118,13 +117,14 @@ namespace CodeGenFileOut
 				yield return $"{managedDelegate}_Object?.Invoke(";
 				if (parameters.Count == 0)
 				{
-					yield return ");";
+					yield return ")";
 				}
 				else
 				{
 					for (int i = 0; i < parameters.Count; i++)
-						yield return (parameters[i].InverseArgument ?? throw new Exception($"Parameter {e.Parameters[i].Name} was not correctly type checked")) + (i == parameters.Count - 1 ? ");" : ",");
+						yield return (parameters[i].InverseArgument ?? throw new Exception($"Parameter {e.Parameters[i].Name} was not correctly type checked")) + (i == parameters.Count - 1 ? ")" : ",");
 				}
+				yield return returnType.InverseFormat == null ? ";" : "??default;";
 
 				string self;
 				if (c.ThreadSafe)
